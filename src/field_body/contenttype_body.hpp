@@ -1,20 +1,20 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	string_body.hpp
- * @brief	Standrad for ARPA Ineternet text messages	
- * @ref		IETF-rfc822
+ * @file	contenttype_body.hpp
+ * @brief	Multi-purpose mail extensions	
+ * @ref		IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
  *
  * Copyright (c) 2019-2019 Jim Zhang 303683086@qq.com
  *------------------------------------------------------------------------------------------------------------------
 */
 
 
-#ifndef __LIBMIME_STRING_BODY_HPP__
-#define __LIBMIME_STRING_BODY_HPP__
+#ifndef __LIBMIME_CONTENTTYPE_BODY_HPP__
+#define __LIBMIME_CONTENTTYPE_BODY_HPP__
 
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												STRING_BODY INCLUDES
+ *												CONTENTTYPE_BODY INCLUDES
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -29,7 +29,7 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												STRING_BODY SHORT ALIAS 
+ *												CONTENTTYPE_BODY SHORT ALIAS 
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -37,28 +37,29 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												STRING_BODY DATA BLOCK
+ *												CONTENTTYPE_BODY DATA BLOCK
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
 /**
- *	@brief string (unstructed) field body class and function set
+ *	@brief string (structed) field body class and function set
  *	@note 
- *		Inheritance graph : string_body->field_body 
+ *		Inheritance graph : contenttype_body->field_body 
  **/
-class string_body : public field_body{
+class contenttype_body : public field_body{
 	public:
-		string_body(){}; /**< Empty structure */
-		string_body(const string &body								  );
-		string_body(const char *body, string::size_type _size		  );
-		string_body(const char *body					    		  );
+		contenttype_body(){}; /**< Empty structure */
+		contenttype_body(const string &contenttype							  );
+		contenttype_body(const char *contenttype, string::size_type _size	  );
+		contenttype_body(const char *contenttype							  );
+		contenttype_body(int v_major, int v_minor							  );
 
-		void set(const string &body									  );
-		void set(const char *body, string::size_type _size			  );
-		void set(const char *body									  );
+		void set(const string &contenttype									  );
+		void set(const char *contenttype, string::size_type _size		      );
+		void set(const char *contenttype								      );
 
-		const string &get(void) const noexcept					       ;
+		const string &get(void) const noexcept					               ;
 
 	private:
 		string body;
@@ -68,5 +69,5 @@ class string_body : public field_body{
 } /* namespace NS_LIBMIME */
 
 
-#endif /*__LIBMIME_STRING_BODY_HPP__*/
+#endif /*__LIBMIME_CONTENTTYPE_BODY_HPP__*/
 

@@ -19,8 +19,9 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-
 #include <string>
+#include <cstring>
+
 
 namespace NS_LIBMIME{
 
@@ -52,13 +53,15 @@ class body{
 		body(){}; /**< Empty structure */
 		body(const string &_body						  );
 		body(const char *body, string::size_type _size	  );
+		body(const char *body							  );
 
-		void set(const string &_body					  );
+		void set(const string &body 					  );
 		void set(const char *body, string::size_type _size);
+		void set(const char *body						  );
 
 		const string &get(void) const noexcept			   ;
 		
-	private:
+	protected:
 		string bodys;
 };
 

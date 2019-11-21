@@ -271,14 +271,3 @@ const string header::get_field(const char *field_name, string::size_type _size) 
 	return get_field(_field_name);
 }
 
-int main(void){
-	header h;
-	
-	h.set("name1", 5, "thisisbody\r\n", 11);
-	h.set("name2", 5, "thisisbody\r\n", 12);
-	h.set("name3", 5,"thisisbody\r\n", 12); h.set("name4", 5, "thisisbody\r\n", 12);
-
-	h.show();
-
-	return 0;
-}

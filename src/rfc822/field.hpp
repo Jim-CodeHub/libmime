@@ -19,9 +19,9 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-
 #include <libMIME/src/rfc822/field_name.hpp>
 #include <libMIME/src/rfc822/field_body.hpp>
+
 
 namespace NS_LIBMIME{
 

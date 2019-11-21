@@ -20,6 +20,7 @@
 */
 
 #include <string>
+#include <cstring>
 
 
 namespace NS_LIBMIME{
@@ -49,14 +50,17 @@ using namespace std ;
  **/
 class field_body{
 	public:
-		virtual ~field_body(){};
+		virtual ~field_body(){}												 ;
 
-		virtual void set(const string &body			   ) = 0;
-		virtual void set(const char *body, size_t _size) = 0;
+		virtual void set(const string &body			   ) = 0				 ;
+		virtual void set(const char *body, size_t _size) = 0				 ;
+		virtual void set(const char *body) = 0								 ;
 		
-		virtual const string &unfold(void) noexcept = 0		;
+		static const string unfold(const string &body						);
+		static const string unfold(const char *body, string::size_type _size);
+		static const string unfold(const char *body							);
 
-		virtual const string &get(void) const noexcept = 0  ;
+		virtual const string &get(void) const noexcept = 0					 ;
 };
 
 

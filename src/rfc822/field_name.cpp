@@ -52,6 +52,22 @@ field_name::field_name(const string &name) { this->set(name); }
 /**
  *	@brief	    Set field name 
  *	@param[in]  name  - field name 
+ *	@param[out] None
+ *	@return		None
+ *	@exception  "const char *", rfc822 field name error
+ *	@note		The string param 'name' must end with '\0'
+ **/
+void field_name::set(const char *name)
+{
+	this->set(name, strlen(name));
+	return;
+}
+
+field_name::field_name(const char *name) { this->set(name); }
+
+/**
+ *	@brief	    Set field name 
+ *	@param[in]  name  - field name 
  *	@param[in]  _size - size of field name 
  *	@param[out] None
  *	@return		None

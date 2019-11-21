@@ -19,11 +19,10 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-
 #include <deque>
 #include <algorithm>
 #include <libMIME/src/rfc822/field.hpp>
-#include <iostream> //TBD
+
 
 namespace NS_LIBMIME{
 
@@ -77,17 +76,8 @@ class header{
 		const string get_field(const char *field_name, string::size_type _size) const noexcept						;
 
 		friend class findIFname;
-	void show(void)
-		{
-			deque<field>::iterator _big = headers.begin(), _end = headers.end();
-			while(_big != _end)
-			{
-				std::cout << _big->get();
-				_big++;
-			}
-		}
 
-	private:
+	protected:
 		deque<field> headers;
 };
 
