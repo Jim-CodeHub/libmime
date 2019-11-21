@@ -36,7 +36,7 @@ void field_name::set(const string &name)
 		if ((*_index < FIELD_NAME_ASCII_SCOPE_MIN) || (*_index > FIELD_NAME_ASCII_SCOPE_MAX) 
 				|| (*_index == FIELD_NAME_ASCII_EXCLUDECH))
 		{
-			throw("Exception : rfc822 field name error!");
+			throw("Exception : rfc822 field name error - Character out of range!");
 		}
 
 		_index++;
@@ -46,6 +46,8 @@ void field_name::set(const string &name)
 
 	return;
 }
+
+field_name::field_name(const string &name) { this->set(name); }
 
 /**
  *	@brief	    Set field name 
@@ -80,6 +82,8 @@ void field_name::set(const char *name, size_t _size)
 
 	return;
 }
+
+field_name::field_name(const char *name, size_t _size) { this->set(name, _size); }
 
 /**
  *	@brief	    Get field name 

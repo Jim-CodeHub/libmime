@@ -52,10 +52,14 @@ using namespace std ;
  **/
 class field_name{
 	public:
-		void set(const string &name			   );
-		void set(const char *name, size_t _size);
+		field_name(){}; /**< Empty structure */
+		field_name(const string &name			 );
+		field_name(const char *name, size_t _size);
 
-		const string &get(void) const noexcept  ;
+		void set(const string &name				 );
+		void set(const char *name, size_t _size  );
+
+		const string &get(void) const noexcept    ;
 
 	private:
 		string name;

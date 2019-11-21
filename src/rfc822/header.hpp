@@ -1,85 +1,112 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	rfc822.hpp
+ * @file	header.hpp
  * @brief	Standrad for ARPA Ineternet text messages	
- * @ref		IETF-RFC822
+ * @ref		IETF-rfc822
  *
  * Copyright (c) 2019-2019 Jim Zhang 303683086@qq.com
  *------------------------------------------------------------------------------------------------------------------
 */
 
 
-#ifndef __LIBMIME_RFC822_HPP__
-#define __LIBMIME_RFC822_HPP__
+#ifndef __LIBMIME_HEADER_HPP__
+#define __LIBMIME_HEADER_HPP__
 
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												RFC822 INCLUDES
+ *												HEADER INCLUDES
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/rfc822/rfc822.hpp>
 
+#include <deque>
+#include <algorithm>
+#include <libMIME/src/rfc822/field.hpp>
+#include <iostream> //TBD
 
 namespace NS_LIBMIME{
 
+using namespace std ;
+
+
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												RFC822 DATA BLOCK
+ *												HEADER SHORT ALIAS 
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
-/**
- *	@brief RFC822 (Header) Field class and function set
- **/
-class rfc822_field{
-	public:
-		void set();
 
-	protected:
-		string field_name;
-		string field_body;
+/*------------------------------------------------------------------------------------------------------------------
+ *
+ *												HEADER DATA BLOCK
+ *
+ *------------------------------------------------------------------------------------------------------------------
+*/
+
+class findIFname;
+
+/**
+ *	@brief header class and function set
+ *	@note 
+ *		Inheritance graph : None
+ **/
+class header{
+	public:
+		header(){}; /**< Empty structure */
+		header(const class field &field_line)																		;
+		header(const string &field_name, const string &field_body												   );	
+		header(const char *field_name, string::size_type _nSize, const char *field_body, string::size_type _bSize  );
+		header(const string &field_line																			   );	
+		header(const char *field_line, string::size_type _size													   );	
+		header(class field_name &name_t, class field_body *pBody_t											       );
+		header(const string &field_name, class field_body *pBody_t		    								       );
+		header(const char *field_name, string::size_type _size, class field_body *pBody_t				   		   );
+
+		void set(const class field &field_line)																		;
+		void set(const string &field_name, const string &field_body												   );	
+		void set(const char *field_name, string::size_type _nSize, const char *field_body, string::size_type _bSize);
+		void set(const string &field_line																		   );	
+		void set(const char *field_line, string::size_type _size												   );	
+		void set(class field_name &name_t, class field_body *pBody_t											   );
+		void set(const string &field_name, class field_body *pBody_t		    								   );
+		void set(const char *field_name, string::size_type _size, class field_body *pBody_t				   		   );
+
+		const string get_field(const string &field_name) const noexcept												;
+		const string get_field(const char *field_name, string::size_type _size) const noexcept						;
+
+		friend class findIFname;
+	void show(void)
+		{
+			deque<field>::iterator _big = headers.begin(), _end = headers.end();
+			while(_big != _end)
+			{
+				std::cout << _big->get();
+				_big++;
+			}
+		}
+
+	private:
+		deque<field> headers;
 };
 
-#if 0
-1. header CRLF 
-   CRLF
-   body
+class findIFname{
+	public:	
+		findIFname(const string &field_name																		   );
+		findIFname(const char *field_name, string::size_type _size												   );
+		findIFname(const class field_name &FName																   );
 
-2. body fold and unfold
-	fold : insert Y only if X exist
+		bool operator()(const string &field_name																   );
+		bool operator()(const class field &_field																   );
 
-	X = 1*([CRLF] + SPACE/HTAB)	;	SPACE = ASCII_32, HTAB = ASCII_9
-	Y = CRLF + 1*(SPACE/HTAB)
-
-	unfold : Y -> SPACE/HTAB 
-
-3. filed  
-
-   filed-name:field-body+CRLF
-
-   filed-name Consist of ASCII 33~126 exclude ":"
-
-   field-body Consist of ANY ASCII exclude CRLF
-
-   Note: An unfold action SHOULD BE done, before parse field-body
-
-   Note: field body can be ignored
-
-#endif
-
-#if 0 //TBD
-class message{};
-class dateTime{};
-class address{};
-more for structrued field-body details
-#endif
+	private:
+		string match_name;
+};
 
 
 } /* namespace NS_LIBMIME */
 
 
-#endif /*__LIBMIME_RFC822_HPP__*/
+#endif /*__LIBMIME_HEADER_HPP__*/
 

@@ -1,5 +1,5 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	field_body.hpp
+ * @file	body.hpp
  * @brief	Standrad for ARPA Ineternet text messages	
  * @ref		IETF-rfc822
  *
@@ -8,19 +8,19 @@
 */
 
 
-#ifndef __LIBMIME_FIELD_BODY_HPP__
-#define __LIBMIME_FIELD_BODY_HPP__
+#ifndef __LIBMIME_BODY_HPP__
+#define __LIBMIME_BODY_HPP__
 
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												FIELD_BODY INCLUDES
+ *												BODY INCLUDES
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <string>
 
+#include <string>
 
 namespace NS_LIBMIME{
 
@@ -29,7 +29,7 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												FIELD_BODY SHORT ALIAS 
+ *												BODY SHORT ALIAS 
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -37,31 +37,34 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												FIELD_BODY DATA BLOCK
+ *												BODY DATA BLOCK
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
 /**
- *	@brief field body class and function set
+ *	@brief body class and function set
  *	@note 
  *		Inheritance graph : None
  **/
-class field_body{
+class body{
 	public:
-		virtual ~field_body(){};
+		body(){}; /**< Empty structure */
+		body(const string &_body						  );
+		body(const char *body, string::size_type _size	  );
 
-		virtual void set(const string &body			   ) = 0;
-		virtual void set(const char *body, size_t _size) = 0;
+		void set(const string &_body					  );
+		void set(const char *body, string::size_type _size);
+
+		const string &get(void) const noexcept			   ;
 		
-		virtual const string &unfold(void) noexcept = 0		;
-
-		virtual const string &get(void) const noexcept = 0  ;
+	private:
+		string bodys;
 };
 
 
 } /* namespace NS_LIBMIME */
 
 
-#endif /*__LIBMIME_FIELD_BODY_HPP__*/
+#endif /*__LIBMIME_BODY_HPP__*/
 

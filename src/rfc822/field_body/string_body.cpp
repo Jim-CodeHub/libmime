@@ -34,6 +34,8 @@ void string_body::set(const string &body)
 	return;
 }
 
+string_body::string_body(const string &body) { this->set(body); }
+
 /**
  *	@brief	    Set string body 
  *	@param[in]  body - string body 
@@ -49,6 +51,8 @@ void string_body::set(const char *body, string::size_type _size)
 
 	return;
 }
+
+string_body::string_body(const char *body, string::size_type _size) { this->set(body, _size); }
 
 /**
  *	@brief	    Get string body 
