@@ -31,7 +31,7 @@ void param::set(const string &param)
 {
 	string::size_type _index = param.find("=", 0);
 
-	if (string::npos != _index)
+	if (string::npos == _index)
 	{
 		throw("Exception : MIME field param error - wrong format!");
 	}
@@ -80,75 +80,88 @@ void param::set(const char *param)
 param::param(const char *param) { this->set(param); }
 	
 /**
- *	@brief	    Set name and value of parameter 
- *	@param[in]  name  
+ *	@brief	    Set attr and value of parameter 
+ *	@param[in]  attr  
  *	@param[in]  value 
  *	@param[out] None
  *	@return		None
- *	@exception  "Const char *", MIME field param name/value error
+ *	@exception  "Const char *", MIME field param attr/value error
  **/
-void param::set(const string &name, const string &value)
+void param::set(const string &attr, const string &value)
 {
-	string::size_type _vIndex = name .find("=", 0);
-	string::size_type _vValue = value.find("=", 0);
+	string invalid_attr  = util::get_CTLs() + " " + util::get_tspecials();
+	string invalid_value = util::get_CTLs() + " ";
 
-	if ((string::npos == _vIndex) || (string::npos == _vValue))
+	string::size_type _vIndex = attr .find_first_of(invalid_attr , 0);
+	string::size_type _vValue = value.find_first_of(invalid_value, 0);
+
+	if ((string::npos != _vIndex) || (string::npos != _vValue))
 	{
-		throw("Exception : MIME field param name/value error - wrong format!");
+		throw("Exception : MIME field param attr/value error - wrong format!");
 	}
 
-	this->params = name + "=" + value;
+	string _value = value;
+
+	if ((*(value.begin()) != '"') || (*(value.end() - 1) != '"'))
+	{
+		if (string::npos != value.find_first_of("()\\<>\"@,;:/[]?="))
+		{
+			_value = "\""+ value + "\""; 
+		}
+	}
+
+	this->params = attr + "=" + _value;
 	return;
 }
 
-param::param(const string &name, const string &value)
+param::param(const string &attr, const string &value)
 {
-	this->set(name, value);
+	this->set(attr, value);
 }
 
 /**
- *	@brief	    Set name and value of parameter 
- *	@param[in]  name  
- *	@param[in]  _nSize - size of name 
+ *	@brief	    Set attr and value of parameter 
+ *	@param[in]  attr  
+ *	@param[in]  _nSize - size of attr 
  *	@param[in]  value 
  *	@param[in]  _vSize - size of value 
  *	@param[out] None
  *	@return		None
- *	@exception  "Const char *", MIME field param name/value error
+ *	@exception  "Const char *", MIME field param attr/value error
  **/
-void param::set(const char *name, string::size_type _nSize, const char *value, string::size_type _vSize)
+void param::set(const char *attr, string::size_type _nSize, const char *value, string::size_type _vSize)
 {
-	string _name (name,  _nSize);
+	string _attr (attr,  _nSize);
 	string _value(value, _vSize);
 
-	this->set(_name, _value); return;
+	this->set(_attr, _value); return;
 }
 
-param::param(const char *name, string::size_type _nSize, const char *value, string::size_type _vSize)
+param::param(const char *attr, string::size_type _nSize, const char *value, string::size_type _vSize)
 {
-	this->set(name, _nSize, value, _vSize);
+	this->set(attr, _nSize, value, _vSize);
 }
 
 /**
- *	@brief	    Set name and value of parameter 
- *	@param[in]  name  
+ *	@brief	    Set attr and value of parameter 
+ *	@param[in]  attr  
  *	@param[in]  value 
  *	@param[out] None
  *	@return		None
  *	@note		The string param 'param' must end with '\0'
- *	@exception  "Const char *", MIME field param name/value error
+ *	@exception  "Const char *", MIME field param attr/value error
  **/
-void param::set(const char *name, const char *value)
+void param::set(const char *attr, const char *value)
 {
-	string _name (name,  strlen(name ));
+	string _attr (attr,  strlen(attr ));
 	string _value(value, strlen(value));
 
-	this->set(_name, _value); return;
+	this->set(_attr, _value); return;
 }
 
-param::param(const char *name, const char *value)
+param::param(const char *attr, const char *value)
 {
-	this->set(name, value);
+	this->set(attr, value);
 }
 
 /**
@@ -163,21 +176,21 @@ const string &param::get(void) const noexcept
 }
 
 /**
- *	@brief	    Get name of parameter 
+ *	@brief	    Get attr of parameter 
  *	@param[in]  None 
  *	@param[out] None
- *	@return	    The name of parameter or ""
+ *	@return	    The attr of parameter or ""
  **/
-const string param::get_name(void) const noexcept
+const string param::get_attr(void) const noexcept
 {
-	return param::get_name(params);
+	return param::get_attr(params);
 }
 
 /**
  *	@brief	    Get value of parameter 
  *	@param[in]  None 
  *	@param[out] None
- *	@return	    The name of parameter or ""
+ *	@return	    The attr of parameter or ""
  **/
 const string param::get_value(void) const noexcept
 {
@@ -185,17 +198,17 @@ const string param::get_value(void) const noexcept
 }
 
 /**
- *	@brief	    Get name of parameter 
+ *	@brief	    Get attr of parameter 
  *	@param[in]  param 
  *	@param[out] None
- *	@return	    The name of parameter or ""
+ *	@return	    The attr of parameter or ""
  **/
-const string param::get_name(const string &param)
+const string param::get_attr(const string &param)
 {
-	string _name = "";
+	string _attr = "";
 	string _param = field_body::unfold(param);
 
-	string::size_type i = 0, _index = _param.find("=", 0);  
+	string::size_type i = 0, j = 0, _index = _param.find("=", 0);  
 
 	if (string::npos != _index)
 	{
@@ -211,38 +224,48 @@ const string param::get_name(const string &param)
 			_end--;
 		}
 
-		_name.assign(_param.begin(), _param.begin() + _index - i);	
+		while(_big != _end)
+		{
+			if ((*_big == ' ') || (*_big == '\t'))
+			{ j++; /**< Skip LWSP before attr */ }
+			else
+			{ break;							 }
+				
+			_big++;
+		}
+
+		_attr.assign(_param.begin() + j, _param.begin() + _index - i);	
 	}
 
-	return _name;
+	return _attr;
 }
 
 /**
- *	@brief	    Get name of parameter 
+ *	@brief	    Get attr of parameter 
  *	@param[in]  param 
  *	@param[in]  _size - size of param 
  *	@param[out] None
- *	@return	    The name of parameter or ""
+ *	@return	    The attr of parameter or ""
  **/
-const string param::get_name(const char *param, string::size_type _size)
+const string param::get_attr(const char *param, string::size_type _size)
 {
 	const string _param(param, _size);
 
-	return param::get_name(_param);
+	return param::get_attr(_param);
 }
 
 /**
- *	@brief	    Get name of parameter 
+ *	@brief	    Get attr of parameter 
  *	@param[in]  param 
  *	@param[out] None
- *	@return	    The name of parameter or ""
+ *	@return	    The attr of parameter or ""
  *	@note		The string param 'param' must end with '\0'
  **/
-const string param::get_name(const char *param)
+const string param::get_attr(const char *param)
 {
 	string _param(param, strlen(param));
 
-	return param::get_name(_param);
+	return param::get_attr(_param);
 }
 
 /**
@@ -256,11 +279,11 @@ const string param::get_value(const string &param)
 	string _value = "";
 	string _param = field_body::unfold(param);
 
-	string::size_type i = 0, _index = _param.find("=", 0);  
+	string::size_type i = 0, j = 0, _index = _param.find("=", 0);  
 
 	if (string::npos != _index)
 	{
-		string::iterator _big = _param.begin() + _index + 1, _end = _param.end();
+		string::iterator _big = _param.begin() + _index + 1, _end = _param.end() - 1;
 
 		while(_big != _end)
 		{
@@ -272,7 +295,20 @@ const string param::get_value(const string &param)
 			_big++;
 		}
 
-		_value.assign(_param.begin() + _index + i, _param.end());
+		while(_end != _big)
+		{
+			if ((*_end == ' ') || (*_end == '\t'))
+			{ j++; /**< Skip LWSP after value */ }
+			else
+			{ break;							 }
+		
+			_end--;
+		}
+
+		if ((*_big == '"') && (*_end == '"'))
+		{ i++; j++; /**< Remove duo '"' */  }
+
+		_value.assign(_param.begin() + _index + 1 + i, _param.end() - j);
 	}
 
 	return _value;

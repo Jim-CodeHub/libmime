@@ -114,7 +114,7 @@ version_body::version_body(int v_major, int v_minor)
  *	@param[out] None
  *	@return	    Version body	
  **/
-const string &version_body::get(void) const noexcept
+const string version_body::get(void) const noexcept
 {
 	return this->body;
 }

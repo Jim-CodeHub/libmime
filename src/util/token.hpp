@@ -1,25 +1,27 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	string_body.hpp
- * @brief	Standrad for ARPA Ineternet text messages	
- * @ref		IETF-rfc822
+ * @file	token.hpp
+ * @brief   tokenity tools
+ * @ref		IETF-rfc822, IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
  *
  * Copyright (c) 2019-2019 Jim Zhang 303683086@qq.com
  *------------------------------------------------------------------------------------------------------------------
 */
 
 
-#ifndef __LIBMIME_STRING_BODY_HPP__
-#define __LIBMIME_STRING_BODY_HPP__
+#ifndef __LIBMIME_TOKEN_HPP__
+#define __LIBMIME_TOKEN_HPP__
 
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												STRING_BODY INCLUDES
+ *												TOKEN INCLUDES
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/rfc822/field_body.hpp>
+#include <string>
+#include <cstring>
+#include <vector>
 
 
 namespace NS_LIBMIME{
@@ -29,7 +31,7 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												STRING_BODY SHORT ALIAS 
+ *												TOKEN SHORT ALIAS 
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -37,36 +39,32 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												STRING_BODY DATA BLOCK
+ *												TOKEN DATA BLOCK
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
 /**
- *	@brief string (unstructed) field body class and function set
+ *	@brief string_token class and function set
  *	@note 
- *		Inheritance graph : string_body->field_body 
+ *		Inheritance graph : None
  **/
-class string_body : public field_body{
+class string_token{
 	public:
-		string_body(){}; /**< Empty structure */
-		string_body(const string &body								  );
-		string_body(const char *body, string::size_type _size		  );
-		string_body(const char *body					    		  );
+		string_token(const string &str, const string &delim						   );
+		string_token(const string &str, const char *delim, string::size_type _dSize);
+		string_token(const string &str, const char *delim						   );
 
-		void set(const string &body									  );
-		void set(const char *body, string::size_type _size			  );
-		void set(const char *body									  );
-
-		const string get(void) const noexcept					       ;
+		const string get_stok(string::size_type pos = 0) const noexcept			    ;
 
 	private:
-		string body;
+		void set(const string &str, const string &delim							   );
+		vector<string> stoks;
 };
 
 
 } /* namespace NS_LIBMIME */
 
 
-#endif /*__LIBMIME_STRING_BODY_HPP__*/
+#endif /*__LIBMIME_TOKEN_HPP__*/
 

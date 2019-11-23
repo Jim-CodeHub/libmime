@@ -60,7 +60,7 @@ class field_body{
 		static const string unfold(const char *body, string::size_type _size);
 		static const string unfold(const char *body							);
 
-		virtual const string &get(void) const noexcept = 0					 ;
+		virtual const string get(void) const noexcept = 0					 ;
 };
 
 

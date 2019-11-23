@@ -1,13 +1,12 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	mime_header.cpp
- * @brief	Multi-purpose mail extensions	
- * @ref		IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
+ * @file	util.cpp
+ * @brief   util utility tool
  *
  * Copyright (c) 2019-2019 Jim Zhang 303683086@qq.com
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/mime_header.hpp>
+#include <libMIME/src/util/util.hpp>
 
 using namespace NS_LIBMIME;
 
@@ -21,16 +20,33 @@ using namespace NS_LIBMIME;
 */
 
 /**
- *	@brief	    Structure, set match string 
- *	@param[in]  field_name 
+ *	@brief	    Get CTLs (ASCII control character) 
+ *	@param[in]  None 
  *	@param[out] None
- *	@return		None
+ *	@return	    CTLs	
  **/
+const string util::get_CTLs(void)
+{
+	string CTLs;
 
+	for (int i = 0; i < 31; i++)
+	{ CTLs += i;			   }
 
-#if 0
-int main(void){
+	CTLs += 127; /**< 0 ~ 31 and 127 of ASCII control character*/
 
-	return 0;
+	return CTLs;
 }
-#endif
+
+/**
+ *	@brief	    Get tspecials
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return	    tspecials	
+ **/
+const string util::get_tspecials(void)
+{
+	string tspecials = "()\\<>\"@,;:/[]?=";
+
+	return tspecials;
+}
+

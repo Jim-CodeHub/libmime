@@ -73,7 +73,7 @@ string_body::string_body(const char *body, string::size_type _size) { this->set(
  *	@param[out] None
  *	@return		None
  **/
-const string &string_body::get(void) const noexcept 
+const string string_body::get(void) const noexcept 
 {
 	return body;
 }
