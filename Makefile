@@ -34,6 +34,9 @@ $(SUBDIRS):
 	$(MAKE) -C $@	
 
 install:
+
+tst:
+	$(CXX) $(CXXFLAGS) test.cpp libMIME.a
  
 tags:
 	@rm -rf ./tags

@@ -21,112 +21,13 @@ using namespace NS_LIBMIME;
 */
 
 /**
- *	@brief	    Set field by field_name and field_body
- *	@param[in]  field_name
- *	@param[in]  field_body
- *	@param[out] None 
- *	@return	    None 
- *	@note		The function do not parse the legality of param 'field_name'
- **/
-void field::set(const string &field_name, const string &field_body)
-{
-	string colon = ": "	 ; /**< Note : one SPACE left */
-	string CRLF	 = "\r\n";
-
-	field_line = field_name + colon + field_body + CRLF; 
-	
-	return;
-}
-
-field::field(const string &field_name, const string &field_body)
-{
-	this->set(field_name, field_body);
-}
-
-/**
- *	@brief	    Set field by field_name and field_body
- *	@param[in]  field_name
- *	@param[in]  field_body
- *	@param[in]  _nSize  - size of field_name 
- *	@param[in]  _bSize  - size of field_body
- *	@param[out] None 
- *	@return	    None 
- *	@note		The function do not parse the legality of param 'field_name'
- **/
-void field::set(const char *field_name, string::size_type _nSize, const char *field_body, string::size_type _bSize)
-{
-	string colon = ": "	 ; /**< Note : one SPACE left */
-	string CRLF	 = "\r\n";
-
-	field_line.clear();
-	field_line.append(field_name, _nSize); field_line.append(colon);
-	field_line.append(field_body, _nSize); field_line.append(CRLF);
-
-	return;
-}
-
-field::field(const char *field_name, string::size_type _nSize, const char *field_body, string::size_type _bSize)
-{
-	this->set(field_name, _nSize, field_body, _bSize);
-}
-
-/**
- *	@brief	    Set field by field_line
- *	@param[in]  field_line
- *	@param[out] None 
- *	@return	    None 
- *	@exception	"const char *", rfc822 field line error! 
- **/
-void field::set(const string &field_line)	
-{
-	if (field_line != "\r\n") /**< Lien consisting only of CRLF is allowed */
-	{
-		string::size_type index_colon = field_line.find(':');
-		string::size_type index_CR_LF = field_line.find("\r\n");
-
-		if ((index_colon == string::npos) || (index_CR_LF == string::npos))
-		{
-			throw("Exception : rfc822 field line error - invalid field line!");
-		}
-	}	
-
-	this->field_line = field_line;
-
-	return;
-}
-		
-field::field(const string &field_line)
-{
-	this->set(field_line);
-}
-
-/**
- *	@brief	    Set field by field_line
- *	@param[in]  field_line
- *	@param[out] None 
- *	@return	    None 
- *	@exception	"const char *", rfc822 field line error! 
- **/
-void field::set(const char *field_line, string::size_type _size)	
-{
-	string _field_line(field_line, _size);
-
-	this->set(_field_line); return;
-}
-
-field::field(const char *field_line, string::size_type _size)	
-{
-	this->set(field_line, _size);
-}
-
-/**
  *	@brief	    Set field by class field_name and class field_body
  *	@param[in]  field_name
- *	@param[in]  field_body
+ *	@param[in]  pBody_t - field (sub)body
  *	@param[out] None 
  *	@return	    None 
  **/
-void field::set(class field_name &name_t, class field_body *pBody_t)
+void field::set(const class field_name &name_t, const class field_body *pBody_t)
 {
 	string colon = ": "	 ; /**< Note : one SPACE left */
 	string CRLF	 = "\r\n";
@@ -136,7 +37,7 @@ void field::set(class field_name &name_t, class field_body *pBody_t)
 	return;
 }
 
-field::field(class field_name &name_t, class field_body *pBody_t)
+field::field(const class field_name &name_t, const class field_body *pBody_t)
 {
 	this->set(name_t, pBody_t);
 }
@@ -144,11 +45,11 @@ field::field(class field_name &name_t, class field_body *pBody_t)
 /**
  *	@brief	    Set field by string field name and class field_body
  *	@param[in]  field name
- *	@param[in]  field_body
+ *	@param[in]  pBody_t - field (sub)body
  *	@param[out] None 
  *	@return	    None 
  **/
-void field::set(const string &field_name, class field_body *pBody_t)
+void field::set(const string &field_name, const class field_body *pBody_t)
 {
 	string colon = ": "	 ; /**< Note : one SPACE left */
 	string CRLF	 = "\r\n";
@@ -158,7 +59,7 @@ void field::set(const string &field_name, class field_body *pBody_t)
 	return;
 }
 
-field::field(const string &field_name, class field_body *pBody_t)
+field::field(const string &field_name, const class field_body *pBody_t)
 {
 	this->set(field_name, pBody_t);
 }
@@ -167,11 +68,11 @@ field::field(const string &field_name, class field_body *pBody_t)
  *	@brief	    Set field by string field name and class field_body
  *	@param[in]  field name
  *	@param[in]  _size  - size of field_name 
- *	@param[in]  field_body
+ *	@param[in]  pBody_t - field (sub)body
  *	@param[out] None 
  *	@return	    None 
  **/
-void field::set(const char *field_name, string::size_type _size, class field_body *pBody_t)
+void field::set(const char *field_name, string::size_type _size, const class field_body *pBody_t)
 {
 	string colon = ": "	 ; /**< Note : one SPACE left */
 	string CRLF	 = "\r\n";
@@ -183,16 +84,38 @@ void field::set(const char *field_name, string::size_type _size, class field_bod
 	return;
 }
 
-field::field(const char *field_name, string::size_type _size, class field_body *pBody_t)
+field::field(const char *field_name, string::size_type _size, const class field_body *pBody_t)
 {
 	this->set(field_name, _size, pBody_t);
 }
 
 /**
- *	@brief	    Operator '==' overloading 
- *	@param[in]  field_line - class field 
+ *	@brief	    Set field by string field name and class field_body
+ *	@param[in]  field name
+ *	@param[in]  field_body
  *	@param[out] None 
- *	@return	    field_line 
+ *	@return	    None 
+ *	@note		String param 'field_name' must end with '\0'
+ **/
+void field::set(const char *field_name, const class field_body *pBody_t)
+{
+	string _field_name(field_name, strlen(field_name));
+
+	this->set(_field_name, pBody_t);
+
+	return;
+}
+
+field::field(const char *field_name, const class field_body *pBody_t)
+{
+	this->set(field_name, pBody_t);
+}
+
+/**
+ *	@brief	    Operator '==' overloading 
+ *	@param[in]  field_line 
+ *	@param[out] None 
+ *	@return	    ture/false 
  **/
 bool field::operator==(const class field &field_line)
 {
@@ -265,7 +188,7 @@ string field::get_body(const string &field_line)
  **/
 const string field::get_name(void) const noexcept
 {
-	return get_name(field_line);
+	return this->get_name(field_line);
 }
 
 /**
@@ -276,6 +199,6 @@ const string field::get_name(void) const noexcept
  **/
 const string field::get_body(void) const noexcept
 {
-	return get_body(field_line);
+	return this->get_body(field_line);
 }
 

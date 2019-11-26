@@ -1,5 +1,5 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	mime_multi.cpp
+ * @file	mime_message.cpp
  * @brief	Multi-purpose mail extensions	
  * @ref		IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
  *
@@ -7,7 +7,7 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/entity/multi/mime_multi.hpp>
+#include <libMIME/src/mime_message.hpp>
 
 using namespace NS_LIBMIME;
 

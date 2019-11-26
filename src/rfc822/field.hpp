@@ -51,23 +51,18 @@ using namespace std ;
 class field{
 	public:
 		field(){}; /**< Empty structure */
-		field(const string &field_name, const string &field_body												   );
-		field(const char *field_name, string::size_type _nSize, const char *field_body, string::size_type _bSize   );
-		field(const string &field_line																		       );	
-		field(const char *field_line, string::size_type _size													   );	
-		field(class field_name &name_t, class field_body *pBody_t											       );
-		field(const string &field_name, class field_body *pBody_t		    								       );
-		field(const char *field_name, string::size_type _size, class field_body *pBody_t				   		   );
+		field(const char *field_line){ this->field_line = field_line; }; /**< Easy set but dangerous*/
+		field(const class field_name &name_t, const class field_body *pBody_t								       );
+		field(const string &field_name, const class field_body *pBody_t	    								       );
+		field(const char *field_name, string::size_type _size, const class field_body *pBody_t			   		   );
+		field(const char *field_name, const class field_body *pBody_t											   );
 
-		bool operator==(const class field &field_line)																;
+		bool operator==(const class field &field_line															   );
 
-		void set(const string &field_name, const string &field_body												   );	
-		void set(const char *field_name, string::size_type _nSize, const char *field_body, string::size_type _bSize);
-		void set(const string &field_line																		   );	
-		void set(const char *field_line, string::size_type _size												   );	
-		void set(class field_name &name_t, class field_body *pBody_t											   );
-		void set(const string &field_name, class field_body *pBody_t		    								   );
-		void set(const char *field_name, string::size_type _size, class field_body *pBody_t				   		   );
+		void set(const class field_name &name_t, const class field_body *pBody_t								   );
+		void set(const string &field_name, const class field_body *pBody_t		    							   );
+		void set(const char *field_name, string::size_type _size, const class field_body *pBody_t			   	   );
+		void set(const char *field_name, const class field_body *pBody_t										   );
 
 		const string &get(void) const noexcept																	    ;
 

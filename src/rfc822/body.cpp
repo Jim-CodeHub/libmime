@@ -28,7 +28,7 @@ using namespace NS_LIBMIME;
  **/
 void body::set(const string &body)
 { 
-	this->bodys.assign(body);
+	this->bodys->assign(body);
 	return;	
 }
 
@@ -40,6 +40,9 @@ body::body(const string &body) { this->set(body); }
  *	@param[in]  _size - size of string body 
  *	@param[out] None
  *	@return		None
+ *	@note		param '_size' is to prevent the 'body' not ending in '\0' 
+ *				or 
+ *				having '\0' truncated in binary data
  **/
 void body::set(const char *body, string::size_type _size)
 {
@@ -54,19 +57,17 @@ body::body(const char *body, string::size_type _size)
 }
 
 /**
- *	@brief	    Set string body 
- *	@param[in]  _body - string body 
+ *	@brief	    Operator '=' overloading 
+ *	@param[in]  _body
  *	@param[out] None
- *	@return		None
- *	@note		The string param '_body' must end with '\0'
+ *	@return	    Reference class body	
  **/
-void body::set(const char *body)
+const class body &body::operator=(const class body &_body)
 {
-	this->set(body, strlen(body));
-	return;
-}
+	*(this->bodys) = *(_body.bodys);
 
-body::body(const char *body) { this->set(body, strlen(body)); }
+	return _body;
+}
 
 /**
  *	@brief	    Get string body 
@@ -76,6 +77,6 @@ body::body(const char *body) { this->set(body, strlen(body)); }
  **/
 const string &body::get(void) const noexcept
 {
-	return bodys;
+	return *bodys;
 }
 

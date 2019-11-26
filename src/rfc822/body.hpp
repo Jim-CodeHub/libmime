@@ -50,19 +50,21 @@ using namespace std ;
  **/
 class body{
 	public:
-		body(){}; /**< Empty structure */
-		body(const string &_body						  );
-		body(const char *body, string::size_type _size	  );
-		body(const char *body							  );
+		body(){};					/**< Empty structure   */
+		~body(){ delete bodys; }	/**< Destructure       */
+		body(const class body &_body){ *this = _body; }	    ;
+		body(const string &_body						   );
+		body(const char *body, string::size_type _size	   );
 
-		void set(const string &body 					  );
-		void set(const char *body, string::size_type _size);
-		void set(const char *body						  );
+		const class body &operator=(const class body &_body);
 
-		const string &get(void) const noexcept			   ;
+		void set(const string &body 					   );
+		void set(const char *body, string::size_type _size );
+
+		const string &get(void) const noexcept			    ;
 		
 	protected:
-		string bodys;
+		string *bodys = new string;
 };
 
 

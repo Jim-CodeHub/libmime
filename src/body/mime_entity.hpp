@@ -19,9 +19,8 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/header/header.hpp>
-#include <libMIME/src/body/body.hpp>
-
+#include <libMIME/src/body/mime_body.hpp>
+#include <libMIME/src/header/mime_header.hpp>
 
 namespace NS_LIBMIME{
 
@@ -47,11 +46,25 @@ using namespace std ;
  *	@brief mime_entity class and function set
  *	@note 
  *		Inheritance graph : None 
+ *
+ *	@note
+ *		In a narrow sense speaking, MIME Entity SHOULD BE a part of body, when the content-type 'multipart' exists 
  **/
 class mime_entity{
 	public:
 		mime_entity(){}; /**< Empty structure */
+		mime_entity(const class mime_header &header, const class mime_body &body);
 
+		void set(const class mime_header &header, const class mime_body &body	);
+
+		const class mime_header &get_header(void) const noexcept				;
+		const class mime_body &get_body(void) const noexcept					;
+
+		const string get(void) const noexcept									;
+
+	protected:
+		class mime_header header;
+		class mime_body   body ;
 };
 
 

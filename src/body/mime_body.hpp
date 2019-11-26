@@ -19,7 +19,9 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
+#include <list>
 #include <libMIME/src/rfc822/body.hpp>
+//#include <libMIME/src/body/mime_entity.hpp>
 
 
 namespace NS_LIBMIME{
@@ -42,6 +44,8 @@ using namespace std ;
  *------------------------------------------------------------------------------------------------------------------
 */
 
+class mime_entity; /**< forward declaration */
+
 /**
  *	@brief mime_body class and function set
  *	@note 
@@ -50,7 +54,12 @@ using namespace std ;
 class mime_body : public body{
 	public:
 		mime_body(){}; /**< Empty structure */
+		mime_body(const string &_body):body(_body){};
+		mime_body(const char *_body, string::size_type _size):body(_body, _size){};
 
+	private:
+		//list<class mime_entity> main_entity; 
+		//list<class mime_entity> part_entity; 
 };
 
 

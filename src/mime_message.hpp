@@ -1,5 +1,5 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	mime_multi.hpp
+ * @file	mime_message.hpp
  * @brief	Multi-purpose mail extensions	
  * @ref		IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
  *
@@ -8,18 +8,19 @@
 */
 
 
-#ifndef __LIBMIME_MIME_MULTI_HPP__
-#define __LIBMIME_MIME_MULTI_HPP__
+#ifndef __LIBMIME_MIME_MESSAGE_HPP__
+#define __LIBMIME_MIME_MESSAGE_HPP__
 
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_MULTI INCLUDES
+ *												MIME_MESSAGE INCLUDES
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
-//#include <libMIME/src/entity/header.hpp>
+#include <libMIME/src/header/mime_header.hpp>
+#include <libMIME/src/body/mime_body.hpp>
 
 
 namespace NS_LIBMIME{
@@ -29,7 +30,7 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_MULTI SHORT ALIAS 
+ *												MIME_MESSAGE SHORT ALIAS 
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -37,19 +38,19 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_MULTI DATA BLOCK
+ *												MIME_MESSAGE DATA BLOCK
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
 /**
- *	@brief mime_multi class and function set
+ *	@brief mime_message class and function set
  *	@note 
  *		Inheritance graph : None 
  **/
-class mime_multi{
+class mime_message{
 	public:
-		mime_multi(){}; /**< Empty structure */
+		mime_message(){}; /**< Empty structure */
 
 };
 
@@ -57,5 +58,5 @@ class mime_multi{
 } /* namespace NS_LIBMIME */
 
 
-#endif /*__LIBMIME_MIME_MULTI_HPP__*/
+#endif /*__LIBMIME_MIME_MESSAGE_HPP__*/
 

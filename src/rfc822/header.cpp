@@ -78,18 +78,18 @@ bool findIFname::operator()(const class field &_field)
 
 /**
  *	@brief	    Set header with field_line (push at the end of header)
- *	@param[in]  name - field name 
+ *	@param[in]  field_line
  *	@param[out] None
  *	@return		None
- *	@exception	"Const char *", 
+ *	@exception	"Const char *", Overmuch CRLF field 
  **/
 void header::set(const class field &field_line)
 {
-	class field separate_line("\r\n", 2); /**< A line seperate from body */
+	class field sep_line("\r\n");
 
-	if (true == headers.empty()) { headers.assign(1, separate_line); }
+	if (true == headers.empty()) { headers.assign(1, sep_line); } /**< Set seperated line */
 
-	if (separate_line == field_line) /**< If header is't empty */
+	if (sep_line == field_line) /**< If overmuch CRLF line */
 	{
 		throw("Exception : rfc822 header error - Overmuch CRLF field!");
 	}
@@ -105,100 +105,20 @@ header::header(const class field &field_line)
 }
 
 /**
- *	@brief	    Set header by field_name and field_body
- *	@param[in]  field_name
- *	@param[in]  field_body
- *	@param[out] None 
- *	@return	    None 
- *	@note		The function do not parse the legality of param 'field_name'
- **/
-void header::set(const string &field_name, const string &field_body)
-{
-	class field _field(field_name, field_body);
-
-	this->set(_field); return;
-}
-
-header::header(const string &field_name, const string &field_body)
-{
-	this->set(field_name, field_body);
-}
-
-/**
- *	@brief	    Set header by field_name and field_body
- *	@param[in]  field_name
- *	@param[in]  field_body
- *	@param[in]  _nSize  - size of field_name 
- *	@param[in]  _bSize  - size of field_body
- *	@param[out] None 
- *	@return	    None 
- *	@note		The function do not parse the legality of param 'field_name'
- **/
-void header::set(const char *field_name, string::size_type _nSize, const char *field_body, string::size_type _bSize)
-{
-	class field _field(field_name, _nSize, field_body, _bSize);
-
-	this->set(_field); return;
-}
-
-header::header(const char *field_name, string::size_type _nSize, const char *field_body, string::size_type _bSize)
-{
-	this->set(field_name, _nSize, field_body, _bSize);
-}
-
-/**
- *	@brief	    Set header by field_line
- *	@param[in]  field_line
- *	@param[out] None 
- *	@return	    None 
- *	@exception	"const char *", rfc822 field line error! 
- **/
-void header::set(const string &field_line)	
-{
-	class field _field(field_line);
-
-	this->set(_field); return;
-}
-		
-header::header(const string &field_line)
-{
-	this->set(field_line);
-}
-
-/**
- *	@brief	    Set field by field_line
- *	@param[in]  field_line
- *	@param[out] None 
- *	@return	    None 
- *	@exception	"const char *", rfc822 field line error! 
- **/
-void header::set(const char *field_line, string::size_type _size)
-{
-	class field _field(field_line, _size);
-
-	this->set(_field); return;
-}
-
-header::header(const char *field_line, string::size_type _size)
-{
-	this->set(field_line, _size);
-}
-
-/**
  *	@brief	    Set header by class field_name and class field_body
  *	@param[in]  field_name
  *	@param[in]  field_body
  *	@param[out] None 
  *	@return	    None 
  **/
-void header::set(class field_name &name_t, class field_body *pBody_t)
+void header::set(const class field_name &name_t, const class field_body *pBody_t)
 {
 	class field _field(name_t, pBody_t);
 
 	this->set(_field); return;
 }
 
-header::header(class field_name &name_t, class field_body *pBody_t)
+header::header(const class field_name &name_t, const class field_body *pBody_t)
 {
 	this->set(name_t, pBody_t);
 }
@@ -210,18 +130,17 @@ header::header(class field_name &name_t, class field_body *pBody_t)
  *	@param[out] None 
  *	@return	    None 
  **/
-void header::set(const string &field_name, class field_body *pBody_t)
+void header::set(const string &field_name, const class field_body *pBody_t)
 {
 	class field _field(field_name, pBody_t);
 
 	this->set(_field); return;
 }
 
-header::header(const string &field_name, class field_body *pBody_t)
+header::header(const string &field_name, const class field_body *pBody_t)
 {
 	this->set(field_name, pBody_t);
 }
-
 /**
  *	@brief	    Set field by string field name and class field_body
  *	@param[in]  field name
@@ -230,16 +149,49 @@ header::header(const string &field_name, class field_body *pBody_t)
  *	@param[out] None 
  *	@return	    None 
  **/
-void header::set(const char *field_name, string::size_type _size, class field_body *pBody_t)
+void header::set(const char *field_name, string::size_type _size, const class field_body *pBody_t)
 {
 	class field _field(field_name, _size, pBody_t);
 
 	this->set(_field); return;
 }
 
-header::header(const char *field_name, string::size_type _size, class field_body *pBody_t)
+header::header(const char *field_name, string::size_type _size, const class field_body *pBody_t)
 {
 	this->set(field_name, _size, pBody_t);
+}
+
+/**
+ *	@brief	    Set field by string field name and class field_body
+ *	@param[in]  field name
+ *	@param[in]  pBody_t - field_body (sub)object 
+ *	@param[out] None 
+ *	@return	    None 
+ *	@note		string param 'field_name' must end with '\0'
+ **/
+void header::set(const char *field_name, const class field_body *pBody_t)
+{
+	class field _field(field_name, pBody_t);
+
+	this->set(_field); return;
+}
+
+header::header(const char *field_name, const class field_body *pBody_t)
+{
+	this->set(field_name, pBody_t);
+}
+
+/**
+ *	@brief	    Operator '=' overloading 
+ *	@param[in]  _header 
+ *	@param[out] None 
+ *	@return	    Reference class header 
+ **/
+const class header &header::operator=(const class header &_header)
+{
+	this->headers = _header.headers;
+
+	return _header;
 }
 
 /**
@@ -269,5 +221,26 @@ const string header::get_field(const char *field_name, string::size_type _size) 
 	string _field_name(field_name, _size);
 
 	return get_field(_field_name);
+}
+
+/**
+ *	@brief	    Get header(s)
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return	    header(s) 
+ **/
+const string header::get(void) const noexcept
+{
+	string headers_str;
+
+	deque<field>::const_iterator _big = headers.begin(), _end = headers.end();
+
+	while(_big != _end)
+	{
+		headers_str += _big->get();	
+		_big++;
+	}
+
+	return headers_str;
 }
 

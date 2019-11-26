@@ -1,6 +1,6 @@
 
 OBJS    = field_body.o field.o field_name.o header.o body.o
-SUBDIRS =
+SUBDIRS = field_body
  
  
 #-------------------------------------------------------------------------------------------------------
