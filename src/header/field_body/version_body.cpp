@@ -8,7 +8,7 @@
 */
 
 
-#include <libMIME/src/field_body/version_body.hpp>
+#include <libMIME/src/header/field_body/version_body.hpp>
 
 using namespace NS_LIBMIME;
 

@@ -7,7 +7,7 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/param.hpp>
+#include <libMIME/src/header/param.hpp>
 
 using namespace NS_LIBMIME;
 

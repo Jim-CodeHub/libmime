@@ -1,6 +1,6 @@
 
-OBJS    = mime_entity.o
-SUBDIRS = codec header rfc822 util body entity
+OBJS    = mime_multi.o 
+SUBDIRS = 
  
  
 #-------------------------------------------------------------------------------------------------------

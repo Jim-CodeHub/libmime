@@ -28,8 +28,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <libMIME/src/rfc822/field_body.hpp>
-#include <libMIME/src/param.hpp>
 #include <libMIME/src/util/token.hpp>
+#include <libMIME/src/header/param.hpp>
 
 
 namespace NS_LIBMIME{

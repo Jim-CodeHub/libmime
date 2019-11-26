@@ -7,7 +7,7 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/mime_header.hpp>
+#include <libMIME/src/header/mime_header.hpp>
 
 using namespace NS_LIBMIME;
 
@@ -21,16 +21,9 @@ using namespace NS_LIBMIME;
 */
 
 /**
- *	@brief	    Structure, set match string 
- *	@param[in]  field_name 
- *	@param[out] None
- *	@return		None
+ *	@brief	    xxx 
+ *	@param[in]  xxx 
+ *	@param[out] xxx 
+ *	@return	    xxx	
  **/
 
-
-#if 0
-int main(void){
-
-	return 0;
-}
-#endif

@@ -1,5 +1,5 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	mime_header.hpp
+ * @file	mime_entity.hpp
  * @brief	Multi-purpose mail extensions	
  * @ref		IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
  *
@@ -8,18 +8,19 @@
 */
 
 
-#ifndef __LIBMIME_MIME_HEADER_HPP__
-#define __LIBMIME_MIME_HEADER_HPP__
+#ifndef __LIBMIME_MIME_ENTITY_HPP__
+#define __LIBMIME_MIME_ENTITY_HPP__
 
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_HEADER INCLUDES
+ *												MIME_ENTITY INCLUDES
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/rfc822/header.hpp>
+#include <libMIME/src/header/header.hpp>
+#include <libMIME/src/body/body.hpp>
 
 
 namespace NS_LIBMIME{
@@ -29,7 +30,7 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_HEADER SHORT ALIAS 
+ *												MIME_ENTITY SHORT ALIAS 
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -37,27 +38,25 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_HEADER DATA BLOCK
+ *												MIME_ENTITY DATA BLOCK
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
 /**
- *	@brief mime_header class and function set
+ *	@brief mime_entity class and function set
  *	@note 
- *		Inheritance graph : mime_header -> header(rfc822) 
+ *		Inheritance graph : None 
  **/
-class mime_header : public header{
+class mime_entity{
 	public:
-		mime_header(){}; /**< Empty structure */
+		mime_entity(){}; /**< Empty structure */
 
-	protected:
-		//deque<field> mime_headers;
 };
 
 
 } /* namespace NS_LIBMIME */
 
 
-#endif /*__LIBMIME_MIME_HEADER_HPP__*/
+#endif /*__LIBMIME_MIME_ENTITY_HPP__*/
 
