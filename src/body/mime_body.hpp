@@ -54,12 +54,19 @@ class mime_entity; /**< forward declaration */
 class mime_body : public body{
 	public:
 		mime_body(){}; /**< Empty structure */
+#if 0
+		mime_body(const class mime_body &_body);
 		mime_body(const string &_body):body(_body){};
 		mime_body(const char *_body, string::size_type _size):body(_body, _size){};
 
+		const class mime_body &operator=(const class mime_body &_body);
+#endif
+
+		//void set(const string &_body);
+		//void set(class mime_entity &part_entity);
+
 	private:
-		//list<class mime_entity> main_entity; 
-		//list<class mime_entity> part_entity; 
+		list<class mime_entity*> part_entity; 
 };
 
 
