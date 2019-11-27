@@ -7,7 +7,7 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/body/mime_body.hpp>
+#include <libMIME/src/mime_body.hpp>
 
 using namespace NS_LIBMIME;
 
@@ -59,25 +59,6 @@ void mime_body::set_preamble(const char *_preamble)
 
 	this->set(_preamble_);                  return;
 }
-
-/**
- *	@brief	    xxx 
- *	@param[in]  xxx 
- *	@param[out] xxx 
- *	@return	    xxx	
- **/
-const class mime_body &mime_body::operator=(const class mime_body &_body)
-{
-#if 0
-	this->preamble		 = _body.preamble	   ;
-	*(this->bodys)		 = *(_body.bodys)	   ;
-	*(this->part_entity) = *(_body.part_entity);
-	string epilogue		 = _body.epilogue	   ;
-#endif
-
-	return _body;
-}
-
 
 /**
  *	@brief	    Set mime body's epilogue 

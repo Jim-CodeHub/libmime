@@ -7,7 +7,7 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/body/mime_entity.hpp>
+#include <libMIME/src/mime_entity.hpp>
 
 using namespace NS_LIBMIME;
 
@@ -19,25 +19,6 @@ using namespace NS_LIBMIME;
 *
 --------------------------------------------------------------------------------------------------------------------
 */
-
-/**
- *	@brief	    Get mime header from mime entity 
- *	@param[in]  None 
- *	@param[out] None 
- *	@return	    mime header of mime entity 
- **/
-void mime_entity::set(const class mime_header &header, const class mime_body &body)
-{
-	this->header = header;
-	this->body   = body  ;
-
-	return;
-}
-
-mime_entity::mime_entity(const class mime_header &header, const class mime_body &body)
-{
-	this->set(header, body);
-}
 
 /**
  *	@brief	    Get mime header from mime entity 
@@ -61,6 +42,7 @@ const class mime_body &mime_entity::get_body(void) const noexcept
 	return this->body;
 }
 
+#if 0
 /**
  *	@brief	    Get mime entity 
  *	@param[in]  None 
@@ -73,3 +55,4 @@ const string mime_entity::get(void) const noexcept
 	return (this->header.get() + this->body.get());
 }
 
+#endif

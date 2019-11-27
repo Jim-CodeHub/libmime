@@ -1,5 +1,5 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	mime_message.hpp
+ * @file	mult_entity.hpp
  * @brief	Multi-purpose mail extensions	
  * @ref		IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
  *
@@ -8,20 +8,18 @@
 */
 
 
-#ifndef __LIBMIME_MIME_MESSAGE_HPP__
-#define __LIBMIME_MIME_MESSAGE_HPP__
+#ifndef __LIBMIME_MULT_ENTITY_HPP__
+#define __LIBMIME_MULT_ENTITY_HPP__
 
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_MESSAGE INCLUDES
+ *												MULT_ENTITY INCLUDES
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/header/mime_header.hpp>
-#include <libMIME/src/body/mime_body.hpp>
-
+#include <libMIME/src/body/mime_entity.hpp>
 
 namespace NS_LIBMIME{
 
@@ -30,7 +28,7 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_MESSAGE SHORT ALIAS 
+ *												MULT_ENTITY SHORT ALIAS 
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -38,25 +36,26 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_MESSAGE DATA BLOCK
+ *												MULT_ENTITY DATA BLOCK
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
 /**
- *	@brief mime_message class and function set
+ *	@brief mult_entity class and function set
  *	@note 
- *		Inheritance graph : None 
+ *		Inheritance graph : mult_entity->mime_entity 
  **/
-class mime_message{
+class mult_entity : public mime_entity{
 	public:
-		mime_message(){}; /**< Empty structure */
+		mult_entity(){}; /**< Empty structure */
 
+	protected:
 };
 
 
 } /* namespace NS_LIBMIME */
 
 
-#endif /*__LIBMIME_MIME_MESSAGE_HPP__*/
+#endif /*__LIBMIME_MULT_ENTITY_HPP__*/
 

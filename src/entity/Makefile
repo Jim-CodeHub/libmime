@@ -1,6 +1,6 @@
 
-OBJS    = mime_body.o mime_entity.o
-SUBDIRS =
+OBJS    = text_entity.o mult_entity.o 
+SUBDIRS = 
  
  
 #-------------------------------------------------------------------------------------------------------

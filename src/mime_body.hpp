@@ -53,17 +53,8 @@ class mime_entity; /**< forward declaration */
 class mime_body : public body{
 	public:
 		mime_body(){};							/**< Empty structure   */
-		//~mime_body(){ delete part_entity; };	/**< Destructure       */
-
 		mime_body(const string &_body):body(_body){};
 		mime_body(const char *_body, string::size_type _size):body(_body, _size){};
-
-		const class mime_body &operator=(const class mime_body &_body);
-
-		void set_part(class mime_entity &entity)
-		{
-			this->part_entity.push_back(&entity);
-		}
 
 		void set_preamble(const string &_preamble);
 		void set_preamble(const char *_preamble, string::size_type _size);
@@ -81,8 +72,10 @@ class mime_body : public body{
 
 	private:
 		string preamble;
-		//list<class mime_entity> *part_entity = new list<class mime_entity>;
+
+		class mime_entity *		 main_entity;
 		list<class mime_entity*> part_entity;
+
 		string epilogue;
 };
 
