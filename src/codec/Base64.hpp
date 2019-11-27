@@ -12,9 +12,20 @@
 #define ___BASE64_HPP__
 
 
+/*------------------------------------------------------------------------------------------------------------------
+ *
+ *												CODEC INCLUDES
+ *
+ *------------------------------------------------------------------------------------------------------------------
+*/
+
+#include <string>
+
+using namespace std;
+
 /*-----------------------------------------------------------------------------------------------------------------
  * 
- *										  BASE64 DATA BLOCK
+ *												BASE64 DATA BLOCK
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -46,12 +57,16 @@ const char base64_decode_table[] = {
 
 /*-----------------------------------------------------------------------------------------------------------------
  * 
- *								    BASE64 FUNCTIONS DECLARATION
+ *										    BASE64 FUNCTIONS DECLARATION
  *
  *------------------------------------------------------------------------------------------------------------------
 */
-void base64_encode(const unsigned char *binIn, char *base64Out);
-void base64_decode(const char *base64In, unsigned char *binOut);
+
+void base64_encode(const unsigned char *binIn, char *base64Out	);
+void base64_encode(const unsigned char *binIn, string &base64Out);
+
+void base64_decode(const char *base64In, unsigned char *binOut	);
+void base64_decode(const char *base64In, string &binOut			);
 
 
 #endif /*__BASE64_HPP__*/

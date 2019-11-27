@@ -61,6 +61,31 @@ void mime_body::set_preamble(const char *_preamble)
 }
 
 /**
+ *	@brief	    Encode mime body
+ *	@param[in]  code - codec method 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void mime_body::encode(enum codec code)
+{
+	string code_data;
+
+	switch (code)
+	{
+		case BASE64:
+			base64_encode((const unsigned char *)this->bodys->c_str(), code_data);
+							   break;
+		case QUOTED_PRINTABLE: break;
+		case _7BIT:			   break;
+		case _8BIT:			   break;
+		case BINARY:		   break;
+		default:                    ;
+	}
+
+	this->set(code_data); return;
+}
+
+/**
  *	@brief	    Set mime body's epilogue 
  *	@param[in]  _epilogue 
  *	@param[out] None 

@@ -21,6 +21,7 @@
 
 #include <list>
 #include <libMIME/src/rfc822/body.hpp>
+#include <libMIME/src/codec/codec.hpp>
 
 
 namespace NS_LIBMIME{
@@ -60,15 +61,18 @@ class mime_body : public body{
 		void set_preamble(const char *_preamble, string::size_type _size);
 		void set_preamble(const char *_preamble);
 
+		void encode(enum codec code);
+
 		void set_epilogue(const string &_epilogue);
 		void set_epilogue(const char *_epilogue, string::size_type _size);
 		void set_epilogue(const char *_epilogue);
 
+
+
+
+
 		const string &get_preamble(void) const noexcept;
 		const string &get_epilogue(void) const noexcept;
-
-	protected:
-		/**< string *bodys = new string; (inherit from rfc822 body */
 
 	private:
 		string preamble;

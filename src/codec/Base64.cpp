@@ -26,6 +26,7 @@ static void decode_block(const char *base64In, unsigned char *binOut);
  *
  *------------------------------------------------------------------------------------------------------------------
 */
+
 /**
  *	@brief	    Encode '8-bit' binary bytes into base64 ASCII 
  *	@param[in]  binIn 
@@ -62,6 +63,43 @@ void base64_encode(const unsigned char *binIn, char *base64Out)
 }
 
 /**
+ *	@brief	    Encode '8-bit' binary bytes into base64 ASCII 
+ *	@param[in]  binIn 
+ *	@param[out] _base64Out 
+ *	@return		None
+ *	@note		The function does no param checking for out
+ *	@warning	Note the use of the escape character '\'
+ **/
+void base64_encode(const unsigned char *binIn, string &_base64Out)
+{
+	unsigned char bufCom[3], i = 0, j = 0;
+	char		  bufOut[4];
+
+	string::iterator base64Out = _base64Out.begin();
+
+	while('\0' != binIn[i])
+	{
+		for (unsigned char k = 0; k < 3; k++, i++) /**< Set buffer in for encode block */
+		{
+			bufCom[k] = binIn[i];
+
+			if ('\0' == binIn[i]) {break;}			
+		}
+
+		encode_block(bufCom, bufOut);
+
+		for (unsigned char k = 0; k < 4; k++, j++) /**< Set buffer out for base64 str */
+		{
+			base64Out[j] = bufOut[k];
+		}
+	}
+
+	base64Out[j] = '\0';
+
+	return;
+}
+
+/**
  *	@brief	    Decode base64 ASCII into '8-bit' binary bytes 
  *	@param[in]	base64In
  *	@param[out] binOut
@@ -72,6 +110,42 @@ void base64_decode(const char *base64In, unsigned char *binOut)
 {
 	unsigned char bufOut[3], i = 0, j = 0;
 	char		  bufCom[4];
+
+	while('\0' != base64In[i])
+	{
+		for (unsigned char k = 0; k < 4; k++, i++) /**< Set buffer in for base64 str */
+		{
+			bufCom[k] = base64In[i];
+
+			if ('\0' == base64In[i]) {break;}
+		}
+
+		decode_block(bufCom, bufOut);
+
+		for (unsigned char k = 0; k < 3; k++, j++) /**< Set buffer out for 8-bit bin */
+		{
+			binOut[j] = bufOut[k];
+		}
+	}
+
+	binOut[j] = '\0';
+
+	return;
+}
+
+/**
+ *	@brief	    Decode base64 ASCII into '8-bit' binary bytes 
+ *	@param[in]	base64In
+ *	@param[out] _binOut
+ *	@return		None
+ *	@note		The function does no param checking for out
+ **/
+void base64_decode(const char *base64In, string &_binOut)
+{
+	unsigned char bufOut[3], i = 0, j = 0;
+	char		  bufCom[4];
+
+	string::iterator binOut = _binOut.begin();
 
 	while('\0' != base64In[i])
 	{
@@ -168,4 +242,4 @@ static void decode_block(const char *base64In, unsigned char *binOut)
 
 	return;
 }
-	
+
