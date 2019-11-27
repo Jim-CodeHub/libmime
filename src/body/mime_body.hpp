@@ -21,7 +21,6 @@
 
 #include <list>
 #include <libMIME/src/rfc822/body.hpp>
-//#include <libMIME/src/body/mime_entity.hpp>
 
 
 namespace NS_LIBMIME{
@@ -53,20 +52,38 @@ class mime_entity; /**< forward declaration */
  **/
 class mime_body : public body{
 	public:
-		mime_body(){}; /**< Empty structure */
-#if 0
-		mime_body(const class mime_body &_body);
+		mime_body(){};							/**< Empty structure   */
+		//~mime_body(){ delete part_entity; };	/**< Destructure       */
+
 		mime_body(const string &_body):body(_body){};
 		mime_body(const char *_body, string::size_type _size):body(_body, _size){};
 
 		const class mime_body &operator=(const class mime_body &_body);
-#endif
 
-		//void set(const string &_body);
-		//void set(class mime_entity &part_entity);
+		void set_part(class mime_entity &entity)
+		{
+			this->part_entity.push_back(&entity);
+		}
+
+		void set_preamble(const string &_preamble);
+		void set_preamble(const char *_preamble, string::size_type _size);
+		void set_preamble(const char *_preamble);
+
+		void set_epilogue(const string &_epilogue);
+		void set_epilogue(const char *_epilogue, string::size_type _size);
+		void set_epilogue(const char *_epilogue);
+
+		const string &get_preamble(void) const noexcept;
+		const string &get_epilogue(void) const noexcept;
+
+	protected:
+		/**< string *bodys = new string; (inherit from rfc822 body */
 
 	private:
-		list<class mime_entity*> part_entity; 
+		string preamble;
+		//list<class mime_entity> *part_entity = new list<class mime_entity>;
+		list<class mime_entity*> part_entity;
+		string epilogue;
 };
 
 
