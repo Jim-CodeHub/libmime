@@ -20,15 +20,19 @@
 
 #include <libMIME/src/util/util.hpp>
 #include <libMIME/src/util/token.hpp>
+#include <libMIME/src/codec/codec.hpp>
 #include <libMIME/src/codec/Base64.hpp>
-#include <libMIME/src/mime_entity.hpp>
-#include <libMIME/src/mime_body.hpp>
+#include <libMIME/src/mime.hpp>
 #include <libMIME/src/rfc822/body.hpp>
 #include <libMIME/src/rfc822/header.hpp>
 #include <libMIME/src/rfc822/field_name.hpp>
 #include <libMIME/src/rfc822/field.hpp>
 #include <libMIME/src/rfc822/field_body/string_body.hpp>
 #include <libMIME/src/rfc822/field_body.hpp>
+#include <libMIME/src/mime_entity.hpp>
+#include <libMIME/src/body/entity/text_entity.hpp>
+#include <libMIME/src/body/entity/mult_entity.hpp>
+#include <libMIME/src/body/mime_body.hpp>
 #include <libMIME/src/header/param.hpp>
 #include <libMIME/src/header/mime_header.hpp>
 #include <libMIME/src/header/field_body/version_body.hpp>

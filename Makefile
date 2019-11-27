@@ -36,7 +36,7 @@ $(SUBDIRS):
 install:
 
 tst:
-	$(CXX) $(CXXFLAGS) test.cpp libMIME.a
+	$(CXX) $(CXXFLAGS) tst/main.cpp libMIME.a
  
 tags:
 	@rm -rf ./tags

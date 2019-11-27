@@ -19,7 +19,7 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/body/mime_entity.hpp>
+#include <libMIME/src/mime_entity.hpp>
 
 namespace NS_LIBMIME{
 

@@ -7,7 +7,7 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/mime_body.hpp>
+#include <libMIME/src/body/mime_body.hpp>
 
 using namespace NS_LIBMIME;
 
