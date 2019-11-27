@@ -1,5 +1,5 @@
 
-OBJS    = mime_body.o
+OBJS    = mime_body.o mime_entity.o
 SUBDIRS = entity 
  
  

@@ -29,7 +29,7 @@
 #include <libMIME/src/rfc822/field.hpp>
 #include <libMIME/src/rfc822/field_body/string_body.hpp>
 #include <libMIME/src/rfc822/field_body.hpp>
-#include <libMIME/src/mime_entity.hpp>
+#include <libMIME/src/body/mime_entity.hpp>
 #include <libMIME/src/body/entity/text_entity.hpp>
 #include <libMIME/src/body/entity/mult_entity.hpp>
 #include <libMIME/src/body/mime_body.hpp>

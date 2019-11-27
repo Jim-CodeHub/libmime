@@ -44,7 +44,7 @@ using namespace std ;
  *------------------------------------------------------------------------------------------------------------------
 */
 
-class mime_entity; /**< forward declaration */
+class mime_entity;  /**< Forward declaration */
 
 /**
  *	@brief mime_body class and function set
@@ -52,34 +52,32 @@ class mime_entity; /**< forward declaration */
  *		Inheritance graph : mime_body -> body(rfc822) 
  **/
 class mime_body : public body{
+	public: friend class mime_entity;
 	public:
-		mime_body(){};							/**< Empty structure   */
-		mime_body(const string &_body):body(_body){};
+		mime_body(){}; /**< Empty structure   */
+		mime_body(const class mime_body &_body){ *this = _body;}				  ;
+		mime_body(const string &_body):body(_body){}							  ;
 		mime_body(const char *_body, string::size_type _size):body(_body, _size){};
 
-		void set_preamble(const string &_preamble);
-		void set_preamble(const char *_preamble, string::size_type _size);
-		void set_preamble(const char *_preamble);
+		void set_preamble(const string &_preamble								 );
+		void set_preamble(const char *_preamble, string::size_type _size		 );
+		void set_preamble(const char *_preamble								     );
 
-		void encode(enum codec code);
+		void encode(enum codec code												 );
+		void decode(enum codec code												 );
 
-		void set_epilogue(const string &_epilogue);
-		void set_epilogue(const char *_epilogue, string::size_type _size);
-		void set_epilogue(const char *_epilogue);
+		void set_epilogue(const string &_epilogue								 );
+		void set_epilogue(const char *_epilogue, string::size_type _size		 );
+		void set_epilogue(const char *_epilogue									 );
 
+		const string &get_preamble(void) const noexcept						      ;
+		const string &get_epilogue(void) const noexcept							  ;
 
+		const class mime_body &operator=(const class mime_body &_body			 );
 
-
-
-		const string &get_preamble(void) const noexcept;
-		const string &get_epilogue(void) const noexcept;
-
-	private:
+	protected:
 		string preamble;
-
-		class mime_entity *		 main_entity;
 		list<class mime_entity*> part_entity;
-
 		string epilogue;
 };
 

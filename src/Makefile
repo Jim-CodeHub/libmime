@@ -1,5 +1,5 @@
 
-OBJS    = mime_entity.o
+OBJS    = mime_message.o
 SUBDIRS = body codec header rfc822 util
  
  

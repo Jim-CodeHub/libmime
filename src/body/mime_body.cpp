@@ -86,6 +86,31 @@ void mime_body::encode(enum codec code)
 }
 
 /**
+ *	@brief	    Decode mime body
+ *	@param[in]  code - codec method 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void mime_body::decode(enum codec code)
+{
+	string code_data;
+
+	switch (code)
+	{
+		case BASE64:
+			base64_decode(this->bodys->c_str(), code_data);
+							   break;
+		case QUOTED_PRINTABLE: break;
+		case _7BIT:			   break;
+		case _8BIT:			   break;
+		case BINARY:		   break;
+		default:                    ;
+	}
+
+	this->set(code_data); return;
+}
+
+/**
  *	@brief	    Set mime body's epilogue 
  *	@param[in]  _epilogue 
  *	@param[out] None 
@@ -147,3 +172,21 @@ const string &mime_body::get_epilogue(void) const noexcept
 {
 	return this->epilogue;
 }
+
+/**
+ *	@brief	    Operator '=' overloading
+ *	@param[in]  _body - mime body 
+ *	@param[out] None 
+ *	@return	    class mime_body 
+ **/
+const class mime_body &mime_body::operator=(const class mime_body &_body)
+{
+	this->preamble = _body.preamble;
+
+	*(this->bodys) = *(_body.bodys);
+
+	this->epilogue = _body.epilogue;
+
+	return _body;
+}
+

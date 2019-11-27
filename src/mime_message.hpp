@@ -1,5 +1,5 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	mult_entity.hpp
+ * @file	mime_message.hpp
  * @brief	Multi-purpose mail extensions	
  * @ref		IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
  *
@@ -8,18 +8,19 @@
 */
 
 
-#ifndef __LIBMIME_MULT_ENTITY_HPP__
-#define __LIBMIME_MULT_ENTITY_HPP__
+#ifndef __LIBMIME_MIME_MESSAGE_HPP__
+#define __LIBMIME_MIME_MESSAGE_HPP__
 
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MULT_ENTITY INCLUDES
+ *												MIME_MESSAGE INCLUDES
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/body/mime_entity.hpp>
+#include <libMIME/src/body/mime_body.hpp>
+#include <libMIME/src/header/mime_header.hpp>
 
 namespace NS_LIBMIME{
 
@@ -28,7 +29,7 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MULT_ENTITY SHORT ALIAS 
+ *												MIME_MESSAGE SHORT ALIAS 
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -36,26 +37,28 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MULT_ENTITY DATA BLOCK
+ *												MIME_MESSAGE DATA BLOCK
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
 /**
- *	@brief mult_entity class and function set
+ *	@brief mime_message class and function set
  *	@note 
- *		Inheritance graph : mult_entity->mime_entity 
+ *		Inheritance graph : None 
  **/
-class mult_entity : public mime_entity{
+class mime_message{
 	public:
-		mult_entity(){}; /**< Empty structure */
+		mime_message(){}; /**< Empty structure */
 
 	protected:
+		class mime_header header;
+		class mime_body   body  ;
 };
 
 
 } /* namespace NS_LIBMIME */
 
 
-#endif /*__LIBMIME_MULT_ENTITY_HPP__*/
+#endif /*__LIBMIME_MIME_MESSAGE_HPP__*/
 

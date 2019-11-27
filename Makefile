@@ -25,7 +25,7 @@ export CXX CXXFLAGS LD_FLAGS
 #-------------------------------------------------------------------------------------------------------
 
 
-.PHONY: all clean install $(SUBDIRS)
+.PHONY: all clean install tst $(SUBDIRS)
 
 all:$(SUBDIRS)
 	ar -rcs $(PROJECT).a $(shell find ./ -name "*.o")

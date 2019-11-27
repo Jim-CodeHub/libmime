@@ -46,19 +46,27 @@ using namespace std ;
  *	@brief mime_entity class and function set
  *	@note 
  *		Inheritance graph : None 
+ *
+ *	@note
+ *		Operator '=' can not be overloading and copy structure will not work correctly 
  **/
 class mime_entity{
+	public: friend class mime_body; 
 	public:
 		mime_entity(){}; /**< Empty structure */
-
-		//const string get(void) const noexcept									;
+		~mime_entity();  /**< Destructure     */
 		
-		const class mime_header &get_header(void) const noexcept				;
-		const class mime_body &get_body(void) const noexcept					;
+		void set_header(const class mime_header &header);
+		class mime_entity *set_body(const class mime_body &_body);
+
+		const class mime_header &get_header(void) const noexcept;
+		const class mime_body &get_body(void) const noexcept;
+
+		const string get(void) const noexcept;
 
 	protected:
 		class mime_header header;
-		class mime_body   body ;
+		class mime_body   _body ;
 };
 
 

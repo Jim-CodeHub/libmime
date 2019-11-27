@@ -57,7 +57,7 @@ using namespace std ;
 /**
  *	@brief string (structed) field body class and function set
  *	@note 
- *		Inheritance graph : contenttype_body->field_body 
+ *		Inheritance graph : contenttype_body->field_body (rfc822)
  **/
 class contenttype_body : public field_body{
 	public:
