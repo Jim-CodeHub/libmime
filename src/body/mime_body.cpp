@@ -41,9 +41,9 @@ void mime_body::set_preamble(const string &_preamble)
  **/
 void mime_body::set_preamble(const char *_preamble, string::size_type _size)
 {
-	string _preamble_(_preamble, _size);
+	string _preamble_(_preamble, _size   );
 
-	this->set(_preamble_);       return;
+	this->set_preamble(_preamble_); return;
 }
 
 /**
@@ -57,7 +57,7 @@ void mime_body::set_preamble(const char *_preamble)
 {
 	string _preamble_(_preamble, strlen(_preamble));
 
-	this->set(_preamble_);                  return;
+	this->set_preamble(_preamble_);          return;
 }
 
 /**
@@ -131,9 +131,9 @@ void mime_body::set_epilogue(const string &_epilogue)
  **/
 void mime_body::set_epilogue(const char *_epilogue, string::size_type _size)
 {
-	string _epilogue_(_epilogue, _size);
+	string _epilogue_(_epilogue, _size   );
 
-	this->set(_epilogue_);       return;
+	this->set_epilogue(_epilogue_); return;
 }
 
 /**
@@ -147,8 +147,11 @@ void mime_body::set_epilogue(const char *_epilogue)
 {
 	string _epilogue_(_epilogue, strlen(_epilogue));
 
-	this->set(_epilogue_);                  return;
+	this->set_epilogue(_epilogue_);			 return;
 }
+
+
+
 
 
 /**
@@ -188,5 +191,19 @@ const class mime_body &mime_body::operator=(const class mime_body &_body)
 	this->epilogue = _body.epilogue;
 
 	return _body;
+}
+
+/**
+ *	@brief	    Clear mime body 
+ *	@param[in]  None 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void mime_body::clear(void)
+{
+	this->bodys  ->clear();
+	this->preamble.clear();	this->epilogue.clear();
+
+	return;
 }
 

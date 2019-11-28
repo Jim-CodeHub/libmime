@@ -75,6 +75,8 @@ class mime_body : public body{
 
 		const class mime_body &operator=(const class mime_body &_body			 );
 
+		void clear(void															 );
+
 	protected:
 		string preamble;
 		list<class mime_entity*> part_entity;

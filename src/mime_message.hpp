@@ -19,8 +19,7 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/body/mime_body.hpp>
-#include <libMIME/src/header/mime_header.hpp>
+#include <libMIME/src/body/mime_entity.hpp>
 
 namespace NS_LIBMIME{
 
@@ -50,10 +49,6 @@ using namespace std ;
 class mime_message{
 	public:
 		mime_message(){}; /**< Empty structure */
-
-	protected:
-		class mime_header header;
-		class mime_body   body  ;
 };
 
 

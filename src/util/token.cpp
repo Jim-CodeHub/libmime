@@ -18,6 +18,7 @@ using namespace NS_LIBMIME;
 *
 --------------------------------------------------------------------------------------------------------------------
 */
+
 /**
  *	@brief	    Split string 
  *	@param[in]  str	  - the string to be splited
@@ -59,6 +60,62 @@ string_token::string_token(const string &str, const char *delim)
 {
 	string _delim(delim, strlen(delim));	
 	this->set(str      , _delim       );
+}
+
+/**
+ *	@brief	    Split string from delim into two part
+ *	@param[in]  str	  - the string to be splited
+ *	@param[in]  delim - delimiter 
+ *	@param[out] None
+ *	@return	    None 
+ **/
+void string_token::cut(const string &str, const string &delim)
+{
+	string::size_type _inx_prev = 0, _inx_next = 0;
+
+	if (string::npos != (_inx_next = str.find(delim, _inx_prev)))
+	{
+		this->stoks.push_back(str.substr(_inx_prev, _inx_next - _inx_prev));
+
+		_inx_prev = _inx_next + 1;
+	}
+
+	if ((string::npos == _inx_next) && (0 == _inx_prev))
+		this->stoks.push_back(""); /**< Push the empty string */
+	else
+		this->stoks.push_back(str.substr(_inx_prev, _inx_next - _inx_prev)); /**< Push the last substring */
+
+	return;
+}
+
+/**
+ *	@brief	    Split string from delim into two part
+ *	@param[in]  str	  - the string to be splited
+ *	@param[in]  delim - delimiter 
+ *	@param[in]  _size - size of delimeter 
+ *	@param[out] None
+ *	@return	    None 
+ **/
+void string_token::cut(const string &str, const char *delim, string::size_type _size)
+{
+	string _delim(delim, _size	 );
+
+	this->cut(str, _delim); return;
+}
+
+/**
+ *	@brief	    Split string from delim into two part
+ *	@param[in]  str	  - the string to be splited
+ *	@param[in]  delim - delimiter 
+ *	@param[out] None
+ *	@return	    None 
+ *	@note		Param 'delim' must end with '\0'
+ **/
+void string_token::cut(const string &str, const char *delim)
+{
+	string _delim(delim, strlen(delim));
+
+	this->cut(str, _delim);		 return;
 }
 
 /**

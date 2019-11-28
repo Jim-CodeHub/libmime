@@ -73,6 +73,10 @@ class header{
 
 		const string get(void) const noexcept																		;
 
+		bool is_empty(void																						   );
+
+		void clear(void																							   );
+
 		friend class findIFname;
 
 	protected:

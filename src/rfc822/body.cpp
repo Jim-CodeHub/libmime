@@ -80,3 +80,11 @@ const string &body::get(void) const noexcept
 	return *bodys;
 }
 
+/**
+ *	@brief	    Clear body 
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return		None	
+ **/
+void body::clear(void) { this->bodys->clear(); }
+

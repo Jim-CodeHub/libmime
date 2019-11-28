@@ -244,3 +244,19 @@ const string header::get(void) const noexcept
 	return headers_str;
 }
 
+/**
+ *	@brief	    Juge if header is empty or not 
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return	    true/flase 
+ **/
+bool header::is_empty(void) { return headers.empty(); }
+
+/**
+ *	@brief	    Clear header 
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return	    None 
+ **/
+void header::clear(void) { headers.clear(); }
+

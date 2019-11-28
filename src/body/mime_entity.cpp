@@ -21,35 +21,97 @@ using namespace NS_LIBMIME;
 */
 
 /**
- *	@brief	    Set mime header for mime entity 
+ *	@brief	    Set mime entity header
  *	@param[in]  header - mime entity header 
  *	@param[out] None 
  *	@return	    None 
- *	@note		The function can be called repeatedly, but leave only the last settings
  **/
-void mime_entity::set_header(const class mime_header &header)
+mime_entity::mime_entity(const class mime_header &header)
 {
 	this->header = header;
+}
+
+/**
+ *	@brief	    Set mime entity
+ *	@param[in]  header - mime entity header 
+ *	@param[in]  _body  - mime entity body 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+mime_entity::mime_entity(const class mime_header &header, const class mime_body &_body)
+{
+	node(header, _body);
+}
+
+/**
+ *	@brief	    Read string to mime entity
+ *	@param[in]  mime_entity - string of mime entity 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void mime_entity::set(const string &_mime_entity)
+{
+	class string_token str_tok;
+
+	str_tok.cut(_mime_entity, "\r\n\r\n");
+
+	cout << str_tok.get_stok(0); //header
+	cout << endl;
+	cout << str_tok.get_stok(1); //body
+	
+	
+	//class mime_header header;
+	//class mime_body	  _body ;	
+
 	return;
 }
 
 /**
- *	@brief	    Set mime body(s) for mime entity 
- *	@param[in]  _body - mime entity body 
+ *	@brief	    Set mime entity node
+ *	@param[in]  header - mime entity header 
+ *	@param[in]  _body  - mime entity body 
  *	@param[out] None 
  *	@return	    None 
- *	@note		The function can be called repeatedly, but leave only the last settings
- *	@note		Continue setting with the return value, if multi part should be setted 
+ *	@note		The function can be called repeatedly, but only to save the last settings 
+ *	@note		The function SHOULD BE used as a leaf node setting 
  **/
-class mime_entity *mime_entity::set_body(const class mime_body &_body)
+void mime_entity::node(const class mime_header &header, const class mime_body &_body)
 {
-	this->_body = _body;	
+	this->header = header;
+	this->_body  = _body ; return;
+}
+
+/**
+ *	@brief	    Make an mime enity instance
+ *	@param[in]  None 
+ *	@param[out] None 
+ *	@return		mime entity pointer 
+ *	@note		The function can be called repeatedly, and each call returns a new mime_entity for the part extension  
+ **/
+class mime_entity *mime_entity::part(void)
+{
+	this->_body.clear();
 
 	class mime_entity *pEntity = new class mime_entity;
 
 	this->_body.part_entity.push_back(pEntity);
-
+	
 	return pEntity; //*(this->_body.part_entity.rbegin());
+}
+
+/**
+ *	@brief	    Set mime header and make an mime enity instance
+ *	@param[in]  header - mime header 
+ *	@param[out] None 
+ *	@return		mime entity pointer 
+ *	@note		The function can be called repeatedly, and each call returns a new mime_entity for the part extension  
+				, but, only the first setting will be saved for mime header	
+ **/
+class mime_entity *mime_entity::part(const class mime_header &header)
+{
+	if (this->header.is_empty()) { this->header = header; }
+	
+	return this->part();
 }
 
 /**
@@ -102,8 +164,8 @@ const string mime_entity::get(void) const noexcept
 	string _mime_entity;
 
 	_mime_entity  = this->header.get();
-	_mime_entity += (this->_body.preamble.empty())?"":(this->_body.preamble + "\r\n");
-	_mime_entity += *(this->_body.bodys); 
+	_mime_entity += (this->_body.preamble.empty())?"":(this->_body.preamble + "\r\n\r\n");
+	_mime_entity += *(this->_body.bodys);
 
 	list<class mime_entity*>::const_iterator _big = this->_body.part_entity.begin();	
 	list<class mime_entity*>::const_iterator _end = this->_body.part_entity.  end();	
@@ -114,7 +176,7 @@ const string mime_entity::get(void) const noexcept
 		_big++;
 	}
 
-	_mime_entity += (this->_body.epilogue.empty())?"":(this->_body.epilogue + "\r\n");
+	_mime_entity += (this->_body.epilogue.empty())?"":(this->_body.epilogue + "\r\n\r\n");
 
 	return _mime_entity; 
 }
