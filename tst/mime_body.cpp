@@ -7,7 +7,7 @@ using namespace NS_LIBMIME;
 
 int main(void)
 {
-	mime_body mb;
+	body_shadow mb;
 
 	mb.set_preamble("preamble");
 	mb.set("this is my string");

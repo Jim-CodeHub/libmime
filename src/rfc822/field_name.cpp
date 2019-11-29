@@ -31,7 +31,7 @@ void field_name::set(const string &name)
 {
 	string::const_iterator _index = name.begin(), _end = name.end();
 
-	while(_index != _end)
+	while (_index != _end)
 	{
 		if ((*_index < FIELD_NAME_ASCII_SCOPE_MIN) || (*_index > FIELD_NAME_ASCII_SCOPE_MAX) 
 				|| (*_index == FIELD_NAME_ASCII_EXCLUDECH))
@@ -79,7 +79,7 @@ void field_name::set(const char *name, size_t _size)
 
 	this->name.clear();
 
-	while((*_index != '\0') && (_size-- != 0))
+	while ((*_index != '\0') && (_size-- != 0))
 	{
 		if ((*_index < FIELD_NAME_ASCII_SCOPE_MIN) || (*_index > FIELD_NAME_ASCII_SCOPE_MAX)
 				|| (*_index == FIELD_NAME_ASCII_EXCLUDECH))

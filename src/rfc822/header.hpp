@@ -54,28 +54,28 @@ class findIFname;
 class header{
 	public:
 		header(){}; /**< Empty structure */
-		header(const class field &field_line																	   );
-		header(const class field_name &name_t, const class field_body *pBody_t									   );
-		header(const string &field_name, const class field_body *pBody_t		    							   );
-		header(const char *field_name, string::size_type _size, const class field_body *pBody_t					   );
-		header(const char *field_name, const class field_body *pBody_t											   );
+		header(const class field &field_line													 );
+		header(const class field_name &name_t, const class field_body *pBody_t					 );
+		header(const string &field_name, const class field_body *pBody_t		    			 );
+		header(const char *field_name, string::size_type _size, const class field_body *pBody_t	 );
+		header(const char *field_name, const class field_body *pBody_t							 );
 
-		const class header &operator=(const class header &_header												   );
+		const class header &operator=(const class header &_header								 );
 
-		void set(const class field &field_line																	   );
-		void set(const class field_name &name_t, const class field_body *pBody_t								   );
-		void set(const string &field_name, const class field_body *pBody_t		    							   );
-		void set(const char *field_name, string::size_type _size, const class field_body *pBody_t			   	   );
-		void set(const char *field_name, const class field_body *pBody_t										   );
+		void set(const class field &field_line													 );
+		void set(const class field_name &name_t, const class field_body *pBody_t				 );
+		void set(const string &field_name, const class field_body *pBody_t		    			 );
+		void set(const char *field_name, string::size_type _size, const class field_body *pBody_t);
+		void set(const char *field_name, const class field_body *pBody_t						 );
 
-		const string get_field(const string &field_name) const noexcept												;
-		const string get_field(const char *field_name, string::size_type _size) const noexcept						;
+		class field get_field(const string &field_name) const noexcept							  ;
 
-		const string get(void) const noexcept																		;
+		const string get(void) const noexcept													  ;
 
-		bool is_empty(void																						   );
+		bool is_empty(void																		 );
+		bool exist_field(const string &field_name												 );
 
-		void clear(void																							   );
+		void clear(void																			 );
 
 		friend class findIFname;
 
@@ -85,12 +85,12 @@ class header{
 
 class findIFname{
 	public:	
-		findIFname(const string &field_name																		   );
-		findIFname(const char *field_name, string::size_type _size												   );
-		findIFname(const class field_name &FName																   );
+		findIFname(const string &field_name														 );
+		findIFname(const char *field_name, string::size_type _size								 );
+		findIFname(const class field_name &FName												 );
 
-		bool operator()(const string &field_name																   );
-		bool operator()(const class field &_field																   );
+		bool operator()(const string &field_name												 );
+		bool operator()(const class field &_field												 );
 
 	private:
 		string match_name;

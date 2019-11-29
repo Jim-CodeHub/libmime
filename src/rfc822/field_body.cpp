@@ -34,12 +34,12 @@ const string field_body::unfold(const string &body)
 
 	string::size_type index = 0; 
 
-	while(string::npos != (index = _body.find("\r\n", index))) /**< Point to '\r' */
+	while (string::npos != (index = _body.find("\r\n", index))) /**< Point to '\r' */
 	{
 		string::iterator _big_ = _big  + index; 
 		string::iterator _inx_ = _big_ + 2    ; /**< Skip '*\r\n' */
 
-		while((_inx_ != _end) && (('\t' == *_inx_) || (' ' == *_inx_)))
+		while ((_inx_ != _end) && (('\t' == *_inx_) || (' ' == *_inx_)))
 			_inx_++; /**< Skip SPACE or HTab */
 
 		if (_big_ + 2 == _inx_) { break; }  /**< There are no HT or SPACE' after CRLF  */ 

@@ -21,162 +21,108 @@ using namespace NS_LIBMIME;
 */
 
 /**
- *	@brief	    Set mime entity header
+ *	@brief	    Set mime entity leaf node 
  *	@param[in]  header - mime entity header 
- *	@param[out] None 
- *	@return	    None 
- **/
-mime_entity::mime_entity(const class mime_header &header)
-{
-	this->header = header;
-}
-
-/**
- *	@brief	    Set mime entity
- *	@param[in]  header - mime entity header 
- *	@param[in]  _body  - mime entity body 
- *	@param[out] None 
- *	@return	    None 
- **/
-mime_entity::mime_entity(const class mime_header &header, const class mime_body &_body)
-{
-	node(header, _body);
-}
-
-/**
- *	@brief	    Read string to mime entity
- *	@param[in]  mime_entity - string of mime entity 
- *	@param[out] None 
- *	@return	    None 
- **/
-void mime_entity::set(const string &_mime_entity)
-{
-	class string_token str_tok;
-
-	str_tok.cut(_mime_entity, "\r\n\r\n");
-
-	cout << str_tok.get_stok(0); //header
-	cout << endl;
-	cout << str_tok.get_stok(1); //body
-	
-	
-	//class mime_header header;
-	//class mime_body	  _body ;	
-
-	return;
-}
-
-/**
- *	@brief	    Set mime entity node
- *	@param[in]  header - mime entity header 
- *	@param[in]  _body  - mime entity body 
+ *	@param[in]  sdbody - mime entity shadow body 
  *	@param[out] None 
  *	@return	    None 
  *	@note		The function can be called repeatedly, but only to save the last settings 
  *	@note		The function SHOULD BE used as a leaf node setting 
  **/
-void mime_entity::node(const class mime_header &header, const class mime_body &_body)
+void mime_entity::set_node(const class mime_header &header, const class body_shadow &sdbody)
 {
 	this->header = header;
-	this->_body  = _body ; return;
+	this->sdbody = sdbody; return;
 }
 
 /**
- *	@brief	    Make an mime enity instance
- *	@param[in]  None 
+ *	@brief	    Set mime enity part which under the param 'header' 
+ *	@param[in]  header - mime entity (part father's) header
  *	@param[out] None 
- *	@return		mime entity pointer 
- *	@note		The function can be called repeatedly, and each call returns a new mime_entity for the part extension  
+ *	@return		mime entity part pointer 
+ *
+ *	@note		1. The function can be called repeatedly, and each call returns a new mime_entity for the part extension  
+ *	@note		2. Param 'header' belong to the part father
+ *	@note		3. The header only to save the first settings
+ *	@note		4. Set Content-Type field with 'multipart' correctly, or the exception will be throw	
+ *
+ *	@exception  "Const char *" 'multipart' type does not exsits
  **/
-class mime_entity *mime_entity::part(void)
+class mime_entity *mime_entity::set_part(const class mime_header &header)
 {
-	this->_body.clear();
+	if (this->header.is_empty()) 
+	{   this->header = header; }
+
+	contenttype_body cb(this->header.get_field("Content-Type").get_body());
+
+	if (cb.get_major_type() != "multipart")
+	{
+		throw("Exception : 'multipart' type does not exsits!");
+	}
+
+	this->sdbody.clear();
 
 	class mime_entity *pEntity = new class mime_entity;
 
-	this->_body.part_entity.push_back(pEntity);
+	this->sdbody.part_entity.push_back(pEntity);
 	
-	return pEntity; //*(this->_body.part_entity.rbegin());
+	return pEntity; //*(this->sdbody.part_entity.rbegin());
 }
 
 /**
- *	@brief	    Set mime header and make an mime enity instance
- *	@param[in]  header - mime header 
- *	@param[out] None 
- *	@return		mime entity pointer 
- *	@note		The function can be called repeatedly, and each call returns a new mime_entity for the part extension  
-				, but, only the first setting will be saved for mime header	
- **/
-class mime_entity *mime_entity::part(const class mime_header &header)
-{
-	if (this->header.is_empty()) { this->header = header; }
-	
-	return this->part();
-}
-
-/**
- *	@brief	    Get mime header from mime entity 
+ *	@brief	    Get mime entity
  *	@param[in]  None 
  *	@param[out] None 
- *	@return	    mime header of the mime entity 
+ *	@return	    mime entity 
  **/
-const class mime_header &mime_entity::get_header(void) const noexcept
+const string mime_entity::make(void)
 {
-	return this->header;
-}
-		
-/**
- *	@brief	    Get mime body(s) from mime entity 
- *	@param[in]  None 
- *	@param[out] None 
- *	@return	    mime body(s) of the mime entity 
- **/
-const class mime_body &mime_entity::get_body(void) const noexcept
-{
-	return this->_body;
-}
+	string _mime_entity, boundary;
+	list<class mime_entity*>::const_iterator _big = this->sdbody.part_entity.begin(),
+											 _end = this->sdbody.part_entity.  end();
+	class contenttype_body cb;
 
-/**
- *	@brief	    class mime_entity destructure 
- *	@param[in]  None 
- *	@param[out] None 
- *	@return	    None 
- **/
-mime_entity::~mime_entity()
-{
-	list<class mime_entity*>::iterator _big = this->_body.part_entity.begin();	
-	list<class mime_entity*>::iterator _end = this->_body.part_entity.  end();	
-
-	while ((_big != _end) && (NULL != *_big))
-	{
-		delete *_big; _big++;
-	}
-}
-
-/**
- *	@brief	    Get string of mime entity 
- *	@param[in]  None 
- *	@param[out] None 
- *	@return	    String of mime entity 
- **/
-const string mime_entity::get(void) const noexcept
-{
-	string _mime_entity;
+	/**----------------------------------------------------------------------------*/
+	/**< Add header */
 
 	_mime_entity  = this->header.get();
-	_mime_entity += (this->_body.preamble.empty())?"":(this->_body.preamble + "\r\n\r\n");
-	_mime_entity += *(this->_body.bodys);
 
-	list<class mime_entity*>::const_iterator _big = this->_body.part_entity.begin();	
-	list<class mime_entity*>::const_iterator _end = this->_body.part_entity.  end();	
+	/**----------------------------------------------------------------------------*/
+	/**< Mult-part does not exsits (End recursive) */
+
+	if (_big == _end) { goto _ADD_NODE_BODY; }
+
+	/**----------------------------------------------------------------------------*/
+	/**< Construct boundary */
+
+	cb.set(this->header.get_field("Content-Type").get_body());
+
+	if ("" == (boundary = cb.get_param_value("boundary")))
+	{
+		boundary = contenttype_body::construct_boundary();
+		cb.set_param("boundary", boundary);
+
+		//this->header.get_field("Content-Type").set_body(&cb);
+	}
+
+	/**----------------------------------------------------------------------------*/
+	/**< Recursive sub multi-part */
 
 	while ((_big != _end) && (NULL != *_big))
 	{
-		_mime_entity += (*_big)->get();
-		_big++;
+		_mime_entity += "--" + boundary + "\r\n\r\n";
+
+		_mime_entity += (*_big)->make(); _big++;
 	}
 
-	_mime_entity += (this->_body.epilogue.empty())?"":(this->_body.epilogue + "\r\n\r\n");
+	_mime_entity += "--" + boundary + "--\r\n\r\n";
+
+	/**----------------------------------------------------------------------------*/
+
+_ADD_NODE_BODY:
+	_mime_entity += (this->sdbody.preamble.empty())?"":(this->sdbody.preamble + "\r\n\r\n");
+	_mime_entity += *(this->sdbody.bodys);
+	_mime_entity += (this->sdbody.epilogue.empty())?"":(this->sdbody.epilogue + "\r\n\r\n");
 
 	return _mime_entity; 
 }

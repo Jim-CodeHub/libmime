@@ -32,7 +32,7 @@ void version_body::set(const string &version)
 {
 	string::const_iterator _big = version.begin(), _end = version.end();
 
-	while(_big != _end)
+	while (_big != _end)
 	{
 		if (((*_big < '0') || (*_big > '9')) && ('.' != *_big))
 		{

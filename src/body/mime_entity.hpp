@@ -19,8 +19,9 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/body/mime_body.hpp>
+#include <libMIME/src/body/body_shadow.hpp>
 #include <libMIME/src/header/mime_header.hpp>
+#include <libMIME/src/header/field_body/contenttype_body.hpp>
 #include <libMIME/src/util/token.hpp>
 
 namespace NS_LIBMIME{
@@ -52,32 +53,20 @@ using namespace std ;
  *		Operator '=' can not be overloading and copy structure will not work correctly 
  **/
 class mime_entity{
-	public: friend class mime_body; 
+	public: friend class body_shadow; 
 	public:
-		mime_entity(const class mime_header &header											);
-		mime_entity(const class mime_header &header, const class mime_body &_body			);
-		~mime_entity();  /**< Destructure     */
+		mime_entity(){} /**< Empty constructure */									   ;
 
-		void set(const string &_mime_entity													);
-		void set(const char *_mime_entity, string::size_type _size							);
-		void set(const char *_mime_entity													);
+		void set_node(const class mime_header &header, const class body_shadow &sdbody);
+		class mime_entity *set_part(const class mime_header &header					  );
+
+		//load
 		
-		const class mime_header &get_header(void) const noexcept							 ;
-		const class mime_body &get_body(void) const noexcept								 ;
-
-		const string get(void) const noexcept												 ;
-
-	protected:
-		void node(const class mime_header &header, const class mime_body &_body				);
-		class mime_entity *part(void														);
-		class mime_entity *part(const class mime_header &header								);
-
-	protected:
-		mime_entity(){} /**< Empty constructure */											 ;
+		const string make(void														  );	
 
 	protected:
 		class mime_header header;
-		class mime_body   _body ;
+		class body_shadow sdbody;
 };
 
 

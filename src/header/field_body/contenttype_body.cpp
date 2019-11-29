@@ -30,34 +30,34 @@ using namespace NS_LIBMIME;
  **/
 void contenttype_body::set(const string &contenttype_body)
 {
+	string types, param_tok;
 	string_token _tok_sem(contenttype_body, ";");
-	string types;
 
 	if ("" == (types = _tok_sem.get_stok(0)))
 	{
-		throw("Exception : MIME field content_type body error - wrong format!");
+		types = contenttype_body; goto _PARSE_TYPES;
 	}
-
-	/**< Parse content type - major_type and minor_type */
-
-	string_token _tok_sla(types, "/");
-
-	if ("" == _tok_sla.get_stok(0))
-	{
-		throw("Exception : MIME field content type error - wrong format!");
-	}
-
-	this->major_type = _tok_sla.get_stok(0);
-	this->minor_type = _tok_sla.get_stok(1);
 
 	/**< Parse content type - parameter list */
-	string param_tok;
 
 	for (string::size_type i = 1; ("" != (param_tok = _tok_sem.get_stok(i))); i++)
 	{
 		class param _param(param_tok);
 		parameters.push_back(_param);
 	}
+
+_PARSE_TYPES:
+	/**< Parse content type - major_type and minor_type */
+
+	string_token _tok_sla(types, "/");
+
+	if ("" == _tok_sla.get_stok(0))
+	{
+		throw("Exception : MIME field contenttype body format error - need '/'!");
+	}
+
+	this->major_type = _tok_sla.get_stok(0);
+	this->minor_type = _tok_sla.get_stok(1);
 
 	return;
 }
@@ -117,7 +117,7 @@ const string contenttype_body::get(void) const noexcept
 
 	list<param>::const_iterator _big = parameters.begin(), _end = parameters.end();
 
-	while(_big != _end)
+	while (_big != _end)
 	{
 		contenttype_body += "; " + _big->get();
 		_big++;

@@ -195,32 +195,18 @@ const class header &header::operator=(const class header &_header)
 }
 
 /**
- *	@brief	    Get header by field name from header container
+ *	@brief	    Get field by field name from header container
  *	@param[in]  field_name
  *	@param[out] None
- *	@return	    field name OR ""
+ *	@return	    class field OR ""
  **/
-const string header::get_field(const string &field_name) const noexcept
+class field header::get_field(const string &field_name) const noexcept
 {
 	deque<field>::const_iterator _inx;
 
 	_inx = find_if(headers.begin(), headers.end(), findIFname(field_name));
 
-	return (_inx != headers.end())?((*_inx).get()):"";
-}
-
-/**
- *	@brief	    Get header by field name from header container
- *	@param[in]  field_name
- *	@param[in]  _size - size of field name
- *	@param[out] None
- *	@return	    field name OR ""
- **/
-const string header::get_field(const char *field_name, string::size_type _size) const noexcept
-{
-	string _field_name(field_name, _size);
-
-	return get_field(_field_name);
+	return (_inx != headers.end())?(*_inx):field("");
 }
 
 /**
@@ -235,7 +221,7 @@ const string header::get(void) const noexcept
 
 	deque<field>::const_iterator _big = headers.begin(), _end = headers.end();
 
-	while(_big != _end)
+	while (_big != _end)
 	{
 		headers_str += _big->get();	
 		_big++;
@@ -251,6 +237,17 @@ const string header::get(void) const noexcept
  *	@return	    true/flase 
  **/
 bool header::is_empty(void) { return headers.empty(); }
+
+/**
+ *	@brief	    Juge the header name exists whether or not
+ *	@param[in]  field_name
+ *	@param[out] None
+ *	@return	    true/flase 
+ **/
+bool header::exist_field(const string &field_name)
+{
+	return (!get_field(field_name).is_empty());
+}
 
 /**
  *	@brief	    Clear header 

@@ -40,7 +40,7 @@ void base64_encode(const unsigned char *binIn, char *base64Out)
 	unsigned char bufCom[3], i = 0, j = 0;
 	char		  bufOut[4];
 
-	while('\0' != binIn[i])
+	while ('\0' != binIn[i])
 	{
 		for (unsigned char k = 0; k < 3; k++, i++) /**< Set buffer in for encode block */
 		{
@@ -77,7 +77,7 @@ void base64_encode(const unsigned char *binIn, string &_base64Out)
 
 	string::iterator base64Out = _base64Out.begin();
 
-	while('\0' != binIn[i])
+	while ('\0' != binIn[i])
 	{
 		for (unsigned char k = 0; k < 3; k++, i++) /**< Set buffer in for encode block */
 		{
@@ -111,7 +111,7 @@ void base64_decode(const char *base64In, unsigned char *binOut)
 	unsigned char bufOut[3], i = 0, j = 0;
 	char		  bufCom[4];
 
-	while('\0' != base64In[i])
+	while ('\0' != base64In[i])
 	{
 		for (unsigned char k = 0; k < 4; k++, i++) /**< Set buffer in for base64 str */
 		{
@@ -147,7 +147,7 @@ void base64_decode(const char *base64In, string &_binOut)
 
 	string::iterator binOut = _binOut.begin();
 
-	while('\0' != base64In[i])
+	while ('\0' != base64In[i])
 	{
 		for (unsigned char k = 0; k < 4; k++, i++) /**< Set buffer in for base64 str */
 		{
@@ -179,7 +179,7 @@ void base64_decode(const char *base64In, string &_binOut)
  **/
 static void encode_block(const unsigned char *binIn, char *base64Out)
 {
-	unsigned char i = 0; while('\0' != binIn[i]) i++; /**< Calculate data size			*/
+	unsigned char i = 0; while ('\0' != binIn[i]) i++; /**< Calculate data size			*/
 
 	switch (i)
 	{
@@ -215,7 +215,7 @@ static void encode_block(const unsigned char *binIn, char *base64Out)
  **/
 static void decode_block(const char *base64In, unsigned char *binOut)
 {
-	unsigned char i = 0; while('\0' != base64In[i]) i++; /**< Calculate data size                         */
+	unsigned char i = 0; while ('\0' != base64In[i]) i++; /**< Calculate data size                        */
 
 	const unsigned char * _base64In = (const unsigned char *)base64In;
 

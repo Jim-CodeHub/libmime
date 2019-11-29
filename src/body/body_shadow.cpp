@@ -1,5 +1,5 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	mime_body.cpp
+ * @file	body_shadow.cpp
  * @brief	Multi-purpose mail extensions	
  * @ref		IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
  *
@@ -7,7 +7,7 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libMIME/src/body/mime_body.hpp>
+#include <libMIME/src/body/body_shadow.hpp>
 
 using namespace NS_LIBMIME;
 
@@ -26,7 +26,7 @@ using namespace NS_LIBMIME;
  *	@param[out] None 
  *	@return	    None 
  **/
-void mime_body::set_preamble(const string &_preamble)
+void body_shadow::set_preamble(const string &_preamble)
 {
 	this->preamble = _preamble;
 	return;
@@ -39,7 +39,7 @@ void mime_body::set_preamble(const string &_preamble)
  *	@param[out] None 
  *	@return	    None 
  **/
-void mime_body::set_preamble(const char *_preamble, string::size_type _size)
+void body_shadow::set_preamble(const char *_preamble, string::size_type _size)
 {
 	string _preamble_(_preamble, _size   );
 
@@ -53,7 +53,7 @@ void mime_body::set_preamble(const char *_preamble, string::size_type _size)
  *	@return	    None 
  *	@note		String param '_preamble' MUST end with '\0'
  **/
-void mime_body::set_preamble(const char *_preamble)
+void body_shadow::set_preamble(const char *_preamble)
 {
 	string _preamble_(_preamble, strlen(_preamble));
 
@@ -66,7 +66,7 @@ void mime_body::set_preamble(const char *_preamble)
  *	@param[out] None 
  *	@return	    None 
  **/
-void mime_body::encode(enum codec code)
+void body_shadow::encode(enum codec code)
 {
 	string code_data;
 
@@ -91,7 +91,7 @@ void mime_body::encode(enum codec code)
  *	@param[out] None 
  *	@return	    None 
  **/
-void mime_body::decode(enum codec code)
+void body_shadow::decode(enum codec code)
 {
 	string code_data;
 
@@ -116,7 +116,7 @@ void mime_body::decode(enum codec code)
  *	@param[out] None 
  *	@return	    None 
  **/
-void mime_body::set_epilogue(const string &_epilogue)
+void body_shadow::set_epilogue(const string &_epilogue)
 {
 	this->epilogue = _epilogue;
 	return;
@@ -129,7 +129,7 @@ void mime_body::set_epilogue(const string &_epilogue)
  *	@param[out] None 
  *	@return	    None 
  **/
-void mime_body::set_epilogue(const char *_epilogue, string::size_type _size)
+void body_shadow::set_epilogue(const char *_epilogue, string::size_type _size)
 {
 	string _epilogue_(_epilogue, _size   );
 
@@ -143,16 +143,12 @@ void mime_body::set_epilogue(const char *_epilogue, string::size_type _size)
  *	@return	    None 
  *	@note		String param '_epilogue' MUST end with '\0'
  **/
-void mime_body::set_epilogue(const char *_epilogue)
+void body_shadow::set_epilogue(const char *_epilogue)
 {
 	string _epilogue_(_epilogue, strlen(_epilogue));
 
 	this->set_epilogue(_epilogue_);			 return;
 }
-
-
-
-
 
 /**
  *	@brief	    Get mime body's preamble 
@@ -160,7 +156,7 @@ void mime_body::set_epilogue(const char *_epilogue)
  *	@param[out] None 
  *	@return	    preamble of the mime body 
  **/
-const string &mime_body::get_preamble(void) const noexcept
+const string &body_shadow::get_preamble(void) const noexcept
 {
 	return this->preamble;
 }
@@ -171,7 +167,7 @@ const string &mime_body::get_preamble(void) const noexcept
  *	@param[out] None 
  *	@return	    epilogue of the mime body 
  **/
-const string &mime_body::get_epilogue(void) const noexcept
+const string &body_shadow::get_epilogue(void) const noexcept
 {
 	return this->epilogue;
 }
@@ -180,9 +176,9 @@ const string &mime_body::get_epilogue(void) const noexcept
  *	@brief	    Operator '=' overloading
  *	@param[in]  _body - mime body 
  *	@param[out] None 
- *	@return	    class mime_body 
+ *	@return	    class body_shadow 
  **/
-const class mime_body &mime_body::operator=(const class mime_body &_body)
+const class body_shadow &body_shadow::operator=(const class body_shadow &_body)
 {
 	this->preamble = _body.preamble;
 
@@ -199,7 +195,7 @@ const class mime_body &mime_body::operator=(const class mime_body &_body)
  *	@param[out] None 
  *	@return	    None 
  **/
-void mime_body::clear(void)
+void body_shadow::clear(void)
 {
 	this->bodys  ->clear();
 	this->preamble.clear();	this->epilogue.clear();

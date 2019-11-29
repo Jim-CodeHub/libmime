@@ -52,25 +52,30 @@ class field{
 	public:
 		field(){}; /**< Empty structure */
 		field(const char *field_line){ this->field_line = field_line; }; /**< Easy set but dangerous*/
-		field(const class field_name &name_t, const class field_body *pBody_t								       );
-		field(const string &field_name, const class field_body *pBody_t	    								       );
-		field(const char *field_name, string::size_type _size, const class field_body *pBody_t			   		   );
-		field(const char *field_name, const class field_body *pBody_t											   );
+		field(const class field_name &name_t, const class field_body *pBody_t						);
+		field(const string &field_name, const class field_body *pBody_t	    						);
+		field(const char *field_name, string::size_type _size, const class field_body *pBody_t		);
+		field(const char *field_name, const class field_body *pBody_t								);
 
-		bool operator==(const class field &field_line															   );
+		bool operator==(const class field &field_line												);
 
-		void set(const class field_name &name_t, const class field_body *pBody_t								   );
-		void set(const string &field_name, const class field_body *pBody_t		    							   );
-		void set(const char *field_name, string::size_type _size, const class field_body *pBody_t			   	   );
-		void set(const char *field_name, const class field_body *pBody_t										   );
+		void set(const class field_name &name_t, const class field_body *pBody_t					);
+		void set(const string &field_name, const class field_body *pBody_t		    				);
+		void set(const char *field_name, string::size_type _size, const class field_body *pBody_t	);
+		void set(const char *field_name, const class field_body *pBody_t							);
 
-		const string &get(void) const noexcept																	    ;
+		void set_name(const string &field_name														);
+		void set_body(const string &field_body														);
 
-		const string get_name(void) const noexcept																    ;
-		const string get_body(void) const noexcept																    ;
+		const string &get(void) const noexcept														 ;
 
-		static string get_name(const string &field_line)															;
-		static string get_body(const string &field_line)															;
+		const string get_name(void) const noexcept													 ;
+		const string get_body(void) const noexcept													 ;
+
+		bool is_empty(void																			);
+
+		static string get_name(const string &field_line)											 ;
+		static string get_body(const string &field_line)											 ;
 
 	private:
 		string field_line;

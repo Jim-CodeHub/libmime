@@ -20,6 +20,7 @@ using namespace NS_LIBMIME;
 --------------------------------------------------------------------------------------------------------------------
 */
 
+#if 0
 /**
  *	@brief	    Set field by class field_name and class field_body
  *	@param[in]  field_name
@@ -111,6 +112,7 @@ field::field(const char *field_name, const class field_body *pBody_t)
 	this->set(field_name, pBody_t);
 }
 
+#endif
 /**
  *	@brief	    Operator '==' overloading 
  *	@param[in]  field_line 
@@ -132,6 +134,14 @@ const string &field::get(void) const noexcept
 {
 	return field_line;
 }
+
+/**
+ *	@brief	    Juge if field is empty or not 
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return	    true/flase 
+ **/
+bool field::is_empty(void) { return this->field_line.empty();}
 
 /**
  *	@brief	    Get field name from a field line
@@ -167,7 +177,7 @@ string field::get_body(const string &field_line)
 	{
 		string::size_type i = 1 + index_colon;
 
-		while((i < field_line.length()-1) && (field_line[i] == ' '))
+		while ((i < field_line.length()-1) && (field_line[i] == ' '))
 			i++;/**< Pass spaces before field-body */
 
 		string::size_type j = field_line.find_last_of("\r\n");
