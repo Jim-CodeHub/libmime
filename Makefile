@@ -28,7 +28,8 @@ export CXX CXXFLAGS LD_FLAGS
 .PHONY: all clean install tst $(SUBDIRS)
 
 all:$(SUBDIRS)
-	ar -rcs $(PROJECT).a $(shell find ./ -name "*.o")
+	ar -rcs $(PROJECT).a $(shell find ./src -name "*.o")
+	$(CXX) -fPIC -shared $(shell find ./src -name "*.cpp") -o $(PROJECT).so
 
 $(SUBDIRS):
 	$(MAKE) -C $@	
@@ -36,7 +37,7 @@ $(SUBDIRS):
 install:
 
 tst:
-	$(CXX) $(CXXFLAGS) tst/main.cpp libMIME.a
+	$(MAKE) -C tst
  
 tags:
 	@rm -rf ./tags

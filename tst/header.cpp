@@ -5,9 +5,14 @@
 using namespace std;
 using namespace NS_LIBMIME;
 
+
 int main(void)
-{
-	class field_name fn();
+{ 
+	string_body sb("stringbody");
+	
+	header h("name1", &sb);
+
+	cout << h.get();
 
 	return 0;
 }
