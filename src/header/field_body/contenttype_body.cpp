@@ -22,6 +22,17 @@ using namespace NS_LIBMIME;
 */
 
 /**
+ *	@brief	    Clone a heap instance for field_body
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return	    Pointer to heap instance	
+ **/
+class field_body *contenttype_body::clone(void) const
+{
+	return new contenttype_body(*this);
+}
+
+/**
  *	@brief	    Set content_type body
  *	@param[in]  contenttype_body 
  *	@param[out] None
@@ -87,25 +98,6 @@ contenttype_body::contenttype_body(const char *contenttype_body, string::size_ty
 }
 
 /**
- *	@brief	    Set content_type body
- *	@param[in]  contenttype_body 
- *	@param[out] None
- *	@return		None
- *	@exception  "Const char *", MIME field content_type error
- *	@note		The string param 'contenttype_body' must end with '\0'
- **/
-void contenttype_body::set(const char *contenttype_body)
-{
-	string cbody(contenttype_body, strlen(contenttype_body));
-	this->set(cbody);								  return;
-}
-
-contenttype_body::contenttype_body(const char *contenttype_body)
-{
-	this->set(contenttype_body);
-}
-
-/**
  *	@brief	    Get content_type body
  *	@param[in]  None 
  *	@param[out] None
@@ -153,53 +145,6 @@ contenttype_body::contenttype_body(const string &major_type, const string &minor
 }
 
 /**
- *	@brief	    Set major_type and minor_type of content_type body
- *	@param[in]  major_type 
- *	@param[in]  _mjrSize  - size of major_type 
- *	@param[in]  minor_type
- *	@param[in]  _morSize  - size of minor_type
- *	@param[out] None
- *	@return		None
- *	@exception  "Const char *", MIME field major/minor type error
- **/
-void contenttype_body::set(const char *major_type, string::size_type _mjrSize, const char *minor_type, string::size_type _morSize)
-{
-	string _major_type(major_type, _mjrSize);
-	string _minor_type(minor_type, _morSize);
-
-	this->set(_major_type, _minor_type);
-	return;
-}
-
-contenttype_body::contenttype_body(const char *major_type, string::size_type _mjrSize, const char *minor_type, string::size_type _morSize)
-{
-	this->set(major_type, _mjrSize, minor_type, _morSize);
-}
-
-/**
- *	@brief	    Set major_type and minor_type of content_type body
- *	@param[in]  major_type 
- *	@param[in]  minor_type
- *	@param[out] None
- *	@return		None
- *	@note		The string param 'major_type' and 'minor_type' must end with '\0'
- *	@exception  "Const char *", MIME field major/minor type error
- **/
-void contenttype_body::set(const char *major_type, const char *minor_type)
-{
-	string _major_type(major_type, strlen(major_type));
-	string _minor_type(minor_type, strlen(minor_type));
-
-	this->set(_major_type, _minor_type);
-	return;
-}
-
-contenttype_body::contenttype_body(const char *major_type, const char *minor_type)
-{
-	this->set(major_type, minor_type);
-}
-
-/**
  *	@brief	    Set parameter of content_type body
  *	@param[in]  _param 
  *	@param[out] None
@@ -242,61 +187,12 @@ void contenttype_body::set_param(const char *_param, string::size_type _size)
 
 /**
  *	@brief	    Set parameter of content_type body
- *	@param[in]  _param 
- *	@param[out] None
- *	@return		None
- **/
-void contenttype_body::set_param(const char *_param)
-{
-	class param _param_(_param);
-
-	this->parameters.push_back(_param_);
-	return;
-}
-
-/**
- *	@brief	    Set parameter of content_type body
  *	@param[in]  attr  - param's attribute
  *	@param[in]  value - param's value 
  *	@param[out] None
  *	@return		None
  **/
 void contenttype_body::set_param(const string &attr, const string &value)
-{
-	class param _param_(attr, value);
-
-	this->parameters.push_back(_param_);
-	return;
-}
-
-/**
- *	@brief	    Set parameter of content_type body
- *	@param[in]  attr   - param's attribute
- *	@param[in]  _nSize - size of atrr
- *	@param[in]  value  - param's value 
- *	@param[in]  _vSize - size of value 
- *	@param[out] None
- *	@return		None
- **/
-void contenttype_body::set_param(const char *attr, string::size_type _nSize, const char *value, string::size_type _vSize)
-{
-	class param _param_(attr, _nSize, value, _vSize);
-
-	this->parameters.push_back(_param_);
-	return;
-}
-
-/**
- *	@brief	    Set parameter of content_type body
- *	@param[in]  attr   - param's attribute
- *	@param[in]  _nSize - size of atrr
- *	@param[in]  value  - param's value 
- *	@param[in]  _vSize - size of value 
- *	@param[out] None
- *	@return		None
- *	@note		The string param 'attr' and 'value' must end with '\0'
- **/
-void contenttype_body::set_param(const char *attr, const char *value)
 {
 	class param _param_(attr, value);
 
@@ -372,20 +268,6 @@ const string contenttype_body::get_param_value(const char *attr, string::size_ty
 }
 
 /**
- *	@brief	    Get parameters value by it's attribute 
- *	@param[in]  attr 
- *	@param[out] None
- *	@return	    parameters value that match attr OR "" if not match
- *	@note		The string param 'attr' must end with '\0'
- **/
-const string contenttype_body::get_param_value(const char *attr) const noexcept
-{
-	string _attr(attr, strlen(attr)	  );
-
-	return this->get_param_value(_attr);
-}
-
-/**
  *	@brief	    Construct content type boundary
  *	@param[in]  None 
  *	@param[out] None
@@ -396,7 +278,8 @@ const string contenttype_body::construct_boundary(void)
 	static uint8_t seed_count = 0;
 
 	string boundary;
-	char   asciibet[] = "abcdefghijklmnopqrstuvwxyz_()+/=,:?'ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	char   asciibet[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; //()+/=,:?'_
 
 	auto time_ms = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch());
 

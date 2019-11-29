@@ -21,6 +21,7 @@
 
 #include <libMIME/src/rfc822/field_name.hpp>
 #include <libMIME/src/rfc822/field_body.hpp>
+#include <libMIME/src/rfc822/field_body/string_body.hpp>
 
 
 namespace NS_LIBMIME{
@@ -50,35 +51,37 @@ using namespace std ;
  **/
 class field{
 	public:
-		field(){}; /**< Empty structure */
-		field(const char *field_line){ this->field_line = field_line; }; /**< Easy set but dangerous*/
-		field(const class field_name &name_t, const class field_body *pBody_t						);
-		field(const string &field_name, const class field_body *pBody_t	    						);
-		field(const char *field_name, string::size_type _size, const class field_body *pBody_t		);
-		field(const char *field_name, const class field_body *pBody_t								);
+		field(){ pbody = NULL;}												     ;
+		~field(){ if (NULL != pbody) { delete pbody; pbody = NULL;}	}			 ;
+		field(const class field &_field) { *this = _field; }				     ;
 
-		bool operator==(const class field &field_line												);
+		field(const string &field_line										    );
+		field(const class field_name &name_t, const class field_body *pBody_t   );
+		field(const string &field_name, const class field_body *pBody_t	        );
+		field(const string &field_name, const string &field_body				);
 
-		void set(const class field_name &name_t, const class field_body *pBody_t					);
-		void set(const string &field_name, const class field_body *pBody_t		    				);
-		void set(const char *field_name, string::size_type _size, const class field_body *pBody_t	);
-		void set(const char *field_name, const class field_body *pBody_t							);
+		bool operator==(const class field &_field								);
+		const class field &operator=(const class field &_field					);
 
-		void set_name(const string &field_name														);
-		void set_body(const string &field_body														);
+		void set(const string &field_line									    );
+		void set(const class field_name &name_t, const class field_body *pBody_t);
+		void set(const string &field_name, const class field_body *pBody_t		);
+		void set(const string &field_name, const string &field_body				);
 
-		const string &get(void) const noexcept														 ;
+		void set_name(const string &field_name									);
+		void set_body(const class field_body *pBody_t							);
+		void set_body(const string &field_body									);
 
-		const string get_name(void) const noexcept													 ;
-		const string get_body(void) const noexcept													 ;
+		const string get(void) const noexcept									 ;
 
-		bool is_empty(void																			);
+		const string get_name(void) const noexcept								 ;
+		const string get_body(void) const noexcept								 ;
 
-		static string get_name(const string &field_line)											 ;
-		static string get_body(const string &field_line)											 ;
+		bool is_empty(void													    );
 
 	private:
-		string field_line;
+		class field_name  _name;
+		class field_body *pbody;
 };
 
 

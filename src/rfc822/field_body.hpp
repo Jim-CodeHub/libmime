@@ -54,7 +54,8 @@ class field_body{
 
 		virtual void set(const string &body			   ) = 0				 ;
 		virtual void set(const char *body, size_t _size) = 0				 ;
-		virtual void set(const char *body) = 0								 ;
+
+		virtual field_body *clone(void) const = 0							 ;
 		
 		static const string unfold(const string &body						);
 		static const string unfold(const char *body, string::size_type _size);

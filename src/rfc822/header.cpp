@@ -81,25 +81,32 @@ bool findIFname::operator()(const class field &_field)
  *	@param[in]  field_line
  *	@param[out] None
  *	@return		None
- *	@exception	"Const char *", Overmuch CRLF field 
  **/
 void header::set(const class field &field_line)
 {
-	class field sep_line("\r\n");
-
-	if (true == headers.empty()) { headers.assign(1, sep_line); } /**< Set seperated line */
-
-	if (sep_line == field_line) /**< If overmuch CRLF line */
-	{
-		throw("Exception : rfc822 header error - Overmuch CRLF field!");
-	}
-
-	headers.insert(headers.end() - 1, 1, field_line); 
-
+	headers.push_back(field_line);
 	return;
 }
 
 header::header(const class field &field_line)
+{
+	this->set(field_line);
+}
+
+/**
+ *	@brief	    Set header with string field_line
+ *	@param[in]  field_line
+ *	@param[out] None
+ *	@return		None
+ **/
+void header::set(const string &field_line)
+{
+	class field _field(field_line);
+
+	this->set(_field);
+}
+
+header::header(const string &field_line)
 {
 	this->set(field_line);
 }
@@ -117,7 +124,6 @@ void header::set(const class field_name &name_t, const class field_body *pBody_t
 
 	this->set(_field); return;
 }
-
 header::header(const class field_name &name_t, const class field_body *pBody_t)
 {
 	this->set(name_t, pBody_t);
@@ -141,44 +147,24 @@ header::header(const string &field_name, const class field_body *pBody_t)
 {
 	this->set(field_name, pBody_t);
 }
+
 /**
- *	@brief	    Set field by string field name and class field_body
+ *	@brief	    Set header by string field name and string field_body
  *	@param[in]  field name
- *	@param[in]  _size  - size of field_name 
  *	@param[in]  field_body
  *	@param[out] None 
  *	@return	    None 
  **/
-void header::set(const char *field_name, string::size_type _size, const class field_body *pBody_t)
+void header::set(const string &field_name, const string &field_body)
 {
-	class field _field(field_name, _size, pBody_t);
+	class field _field(field_name, field_body);
 
 	this->set(_field); return;
 }
 
-header::header(const char *field_name, string::size_type _size, const class field_body *pBody_t)
+header::header(const string &field_name, const string &field_body)
 {
-	this->set(field_name, _size, pBody_t);
-}
-
-/**
- *	@brief	    Set field by string field name and class field_body
- *	@param[in]  field name
- *	@param[in]  pBody_t - field_body (sub)object 
- *	@param[out] None 
- *	@return	    None 
- *	@note		string param 'field_name' must end with '\0'
- **/
-void header::set(const char *field_name, const class field_body *pBody_t)
-{
-	class field _field(field_name, pBody_t);
-
-	this->set(_field); return;
-}
-
-header::header(const char *field_name, const class field_body *pBody_t)
-{
-	this->set(field_name, pBody_t);
+	this->set(field_name, field_body);
 }
 
 /**
@@ -223,11 +209,11 @@ const string header::get(void) const noexcept
 
 	while (_big != _end)
 	{
-		headers_str += _big->get();	
+		headers_str += _big->get();
 		_big++;
 	}
 
-	return headers_str;
+	return headers_str + "\r\n";
 }
 
 /**

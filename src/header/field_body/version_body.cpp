@@ -22,6 +22,17 @@ using namespace NS_LIBMIME;
 */
 
 /**
+ *	@brief	    Clone a heap instance for field_body
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return	    Pointer to heap instance	
+ **/
+class field_body *version_body::clone(void) const
+{
+	return new version_body(*this);
+}
+
+/**
  *	@brief	    Set version body 
  *	@param[in]  version - version string
  *	@param[out] None
@@ -69,23 +80,6 @@ version_body::version_body(const char *version, string::size_type _size)
 {
 	this->set(version, _size);
 }
-
-/**
- *	@brief	    Set version body 
- *	@param[in]  version - version string
- *	@param[out] None
- *	@return		None
- *	@note		The string param 'version' must end with '\0'
- *	@exception  "Const char *", MIME version format error
- **/
-void version_body::set(const char *version)
-{
-	string _version(version, strlen(version));
-
-	this->set(_version); return;
-}
-
-version_body::version_body(const char *version) { this->set(version); }
 
 /**
  *	@brief	    Set version body 

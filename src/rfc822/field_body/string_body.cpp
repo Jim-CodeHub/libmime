@@ -38,21 +38,6 @@ string_body::string_body(const string &body) { this->set(body); }
 /**
  *	@brief	    Set string body 
  *	@param[in]  body - string body 
- *	@param[out] None
- *	@return		None
- *	@note		The string param 'body' must end with '\0'
- **/
-void string_body::set(const char *body)
-{
-	this->set(body, strlen(body));
-	return;
-}
-
-string_body::string_body(const char *body) { this->set(body); }
-
-/**
- *	@brief	    Set string body 
- *	@param[in]  body - string body 
  *	@param[in]  body - sizeof string body 
  *	@param[out] None
  *	@return		None
@@ -66,6 +51,17 @@ void string_body::set(const char *body, string::size_type _size)
 }
 
 string_body::string_body(const char *body, string::size_type _size) { this->set(body, _size); }
+
+/**
+ *	@brief	    Clone a heap instance for field_body
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return	    Pointer to heap instance	
+ **/
+field_body *string_body::clone() const
+{
+	return new string_body(*this);
+}
 
 /**
  *	@brief	    Get string body 

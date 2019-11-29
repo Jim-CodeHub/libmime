@@ -7,6 +7,7 @@ using namespace NS_LIBMIME;
 
 int main(void)
 {
+	try{
 
 	string_body sb1("stringbody1111");
 	contenttype_body cb1;
@@ -20,7 +21,6 @@ int main(void)
 	body_shadow bs1("sdbody1111");
 	bs1.set_preamble("1111preamble");
 	bs1.set_epilogue("1111epilogue");
-
 
 	string_body sb2("stringbody2222");
 	contenttype_body cb2;
@@ -102,7 +102,6 @@ int main(void)
 
 	body_shadow bs8("sdbody8888");
 
-	try{
 	class mime_entity me, *p; 
 
 	me.set_part(mh1)->set_node(mh2,bs2);
@@ -117,6 +116,5 @@ p = me.set_part(mh1);
 	{
 		cout << str << endl;
 	}
-
 	return 0;
 }

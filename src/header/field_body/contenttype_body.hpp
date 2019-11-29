@@ -67,25 +67,16 @@ class contenttype_body : public field_body{
 		contenttype_body(){}; /**< Empty structure */
 		contenttype_body(const string &contenttype_body																		   );
 		contenttype_body(const char *contenttype_body, string::size_type _size												   );
-		contenttype_body(const char *contenttype_body																		   );
 		contenttype_body(const string &major_type, const string &minor_type												       );
-		contenttype_body(const char *major_type, string::size_type _mjrSize, const char *minor_type, string::size_type _morSize);
-		contenttype_body(const char *major_type, const char *minor_type														   );
 
 		void set(const string &contenttype_body																				   );
 		void set(const char *contenttype_body, string::size_type _size														   );
-		void set(const char *contenttype_body																				   );
 		void set(const string &major_type, const string &minor_type															   );
-		void set(const char *major_type, string::size_type _mjrSize, const char *minor_type, string::size_type _morSize		   );
-		void set(const char *major_type, const char *minor_type																   );
 
 		void set_param(const class param &_param																			   );
 		void set_param(const string &_param																					   );
 		void set_param(const char *_param, string::size_type _size															   );
-		void set_param(const char *_param																					   );
 		void set_param(const string &attr, const string &value																   );
-		void set_param(const char *attr, string::size_type _nSize, const char *value, string::size_type _vSize				   );
-		void set_param(const char *attr, const char *value																	   );
 
 		const string get(void) const noexcept																					;
 
@@ -95,10 +86,12 @@ class contenttype_body : public field_body{
 
 		const string get_param_value(const string &attr) const noexcept															;
 		const string get_param_value(const char *attr, string::size_type _size) const noexcept									;
-		const string get_param_value(const char *attr) const noexcept															;
 
 
 		static const string construct_boundary(void																			   );
+
+	protected:
+		class field_body *clone(void) const																						;
 
 	private:
 		string major_type, minor_type; 

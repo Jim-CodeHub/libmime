@@ -55,18 +55,18 @@ class header{
 	public:
 		header(){}; /**< Empty structure */
 		header(const class field &field_line													 );
+		header(const string &field_line															 );
 		header(const class field_name &name_t, const class field_body *pBody_t					 );
-		header(const string &field_name, const class field_body *pBody_t		    			 );
-		header(const char *field_name, string::size_type _size, const class field_body *pBody_t	 );
-		header(const char *field_name, const class field_body *pBody_t							 );
+		header(const string &field_name, const class field_body *pBody_t						 );
+		header(const string &field_name, const string &field_body								 );
 
 		const class header &operator=(const class header &_header								 );
 
 		void set(const class field &field_line													 );
+		void set(const string &field_line														 );
 		void set(const class field_name &name_t, const class field_body *pBody_t				 );
-		void set(const string &field_name, const class field_body *pBody_t		    			 );
-		void set(const char *field_name, string::size_type _size, const class field_body *pBody_t);
-		void set(const char *field_name, const class field_body *pBody_t						 );
+		void set(const string &field_name, const class field_body *pBody_t						 );
+		void set(const string &field_name, const string &field_body								 );
 
 		class field get_field(const string &field_name) const noexcept							  ;
 

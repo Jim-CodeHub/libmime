@@ -102,7 +102,7 @@ const string mime_entity::make(void)
 		boundary = contenttype_body::construct_boundary();
 		cb.set_param("boundary", boundary);
 
-		//this->header.get_field("Content-Type").set_body(&cb);
+		this->header.get_field("Content-Type").set_body(&cb);
 	}
 
 	/**----------------------------------------------------------------------------*/

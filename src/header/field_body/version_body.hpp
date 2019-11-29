@@ -52,15 +52,16 @@ class version_body : public field_body{
 		version_body(){}; /**< Empty structure */
 		version_body(const string &version						 );
 		version_body(const char *version, string::size_type _size);
-		version_body(const char *version						 );
 		version_body(int v_major, int v_minor					 );
 
 		void set(const string &version							 );
 		void set(const char *version, string::size_type _size	 );
-		void set(const char *version							 );
 		void set(int v_major, int v_minor						 );
 
 		const string get(void) const noexcept					  ;
+
+	protected:
+		class field_body *clone(void) const						  ;
 
 	private:
 		string body;

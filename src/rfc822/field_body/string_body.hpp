@@ -52,13 +52,14 @@ class string_body : public field_body{
 		string_body(){}; /**< Empty structure */
 		string_body(const string &body								  );
 		string_body(const char *body, string::size_type _size		  );
-		string_body(const char *body					    		  );
 
 		void set(const string &body									  );
 		void set(const char *body, string::size_type _size			  );
-		void set(const char *body									  );
 
 		const string get(void) const noexcept					       ;
+
+	protected:
+		field_body *clone(void) const								   ; 
 
 	private:
 		string body;

@@ -50,12 +50,11 @@ using namespace std ;
 class mime_header : public header{
 	public:
 		mime_header(){}; /**< Empty structure */
-		mime_header(const class field &field_line):header(field_line																   ){};
-		mime_header(const class field_name &name_t, const class field_body *pBody_t):header(name_t, pBody_t							   ){};
-		mime_header(const string &field_name, const class field_body *pBody_t):header(field_name, pBody_t							   ){};
-		mime_header(const char *field_name, string::size_type _size, const class field_body *pBody_t):header(field_name, _size, pBody_t){};
-		mime_header(const char *field_name, const class field_body *pBody_t):header(field_name, pBody_t								   ){};
-
+		mime_header(const class field &field_line									):header(field_line			   ){};
+		mime_header(const string &field_line										):header(field_line			   ){};
+		mime_header(const class field_name &name_t, const class field_body *pBody_t	):header(name_t, pBody_t	   ){};
+		mime_header(const string &field_name, const class field_body *pBody_t		):header(field_name, pBody_t   ){};
+		mime_header(const string &field_name, const string &field_body				):header(field_name, field_body){};
 };
 
 
