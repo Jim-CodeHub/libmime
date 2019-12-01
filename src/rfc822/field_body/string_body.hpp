@@ -49,17 +49,22 @@ using namespace std ;
  **/
 class string_body : public field_body{
 	public:
+		static const string lable												   ;
+
+	public:
 		string_body(){}; /**< Empty structure */
-		string_body(const string &body								  );
-		string_body(const char *body, string::size_type _size		  );
+		string_body(const string &body											  );
+		string_body(const char *body, string::size_type _size					  );
 
-		void set(const string &body									  );
-		void set(const char *body, string::size_type _size			  );
+		void set(const string &body												  );
+		void set(const char *body, string::size_type _size						  );
 
-		const string get(void) const noexcept					       ;
+		const string &get_lable(void) const noexcept { return string_body::lable; };
+
+		const string get(void) const noexcept { return this->body; }               ;
 
 	protected:
-		field_body *clone(void) const								   ; 
+		field_body *clone(void) const											   ; 
 
 	private:
 		string body;

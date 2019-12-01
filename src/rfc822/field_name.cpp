@@ -86,6 +86,30 @@ void field_name::set(const char *name, size_t _size)
 field_name::field_name(const char *name, size_t _size) { this->set(name, _size); }
 
 /**
+ *	@brief	    Operator '=' overloading 
+ *	@param[in]  rname_t - class field_name reference 
+ *	@param[out] None
+ *	@return	    class field_name reference	
+ **/
+const class field_name &field_name::operator=(const class field_name &rname_t)
+{
+	this->name = rname_t.name;
+
+	return rname_t;
+}
+
+/**
+ *	@brief	    Operator '==' overloading 
+ *	@param[in]  rname_t - class field_name reference 
+ *	@param[out] None
+ *	@return		true/false	
+ **/
+bool field_name::operator==(const class field_name &rname_t)
+{
+	return (this->name == rname_t.name);
+}
+
+/**
  *	@brief	    Get field name 
  *	@param[in]  None 
  *	@param[out] None

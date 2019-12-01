@@ -16,6 +16,16 @@ using namespace NS_LIBMIME;
 /*
 --------------------------------------------------------------------------------------------------------------------
 *
+*			                                  VARIABLES DECLARATION
+*
+--------------------------------------------------------------------------------------------------------------------
+*/
+const string contenttype_body::lable = "Content-Type";
+
+
+/*
+--------------------------------------------------------------------------------------------------------------------
+*
 *			                                  FUNCTIONS IMPLEMENT
 *
 --------------------------------------------------------------------------------------------------------------------
@@ -64,7 +74,7 @@ _PARSE_TYPES:
 
 	if ("" == _tok_sla.get_stok(0))
 	{
-		throw("Exception : MIME field contenttype body format error - need '/'!");
+		throw ("Exception : 'contenttype_body.cpp' MIME field contenttype body format error - need '/'!");
 	}
 
 	this->major_type = _tok_sla.get_stok(0);
@@ -130,7 +140,7 @@ void contenttype_body::set(const string &major_type, const string &minor_type)
 {
 	if ((string::npos != major_type.find_first_of(" ")) || (string::npos != minor_type.find_first_of(" ")))
 	{
-		throw("Exception : MIME field major/minor type error - wrong format!");
+		throw("Exception : 'contenttype_body.cpp' MIME field major/minor type error - wrong format!");
 	}
 
 	this->major_type = major_type;
@@ -279,7 +289,7 @@ const string contenttype_body::construct_boundary(void)
 
 	string boundary;
 
-	char   asciibet[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"; //()+/=,:?'_
+	char   asciibet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'()+_,-./:=?";
 
 	auto time_ms = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch());
 

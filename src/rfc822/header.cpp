@@ -2,6 +2,7 @@
  * @file	header.cpp
  * @brief	Standrad for ARPA Ineternet text messages	
  * @ref		IETF-rfc822
+ * @note	Set an empty header with only default constructure
  *
  * Copyright (c) 2019-2019 Jim Zhang 303683086@qq.com
  *------------------------------------------------------------------------------------------------------------------
@@ -94,77 +95,24 @@ header::header(const class field &field_line)
 }
 
 /**
- *	@brief	    Set header with string field_line
- *	@param[in]  field_line
+ *	@brief	    Set header with string field_name and field_body instance 
+ *	@param[in]  field_name
+ *	@param[in]  pBody_t - field_body instance 
  *	@param[out] None
  *	@return		None
  **/
-void header::set(const string &field_line)
-{
-	class field _field(field_line);
-
-	this->set(_field);
-}
-
-header::header(const string &field_line)
-{
-	this->set(field_line);
-}
-
-/**
- *	@brief	    Set header by class field_name and class field_body
- *	@param[in]  field_name
- *	@param[in]  field_body
- *	@param[out] None 
- *	@return	    None 
- **/
-void header::set(const class field_name &name_t, const class field_body *pBody_t)
-{
-	class field _field(name_t, pBody_t);
-
-	this->set(_field); return;
-}
-header::header(const class field_name &name_t, const class field_body *pBody_t)
-{
-	this->set(name_t, pBody_t);
-}
-
-/**
- *	@brief	    Set header by string field name and class field_body
- *	@param[in]  field name
- *	@param[in]  field_body
- *	@param[out] None 
- *	@return	    None 
- **/
 void header::set(const string &field_name, const class field_body *pBody_t)
 {
-	class field _field(field_name, pBody_t);
+	class field_name _name(field_name);
 
-	this->set(_field); return;
+	class field _field(_name, pBody_t);
+
+	this->set(_field);			return;
 }
 
 header::header(const string &field_name, const class field_body *pBody_t)
 {
 	this->set(field_name, pBody_t);
-}
-
-/**
- *	@brief	    Set header by string field name and string field_body
- *	@param[in]  field name
- *	@param[in]  field_body
- *	@param[out] None 
- *	@return	    None 
- **/
-void header::set(const string &field_name, const string &field_body)
-{
-	class field _field(field_name, field_body);
-
-	this->set(_field); return;
-}
-
-header::header(const string &field_name, const string &field_body)
-{
-	this->set(field_name, field_body);
 }
 
 /**
@@ -186,13 +134,24 @@ const class header &header::operator=(const class header &_header)
  *	@param[out] None
  *	@return	    class field OR ""
  **/
-class field header::get_field(const string &field_name) const noexcept
+class field &header::get_field(const string &field_name)
 {
-	deque<field>::const_iterator _inx;
+	deque<field>::iterator _inx;
 
 	_inx = find_if(headers.begin(), headers.end(), findIFname(field_name));
 
-	return (_inx != headers.end())?(*_inx):field("");
+	return (_inx != headers.end())?(*_inx):(field::null_field);
+}
+
+/**
+ *	@brief	    Get field by position index from header container
+ *	@param[in]  position 
+ *	@param[out] None 
+ *	@return	    field at position 
+ **/
+class field &header::get_field(size_t pos)
+{ 
+	return (pos >= this->headers.size())?(field::null_field):this->headers.at(pos);
 }
 
 /**
@@ -242,4 +201,24 @@ bool header::exist_field(const string &field_name)
  *	@return	    None 
  **/
 void header::clear(void) { headers.clear(); }
+
+/**
+ *	@brief	    Delete a field of headers
+ *	@param[in]  field_name 
+ *	@param[out] None
+ *	@return	    None 
+ **/
+void header::remove(const string &field_name)
+{
+	deque<field>::const_iterator _inx;
+
+	_inx = find_if(headers.begin(), headers.end(), findIFname(field_name));
+
+	if (_inx != headers.end())
+	{
+		this->headers.erase(_inx);	
+	}
+
+	return;
+}
 

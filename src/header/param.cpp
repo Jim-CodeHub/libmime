@@ -33,7 +33,7 @@ void param::set(const string &param)
 
 	if (string::npos == _index)
 	{
-		throw("Exception : MIME field param error - wrong format!");
+		throw("Exception : 'param.cpp' - MIME field param error - wrong format!");
 	}
 
 	this->params = param;
@@ -63,23 +63,6 @@ param::param(const char *param, string::size_type _size)
 }
 
 /**
- *	@brief	    Set parameter 
- *	@param[in]  param 
- *	@param[out] None
- *	@return		None
- *	@exception  "Const char *", MIME field param error 
- *	@note		The string param 'param' must end with '\0'
- **/
-void param::set(const char *param)
-{
-	string _param(param, strlen(param));
-
-	this->params.assign(param); return;
-}
-
-param::param(const char *param) { this->set(param); }
-	
-/**
  *	@brief	    Set attr and value of parameter 
  *	@param[in]  attr  
  *	@param[in]  value 
@@ -97,7 +80,7 @@ void param::set(const string &attr, const string &value)
 
 	if ((string::npos != _vIndex) || (string::npos != _vValue))
 	{
-		throw("Exception : MIME field param attr/value error - wrong format!");
+		throw("Exception : 'param.cpp' MIME field param attr/value error - wrong format!");
 	}
 
 	string _value = value;
@@ -115,51 +98,6 @@ void param::set(const string &attr, const string &value)
 }
 
 param::param(const string &attr, const string &value)
-{
-	this->set(attr, value);
-}
-
-/**
- *	@brief	    Set attr and value of parameter 
- *	@param[in]  attr  
- *	@param[in]  _nSize - size of attr 
- *	@param[in]  value 
- *	@param[in]  _vSize - size of value 
- *	@param[out] None
- *	@return		None
- *	@exception  "Const char *", MIME field param attr/value error
- **/
-void param::set(const char *attr, string::size_type _nSize, const char *value, string::size_type _vSize)
-{
-	string _attr (attr,  _nSize);
-	string _value(value, _vSize);
-
-	this->set(_attr, _value); return;
-}
-
-param::param(const char *attr, string::size_type _nSize, const char *value, string::size_type _vSize)
-{
-	this->set(attr, _nSize, value, _vSize);
-}
-
-/**
- *	@brief	    Set attr and value of parameter 
- *	@param[in]  attr  
- *	@param[in]  value 
- *	@param[out] None
- *	@return		None
- *	@note		The string param 'param' must end with '\0'
- *	@exception  "Const char *", MIME field param attr/value error
- **/
-void param::set(const char *attr, const char *value)
-{
-	string _attr (attr,  strlen(attr ));
-	string _value(value, strlen(value));
-
-	this->set(_attr, _value); return;
-}
-
-param::param(const char *attr, const char *value)
 {
 	this->set(attr, value);
 }
@@ -255,20 +193,6 @@ const string param::get_attr(const char *param, string::size_type _size)
 }
 
 /**
- *	@brief	    Get attr of parameter 
- *	@param[in]  param 
- *	@param[out] None
- *	@return	    The attr of parameter or ""
- *	@note		The string param 'param' must end with '\0'
- **/
-const string param::get_attr(const char *param)
-{
-	string _param(param, strlen(param));
-
-	return param::get_attr(_param);
-}
-
-/**
  *	@brief	    Get value of parameter 
  *	@param[in]  param
  *	@param[out] None
@@ -324,20 +248,6 @@ const string param::get_value(const string &param)
 const string param::get_value(const char *param, string::size_type _size)
 {
 	string _param(param, _size);
-
-	return param::get_value(_param);
-}
-
-/**
- *	@brief	    Get value of parameter 
- *	@param[in]  param
- *	@param[out] None
- *	@return	    The value of parameter or ""
- *	@note		The string param 'param' must end with '\0'
- **/
-const string param::get_value(const char *param)
-{
-	string _param(param, strlen(param));
 
 	return param::get_value(_param);
 }

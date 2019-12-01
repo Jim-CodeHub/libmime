@@ -16,6 +16,16 @@ using namespace NS_LIBMIME;
 /*
 --------------------------------------------------------------------------------------------------------------------
 *
+*			                                  VARIABLES DECLARATION
+*
+--------------------------------------------------------------------------------------------------------------------
+*/
+const string version_body::lable = "MIME_VERSION";
+
+
+/*
+--------------------------------------------------------------------------------------------------------------------
+*
 *			                                  FUNCTIONS IMPLEMENT
 *
 --------------------------------------------------------------------------------------------------------------------
@@ -47,7 +57,7 @@ void version_body::set(const string &version)
 	{
 		if (((*_big < '0') || (*_big > '9')) && ('.' != *_big))
 		{
-			throw("Exception : MIME version format error - need x.x !");
+			throw ("Exception : 'version_body.cpp' MIME version format error - need x.x !");
 		}
 
 		_big++;
@@ -99,17 +109,5 @@ void version_body::set(int v_major, int v_minor)
 version_body::version_body(int v_major, int v_minor)
 {
 	this->set(v_major, v_minor);
-}
-
-/**
- *	@brief	    Get version body 
- *	@param[in]  None 
- *	@param[in]  None
- *	@param[out] None
- *	@return	    Version body	
- **/
-const string version_body::get(void) const noexcept
-{
-	return this->body;
 }
 

@@ -59,26 +59,10 @@ class body_shadow : public body{
 		body_shadow(const string &sdbody):body(sdbody){}							  ;
 		body_shadow(const char *sdbody, string::size_type _size):body(sdbody, _size){};
 
-		void set_preamble(const string &_preamble								     );
-		void set_preamble(const char *_preamble, string::size_type _size		     );
-		void set_preamble(const char *_preamble								         );
-
 		void encode(enum codec code												     );
 		void decode(enum codec code												     );
 
-		void set_epilogue(const string &_epilogue								     );
-		void set_epilogue(const char *_epilogue, string::size_type _size		     );
-		void set_epilogue(const char *_epilogue									     );
-
-		const string &get_preamble(void) const noexcept						          ;
-		const string &get_epilogue(void) const noexcept							      ;
-
-		const class body_shadow &operator=(const class body_shadow &sdbody		     );
-
-		void clear(void															     );
-
 	protected:
-		string preamble;	 string epilogue;
 		list<class mime_entity*> part_entity;
 };
 

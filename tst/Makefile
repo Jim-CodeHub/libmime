@@ -1,5 +1,5 @@
 
-OBJS    = field_name field_body string_body mime_body body mime_entity header
+OBJS    = mime_entity
 SUBDIRS = 
  
  

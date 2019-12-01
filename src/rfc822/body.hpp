@@ -51,8 +51,9 @@ using namespace std ;
 class body{
 	public:
 		body(){};					/**< Empty structure   */
-		~body(){ delete bodys; }	/**< Destructure       */
+		~body(){ delete bodys; bodys = NULL;}				;
 		body(const class body &_body){ *this = _body; }	    ;
+
 		body(const string &_body						   );
 		body(const char *body, string::size_type _size	   );
 

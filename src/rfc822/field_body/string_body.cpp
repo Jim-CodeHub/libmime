@@ -16,6 +16,16 @@ using namespace NS_LIBMIME;
 /*
 --------------------------------------------------------------------------------------------------------------------
 *
+*			                                  VARIABLES DECLARATION
+*
+--------------------------------------------------------------------------------------------------------------------
+*/
+const string string_body::lable = "string";
+
+
+/*
+--------------------------------------------------------------------------------------------------------------------
+*
 *			                                  FUNCTIONS IMPLEMENT
 *
 --------------------------------------------------------------------------------------------------------------------
@@ -61,16 +71,5 @@ string_body::string_body(const char *body, string::size_type _size) { this->set(
 field_body *string_body::clone() const
 {
 	return new string_body(*this);
-}
-
-/**
- *	@brief	    Get string body 
- *	@param[in]  None 
- *	@param[out] None
- *	@return		None
- **/
-const string string_body::get(void) const noexcept 
-{
-	return body;
 }
 

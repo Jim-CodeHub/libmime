@@ -55,14 +55,19 @@ using namespace std ;
 class mime_entity{
 	public: friend class body_shadow; 
 	public:
-		mime_entity(){} /**< Empty constructure */									   ;
+		mime_entity(){ this->nest = true; } /**< Empty constructure */				   ;
 
-		void set_node(const class mime_header &header, const class body_shadow &sdbody);
-		class mime_entity *set_part(const class mime_header &header					  );
+		void set_node(class mime_header &header, const class body_shadow &sdbody	  );
+		class mime_entity *set_part(class mime_header &header						  );
 
 		//load
 		
 		const string make(void														  );	
+
+		static const class mime_header &check_header(class mime_header &_header		  );
+
+	protected:
+		bool nest; /**< Mark if the entity can be nested or not */ 
 
 	protected:
 		class mime_header header;

@@ -2,6 +2,7 @@
  * @file	header.hpp
  * @brief	Standrad for ARPA Ineternet text messages	
  * @ref		IETF-rfc822
+ * @note	Set an empty header with only default constructure
  *
  * Copyright (c) 2019-2019 Jim Zhang 303683086@qq.com
  *------------------------------------------------------------------------------------------------------------------
@@ -54,30 +55,27 @@ class findIFname;
 class header{
 	public:
 		header(){}; /**< Empty structure */
-		header(const class field &field_line													 );
-		header(const string &field_line															 );
-		header(const class field_name &name_t, const class field_body *pBody_t					 );
-		header(const string &field_name, const class field_body *pBody_t						 );
-		header(const string &field_name, const string &field_body								 );
+		header(const class field &field_line							  );		
+		header(const string &field_name, const class field_body *pBody_t  );
 
-		const class header &operator=(const class header &_header								 );
+		void set(const class field &field_line							  );
+		void set(const string &field_name, const class field_body *pBody_t);
 
-		void set(const class field &field_line													 );
-		void set(const string &field_line														 );
-		void set(const class field_name &name_t, const class field_body *pBody_t				 );
-		void set(const string &field_name, const class field_body *pBody_t						 );
-		void set(const string &field_name, const string &field_body								 );
+		const class header &operator=(const class header &_header		  );
 
-		class field get_field(const string &field_name) const noexcept							  ;
+		class field &get_field(const string &field_name					  );
+		class field &get_field(size_t pos								  );
 
-		const string get(void) const noexcept													  ;
+		const string get(void) const noexcept							   ;
 
-		bool is_empty(void																		 );
-		bool exist_field(const string &field_name												 );
+		bool is_empty(void												  );
+		bool exist_field(const string &field_name				          );
 
-		void clear(void																			 );
+		void clear(void											          );
 
 		friend class findIFname;
+
+		void remove(const string &field_name					          );
 
 	protected:
 		deque<field> headers;
@@ -85,12 +83,12 @@ class header{
 
 class findIFname{
 	public:	
-		findIFname(const string &field_name														 );
-		findIFname(const char *field_name, string::size_type _size								 );
-		findIFname(const class field_name &FName												 );
+		findIFname(const string &field_name								  );
+		findIFname(const char *field_name, string::size_type _size 		  );
+		findIFname(const class field_name &FName				   		  );
 
-		bool operator()(const string &field_name												 );
-		bool operator()(const class field &_field												 );
+		bool operator()(const string &field_name				   		  );
+		bool operator()(const class field &_field				   		  );	
 
 	private:
 		string match_name;

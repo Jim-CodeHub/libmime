@@ -49,19 +49,24 @@ using namespace std ;
  **/
 class version_body : public field_body{
 	public:
+		static const string lable								                    ;
+
+	public:
 		version_body(){}; /**< Empty structure */
-		version_body(const string &version						 );
-		version_body(const char *version, string::size_type _size);
-		version_body(int v_major, int v_minor					 );
+		version_body(const string &version						                   );
+		version_body(const char *version, string::size_type _size                  );
+		version_body(int v_major, int v_minor					                   );
 
-		void set(const string &version							 );
-		void set(const char *version, string::size_type _size	 );
-		void set(int v_major, int v_minor						 );
+		void set(const string &version							                   );
+		void set(const char *version, string::size_type _size	                   );
+		void set(int v_major, int v_minor						                   );
 
-		const string get(void) const noexcept					  ;
+		const string &get_lable(void) const noexcept { return version_body::lable; };
+
+		const string get(void) const noexcept { return this->body; }				;
 
 	protected:
-		class field_body *clone(void) const						  ;
+		class field_body *clone(void) const											;
 
 	private:
 		string body;

@@ -43,6 +43,12 @@ using namespace std ;
 */
 
 /**
+ *	@brief mime field nameenumeration list 
+ **/
+enum MIME_FNAME{MIME_VERSION, CONTENT_TYPE, CONTENT_ID, CONTENT_DISPOSITION, CONTENT_DESCRIPTION, 
+			    CONTENT_TRANSFERENCODING}; 
+
+/**
  *	@brief mime_header class and function set
  *	@note 
  *		Inheritance graph : mime_header -> header(rfc822) 
@@ -50,12 +56,18 @@ using namespace std ;
 class mime_header : public header{
 	public:
 		mime_header(){}; /**< Empty structure */
-		mime_header(const class field &field_line									):header(field_line			   ){};
-		mime_header(const string &field_line										):header(field_line			   ){};
-		mime_header(const class field_name &name_t, const class field_body *pBody_t	):header(name_t, pBody_t	   ){};
-		mime_header(const string &field_name, const class field_body *pBody_t		):header(field_name, pBody_t   ){};
-		mime_header(const string &field_name, const string &field_body				):header(field_name, field_body){};
+		mime_header(const class field &field_line):header(field_line){}										;
+		mime_header(const string &field_name, const class field_body *pBody_t):header(field_name, pBody_t){};
+		mime_header(enum MIME_FNAME fname_t, const class field_body *pBody_t							   );
+
+		void set(const class field &field_line					   			 							   );
+		void set(const string &field_name, const class field_body *pBody_t	 							   );
+		void set(enum MIME_FNAME fname_t, const class field_body *pBody_t	 							   );
+
+		class field &get_field(enum MIME_FNAME fname_t						 							   );
 };
+
+
 
 
 } /* namespace NS_LIBMIME */

@@ -61,37 +61,42 @@ using namespace std ;
  **/
 class contenttype_body : public field_body{
 	public:
-		enum major_type{TEXT, IMAGE, AUDIO, VIDEO, APPLICATION, MESSAGE, MULTIPART};
+		static const string lable																;
+
+	public:
+		enum major_type{TEXT, IMAGE, AUDIO, VIDEO, APPLICATION, MESSAGE, MULTIPART}			    ;
 
 	public:
 		contenttype_body(){}; /**< Empty structure */
-		contenttype_body(const string &contenttype_body																		   );
-		contenttype_body(const char *contenttype_body, string::size_type _size												   );
-		contenttype_body(const string &major_type, const string &minor_type												       );
+		contenttype_body(const string &contenttype_body										   );
+		contenttype_body(const char *contenttype_body, string::size_type _size				   );
+		contenttype_body(const string &major_type, const string &minor_type					   );
 
-		void set(const string &contenttype_body																				   );
-		void set(const char *contenttype_body, string::size_type _size														   );
-		void set(const string &major_type, const string &minor_type															   );
+		void set(const string &contenttype_body												   );
+		void set(const char *contenttype_body, string::size_type _size						   );
+		void set(const string &major_type, const string &minor_type							   );
 
-		void set_param(const class param &_param																			   );
-		void set_param(const string &_param																					   );
-		void set_param(const char *_param, string::size_type _size															   );
-		void set_param(const string &attr, const string &value																   );
+		void set_param(const class param &_param											   );
+		void set_param(const string &_param													   );
+		void set_param(const char *_param, string::size_type _size							   );
+		void set_param(const string &attr, const string &value								   );
 
-		const string get(void) const noexcept																					;
+		const string &get_lable(void) const noexcept { return contenttype_body::lable; }		;
 
-		const string get_types(void) const noexcept																				;
-		const string &get_major_type(void) const noexcept																		;
-		const string &get_minor_type(void) const noexcept																		;
+		const string get(void) const noexcept													;
 
-		const string get_param_value(const string &attr) const noexcept															;
-		const string get_param_value(const char *attr, string::size_type _size) const noexcept									;
+		const string get_types(void) const noexcept												;
+		const string &get_major_type(void) const noexcept										;
+		const string &get_minor_type(void) const noexcept										;
+
+		const string get_param_value(const string &attr) const noexcept							;
+		const string get_param_value(const char *attr, string::size_type _size) const noexcept	;
 
 
-		static const string construct_boundary(void																			   );
+		static const string construct_boundary(void											   );
 
 	protected:
-		class field_body *clone(void) const																						;
+		class field_body *clone(void) const													    ;
 
 	private:
 		string major_type, minor_type; 

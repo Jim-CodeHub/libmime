@@ -21,9 +21,76 @@ using namespace NS_LIBMIME;
 */
 
 /**
- *	@brief	    
+ *	@brief	    Set mime message preamble 
+ *	@param[in]  _preamble 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void mime_message::set_preamble(const string &_preamble)
+{
+	this->preamble = _preamble;
+	return;
+}
+
+/**
+ *	@brief	    Set mime message preamble 
+ *	@param[in]  _preamble 
+ *	@param[in]  _size - size of _preamble
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void mime_message::set_preamble(const char *_preamble, string::size_type _size)
+{
+	string _preamble_(_preamble, _size   );
+
+	this->set_preamble(_preamble_); return;
+}
+
+/**
+ *	@brief	    Set mime message epilogue 
+ *	@param[in]  _epilogue 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void mime_message::set_epilogue(const string &_epilogue)
+{
+	this->epilogue = _epilogue;
+	return;
+}
+
+/**
+ *	@brief	    Set mime message epilogue 
+ *	@param[in]  _epilogue 
+ *	@param[in]  _size - size of _epilogue
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void mime_message::set_epilogue(const char *_epilogue, string::size_type _size)
+{
+	string _epilogue_(_epilogue, _size   );
+
+	this->set_epilogue(_epilogue_); return;
+}
+
+/**
+ *	@brief	    Get mime message preamble 
  *	@param[in]  None 
  *	@param[out] None 
- *	@return	    
+ *	@return	    preamble of the mime body 
  **/
+const string &mime_message::get_preamble(void) const noexcept
+{
+	return this->preamble;
+}
+
+/**
+ *	@brief	    Get mime message epilogue 
+ *	@param[in]  None 
+ *	@param[out] None 
+ *	@return	    epilogue of the mime body 
+ **/
+const string &mime_message::get_epilogue(void) const noexcept
+{
+	return this->epilogue;
+}
 

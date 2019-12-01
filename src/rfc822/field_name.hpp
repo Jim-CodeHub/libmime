@@ -54,13 +54,16 @@ using namespace std ;
 class field_name{
 	public:
 		field_name(){}; /**< Empty structure */
-		field_name(const string &name			 );
-		field_name(const char *name, size_t _size);
+		field_name(const string &name									 );
+		field_name(const char *name, size_t _size						 );
 
-		void set(const string &name				 );
-		void set(const char *name, size_t _size  );
+		void set(const string &name										 );
+		void set(const char *name, size_t _size							 );
 
-		const string &get(void) const noexcept    ;
+		const class field_name &operator=(const class field_name &rname_t);
+		bool operator==(const class field_name &rname_t					 );
+
+		const string &get(void) const noexcept							  ;
 
 	private:
 		string name;

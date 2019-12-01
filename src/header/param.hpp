@@ -52,31 +52,23 @@ using namespace std ;
 class param{
 	public:
 		param(){}; /**< Empty structure */
-		param(const string &param																	    );
-		param(const char *param, string::size_type _size											    );
-		param(const char *param																			);
-		param(const string &attr, const string &value													);
-		param(const char *attr, string::size_type _nSize, const char *value, string::size_type _vSize	);
-		param(const char *attr, const char *value														);
+		param(const string &param												);
+		param(const char *param, string::size_type _size						);
+		param(const string &attr, const string &value							);
 
-		void set(const string &param																	);
-		void set(const char *param, string::size_type _size												);
-		void set(const char *param																		);
-		void set(const string &attr, const string &value												);
-		void set(const char *attr, string::size_type _nSize, const char *value, string::size_type _vSize);
-		void set(const char *attr, const char *value													);
+		void set(const string &param											);
+		void set(const char *param, string::size_type _size						);
+		void set(const string &attr, const string &value						);
 
-		const string &get(void) const noexcept															 ;
+		const string &get(void) const noexcept									 ;
 
-		const string get_attr (void) const noexcept													     ;
-		const string get_value(void) const noexcept													     ;
+		const string get_attr (void) const noexcept								 ;
+		const string get_value(void) const noexcept								 ;
 
-		static const string get_attr (const string &param												);
-		static const string get_attr (const char *param, string::size_type _size					    );
-		static const string get_attr (const char *param													);
-		static const string get_value(const string &param											    );
-		static const string get_value(const char *param, string::size_type _size						);
-		static const string get_value(const char *param													);
+		static const string get_attr (const string &param						);
+		static const string get_attr (const char *param, string::size_type _size);
+		static const string get_value(const string &param						);
+		static const string get_value(const char *param, string::size_type _size);
 
 	private:
 		string params;

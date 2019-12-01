@@ -51,26 +51,22 @@ using namespace std ;
  **/
 class field{
 	public:
+		static class field null_field											 ;
+
+	public:
 		field(){ pbody = NULL;}												     ;
 		~field(){ if (NULL != pbody) { delete pbody; pbody = NULL;}	}			 ;
 		field(const class field &_field) { *this = _field; }				     ;
 
-		field(const string &field_line										    );
 		field(const class field_name &name_t, const class field_body *pBody_t   );
-		field(const string &field_name, const class field_body *pBody_t	        );
-		field(const string &field_name, const string &field_body				);
+
+		void set(const class field_name &name_t, const class field_body *pBody_t);
+
+		void set_name(const class field_name &rname_t							);
+		void set_body(const class field_body *pBody_t							);
 
 		bool operator==(const class field &_field								);
 		const class field &operator=(const class field &_field					);
-
-		void set(const string &field_line									    );
-		void set(const class field_name &name_t, const class field_body *pBody_t);
-		void set(const string &field_name, const class field_body *pBody_t		);
-		void set(const string &field_name, const string &field_body				);
-
-		void set_name(const string &field_name									);
-		void set_body(const class field_body *pBody_t							);
-		void set_body(const string &field_body									);
 
 		const string get(void) const noexcept									 ;
 

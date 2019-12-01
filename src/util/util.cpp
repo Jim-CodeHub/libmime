@@ -24,13 +24,14 @@ using namespace NS_LIBMIME;
  *	@param[in]  None 
  *	@param[out] None
  *	@return	    CTLs	
+ *	@note		Actually, CTLs contain '\0', but it can not be place correctly at string
  **/
 const string util::get_CTLs(void)
 {
 	string CTLs;
 
-	for (int i = 0; i < 31; i++)
-	{ CTLs += i;			   }
+	for (int i = 1; i <= 31; i++)
+	{ CTLs += i;			    }
 
 	CTLs += 127; /**< 0 ~ 31 and 127 of ASCII control character*/
 
