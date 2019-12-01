@@ -30,12 +30,11 @@ const class mime_header &mime_entity::check_header(class mime_header &_header)
 {
 	long unsigned int i = 0;
 
-	class field _field;
-	while (!(field::null_field == (_field = _header.header::get_field(i))))
+	while (!(field::null_field == (_header.header::get_field(i))))
 	{
-		if (string::npos == _field.get_name().find("Content-", 0))
+		if (string::npos == (_header.header::get_field(i)).get_name().find("Content-", 0))
 		{
-			_header.remove(_field.get_name());
+			_header.remove((_header.header::get_field(i)).get_name());
 			continue;
 		}
 
@@ -172,6 +171,41 @@ const string mime_entity::make(void)
 _ADD_NODE_BODY:
 	_mime_entity += *(this->sdbody.bodys);
 
+	/**----------------------------------------------------------------------------*/
+	/**< Release eneity */
+
+	list<class mime_entity*>::const_iterator _big_ = this->sdbody.part_entity.begin(),
+											 _end_ = this->sdbody.part_entity.  end();
+	while (_big_ != _end_)
+	{
+		delete *_big_; _big_++;
+	}
+
 	return _mime_entity; 
+}
+mime_entity::~mime_entity(){
+#if 0
+	list<class mime_entity*>::iterator _big =  sdbody.part_entity.begin(), _end = sdbody.part_entity.end();
+
+	while (_big != _end)
+	{
+		delete *_big; *_big = NULL;
+		_big++;
+	}
+#endif
+}
+
+/**
+ *	@brief	    Load mime entity from some string buffer 
+ *	@param[in]  _eneity - entity buffer 
+ *	@param[in]  _size   - size of entity buffer
+ *	@param[out] None 
+ *	@return	    ture/flase 
+ **/
+bool load(const char *_eneity, string::size_type _size)
+{
+
+
+	return false;
 }
 

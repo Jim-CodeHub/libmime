@@ -124,7 +124,10 @@ bool field::operator==(const class field &_field)
 const class field &field::operator=(const class field &_field)
 {
 	this->_name = _field._name;
-	this->pbody = (NULL != _field.pbody)?_field.pbody->clone():NULL;
+
+	if (this->pbody  == NULL) { delete pbody; pbody = NULL;	   }
+
+	if (_field.pbody != NULL) { pbody = _field.pbody->clone(); }
 
 	return _field;
 }
