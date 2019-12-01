@@ -125,6 +125,7 @@ class mime_entity *mime_entity::set_part(class mime_header &header)
  *	@param[in]  None 
  *	@param[out] None 
  *	@return	    mime entity 
+ *	@note		Base64 encoding will be used as default
  **/
 const string mime_entity::make(void)
 {
@@ -183,17 +184,6 @@ _ADD_NODE_BODY:
 
 	return _mime_entity; 
 }
-mime_entity::~mime_entity(){
-#if 0
-	list<class mime_entity*>::iterator _big =  sdbody.part_entity.begin(), _end = sdbody.part_entity.end();
-
-	while (_big != _end)
-	{
-		delete *_big; *_big = NULL;
-		_big++;
-	}
-#endif
-}
 
 /**
  *	@brief	    Load mime entity from some string buffer 
@@ -202,9 +192,16 @@ mime_entity::~mime_entity(){
  *	@param[out] None 
  *	@return	    ture/flase 
  **/
-bool load(const char *_eneity, string::size_type _size)
+//bool load(const char *_eneity, string::size_type _size)
+bool load(string &_eneity)
 {
+#if 0
+	class string_token stok; stok.cut(_eneity, "\r\n\r\n");
 
+	string header = stok.get_stok(0); /**< Get header */
+	string sdbody = stok.get_stok(1); /**< Get body   */
+
+#endif
 
 	return false;
 }
