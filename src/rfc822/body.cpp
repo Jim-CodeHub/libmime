@@ -66,6 +66,9 @@ const class body &body::operator=(const class body &_body)
 {
 	*(this->bodys) = *(_body.bodys);
 
+	//this->_size = _body.bodys->size();
+	//this->bodys->assign(*(_body.bodys), 0, _size);
+
 	return _body;
 }
 

@@ -46,18 +46,20 @@ using namespace std ;
  *	@note 
  *		Inheritance graph : None 
  **/
-class mime_message{
+class mime_message : public mime_entity{
 	public:
 		mime_message(){}; /**< Empty structure */
 
-		void set_preamble(const string &_preamble								     );
-		void set_preamble(const char *_preamble, string::size_type _size		     );
+		void set_preamble(const string &_preamble						 );
+		void set_preamble(const char *_preamble, string::size_type _size );
 
-		void set_epilogue(const string &_epilogue								     );
-		void set_epilogue(const char *_epilogue, string::size_type _size		     );
+		void set_epilogue(const string &_epilogue						 );
+		void set_epilogue(const char *_epilogue, string::size_type _size );
 
-		const string &get_preamble(void) const noexcept						          ;
-		const string &get_epilogue(void) const noexcept						          ;
+		const string &get_preamble(void) const noexcept					  ;
+		const string &get_epilogue(void) const noexcept					  ;
+
+		const string make(void											 );
 
 	protected:
 		string preamble;	 string epilogue;

@@ -28,7 +28,7 @@ using namespace NS_LIBMIME;
  **/
 void mime_message::set_preamble(const string &_preamble)
 {
-	this->preamble = _preamble;
+	this->preamble = _preamble + "\r\n\r\n";
 	return;
 }
 
@@ -54,7 +54,7 @@ void mime_message::set_preamble(const char *_preamble, string::size_type _size)
  **/
 void mime_message::set_epilogue(const string &_epilogue)
 {
-	this->epilogue = _epilogue;
+	this->epilogue = "\r\n\r\n" + _epilogue;
 	return;
 }
 
@@ -92,5 +92,23 @@ const string &mime_message::get_preamble(void) const noexcept
 const string &mime_message::get_epilogue(void) const noexcept
 {
 	return this->epilogue;
+}
+
+/**
+ *	@brief	    Make mime message
+ *	@param[in]  None 
+ *	@param[out] None 
+ *	@return	    mime message 
+ **/
+const string mime_message::make(void)
+{
+	string message = mime_entity::make();
+
+	string::size_type _inx = message.find("\r\n\r\n");
+
+	message.insert(_inx + 4, this->preamble);
+	message.append(this->epilogue);
+	
+	return message;
 }
 

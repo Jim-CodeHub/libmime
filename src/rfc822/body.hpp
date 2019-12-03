@@ -68,6 +68,7 @@ class body{
 		
 	protected:
 		string *bodys = new string;
+		//string::size_type _size; /**< Size of bodys        */
 };
 
 

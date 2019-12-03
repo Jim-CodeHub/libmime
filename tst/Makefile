@@ -1,5 +1,5 @@
 
-OBJS    = mime_entity
+OBJS    = mime_entity mime_message
 SUBDIRS = 
  
  
