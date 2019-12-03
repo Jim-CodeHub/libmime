@@ -35,7 +35,17 @@ all:$(SUBDIRS)
 $(SUBDIRS):
 	$(MAKE) -C $@	
 
-install:
+install:.ONSHELL
+.ONSHELL:
+	@make
+	@if [ ! -d libMIME ]; then mkdir libMIME; fi;
+	@cp -rf src ./libMIME
+	@find ./libMIME/src -name "*.o"
+	@rm -rf `find ./libMIME/src -name "*.o"`
+	@rm -rf `find ./libMIME/src -name "*.cpp"`
+	@rm -rf `find ./libMIME/src -name "Makefile"`
+	@mv ./libMIME.a libMIME
+	@mv ./libMIME.so libMIME 
 
 tst:
 	$(MAKE) -C tst
