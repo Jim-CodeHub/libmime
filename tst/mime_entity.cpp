@@ -26,7 +26,7 @@ int main(void)
 
 	string_body sb2("stringbody2222");
 	contenttype_body cb2;
-		cb2.set("multipart", "related");
+		cb2.set("text", "plain");
 
 	mime_header mh2;
 
@@ -59,7 +59,7 @@ int main(void)
 
 	string_body sb5("stringbody5555");
 	contenttype_body cb5;
-		cb5.set("multipart", "related");
+		cb5.set("text", "plain");
 
 	mime_header mh5;
 
@@ -110,8 +110,98 @@ p = me.set_part(mh1);
 		p->set_part(mh6)->set_node(mh7, bs7);
 		p->set_part(mh6)->set_node(mh8, bs8);
 	me.set_part(mh1)->set_node(mh5,bs5);
+#if 0
+	int i = 0;
+	const class mime_entity *pp;
+	const class mime_entity *subp;
+	while ( NULL != (pp = me.get_part(i)))
+	{
+		cout << endl; 
+		cout << endl; 
+		cout << "PART " << i << " = " << endl;
+		
+		cout << "--------HEADER START -----------" <<endl;
+		cout << pp->get_header().get() <<endl;
+		cout << "--------HEADER END--------------" <<endl;
 
-	cout << me.make() <<endl;
+		cout << "--------BODY START------------" <<endl;
+		cout << pp->get_sdbody().get() <<endl;
+		cout << "--------BODY END--------" <<endl;
+
+		int j = 0;
+		if (2 == i)
+		{
+			while (NULL != (subp = pp->get_part(j)))
+			{
+				cout << "\t\t\t----SUB HEADER START" <<endl; 
+				cout << subp->get_header().get() <<endl;
+				cout << "\t\t\t----SUB HEADER END" <<endl; 
+
+				cout << "\t\t\t----SUB BODY start--" <<endl;
+				cout << subp->get_sdbody().get() <<endl;
+				cout << "\t\t\t----SUB BODY end --" <<endl;
+
+				j++;
+			}
+		}
+		i++;
+	}
+
+#endif
+
+#if 0
+	string my_entity = me.make();
+
+	cout << "-----------load entity--------------"<<endl;
+
+	class mime_entity lme;
+
+	lme.load(my_entity);
+
+	int i = 0;
+	const class mime_entity *pp;
+	const class mime_entity *subp;
+	while ( NULL != (pp = lme.get_part(i)))
+	{
+		cout << "PART " << i << " = " << endl;
+		
+		cout << "--------HEADER START -----------" <<endl;
+		cout << pp->get_header().get();
+		cout << "--------HEADER END--------------" <<endl;
+
+		cout << "--------BODY START------------" <<endl;
+		cout << pp->get_sdbody().get();
+		cout << "--------BODY END--------" <<endl;
+
+		int j = 0;
+		if (2 == i)
+		{
+			while (NULL != (subp = pp->get_part(j)))
+			{
+				cout << "\t\t\t----SUB HEADER START" <<endl; 
+				cout << subp->get_header().get();
+				cout << "\t\t\t----SUB HEADER END" <<endl; 
+
+				cout << "\t\t\t----SUB BODY start--" <<endl;
+				cout << subp->get_sdbody().get();
+				cout << "\t\t\t----SUB BODY end --" <<endl;
+
+				j++;
+			}
+		}
+		i++;
+	}
+
+	cout << my_entity <<endl;
+#endif
+
+	class mime_entity lme;
+	string ss = me.make();
+	cout << "source---------"<<endl;
+	cout <<ss<<endl;
+	cout << "source-end--------"<<endl;
+	lme.load(ss);
+	cout << lme.make() <<endl;
 
 	}catch (const char *str)
 	{

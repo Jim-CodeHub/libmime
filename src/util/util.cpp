@@ -51,3 +51,73 @@ const string util::get_tspecials(void)
 	return tspecials;
 }
 
+/**
+ *	@brief	    Trans string to lower string 
+ *	@param[in]  str   - source string 
+ *	@param[in]  _size - size of string 
+ *	@param[out] None
+ *	@return	    lower string 
+ **/
+const string util::to_lower(const string &str, string::size_type _size)
+{
+	string _str;
+	string::size_type i = 0;
+
+	string::const_iterator _ori_inx = str.begin();
+
+	while (i != _size)
+	{
+		_str.push_back(::tolower(_ori_inx[i]));
+
+		i++;	
+	}
+
+	return _str;
+}
+
+/**
+ *	@brief	    Trans string to lower string 
+ *	@param[in]  str - source string 
+ *	@param[out] None
+ *	@return	    lower string 
+ **/
+const string util::to_lower(const string &str)
+{
+	return util::to_lower(str, str.size());
+}
+
+/**
+ *	@brief	    Trans string to upper string 
+ *	@param[in]  str   - source string 
+ *	@param[in]  _size - size of string 
+ *	@param[out] None
+ *	@return	    upper string 
+ **/
+const string util::to_upper(const string &str, string::size_type _size)
+{
+	string _str;
+	string::size_type i = 0;
+
+	string::const_iterator _ori_inx = str.begin();
+
+	while (i != _size)
+	{
+		_str.push_back(::toupper(_ori_inx[i]));
+
+		i++;	
+	}
+
+	return _str;
+}
+
+/**
+ *	@brief	    Trans string to upper string 
+ *	@param[in]  str - source string 
+ *	@param[out] None
+ *	@return	    upper string 
+ **/
+const string util::to_upper(const string &str)
+{
+	return util::to_upper(str, str.size());
+}
+

@@ -49,8 +49,12 @@ using namespace std ;
  **/
 class util{
 	public:
-		static const string get_CTLs(void	  );
-		static const string get_tspecials(void);
+		static const string get_CTLs(void										);
+		static const string get_tspecials(void								    );
+		static const string to_lower(const string &str							);
+		static const string to_lower(const string &str, string::size_type _size );
+		static const string to_upper(const string &str							);
+		static const string to_upper(const string &str, string::size_type _size );
 };
 
 

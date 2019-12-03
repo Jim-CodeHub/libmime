@@ -21,52 +21,8 @@ using namespace NS_LIBMIME;
 */
 
 /**
- *	@brief	    Encode mime body
- *	@param[in]  code - codec method 
- *	@param[out] None 
- *	@return	    None 
+ *	@brief	    xxx 
+ *	@param[in]  
+ *	@param[out] 
+ *	@return	    
  **/
-void body_shadow::encode(enum codec code)
-{
-	string code_data;
-
-	switch (code)
-	{
-		case BASE64:
-			base64_encode((const unsigned char *)this->bodys->c_str(), code_data);
-							   break;
-		case QUOTED_PRINTABLE: break;
-		case _7BIT:			   break;
-		case _8BIT:			   break;
-		case BINARY:		   break;
-		default:                    ;
-	}
-
-	this->set(code_data); return;
-}
-
-/**
- *	@brief	    Decode mime body
- *	@param[in]  code - codec method 
- *	@param[out] None 
- *	@return	    None 
- **/
-void body_shadow::decode(enum codec code)
-{
-	string code_data;
-
-	switch (code)
-	{
-		case BASE64:
-			base64_decode(this->bodys->c_str(), code_data);
-							   break;
-		case QUOTED_PRINTABLE: break;
-		case _7BIT:			   break;
-		case _8BIT:			   break;
-		case BINARY:		   break;
-		default:                    ;
-	}
-
-	this->set(code_data); return;
-}
-

@@ -53,11 +53,25 @@ const class mime_header &mime_entity::check_header(class mime_header &_header)
  *	@note		The function can be called repeatedly, but only to save the last settings 
  *	@note		The function SHOULD BE used as a leaf node setting 
  *	@note		The header will be filtered when set an non-mime-entity header
+ *	@note		Base64 encoding will be used as default
  **/
 void mime_entity::set_node(class mime_header &header, const class body_shadow &sdbody)
 {
 	this->header = check_header(header);
-	this->sdbody = sdbody;		 return;
+
+	class codec _codec;
+
+	string encode = this->header.get_field(CONTENT_TRANSFER_ENCODING).get_body();
+
+	class string_body str_body("base64");
+
+	_codec.encode((encode == "")
+			?(this->header.set(CONTENT_TRANSFER_ENCODING, &str_body), "base64")
+			:util::to_lower(encode) 
+			
+			, sdbody.get(), *(this->sdbody.bodys), sdbody.get().size());
+
+	return;
 }
 
 /**
@@ -154,8 +168,11 @@ const string mime_entity::make(void)
 
 	_mime_entity  = this->header.get();
 
-	boundary.erase(0, 1);
-	boundary.erase(boundary.size() - 1, 1);
+	if (('\"' == *(boundary.begin())) && ('\"' == *(boundary.rbegin())))
+	{
+		boundary.erase(0, 1);
+		boundary.erase(boundary.size() - 1, 1);
+	}
 
 	/**----------------------------------------------------------------------------*/
 	/**< Recursive sub multi-part */
@@ -164,16 +181,176 @@ const string mime_entity::make(void)
 	{
 		_mime_entity += "--" + boundary + "\r\n";
 
-		_mime_entity += (*_big)->make(); _big++;
+		_mime_entity += (*_big)->make() + "\r\n"; _big++;
 	}
 
-	_mime_entity += "--" + boundary + "--\r\n";
+	_mime_entity.erase(_mime_entity.size()-2, 2); /**< Delete '\r\n' that end of the last part */
+
+	_mime_entity += "\r\n--" + boundary + "--"  ;
 
 _ADD_NODE_BODY:
 	_mime_entity += *(this->sdbody.bodys);
 
 	/**----------------------------------------------------------------------------*/
-	/**< Release eneity */
+	/**< Release entity */
+
+	this->clear();
+
+	return _mime_entity; 
+}
+
+/**
+ *	@brief	    Load mime entity from some string buffer 
+ *	@param[in]  entity  - entity buffer 
+ *	@param[in]  _size   - size of entity buffer
+ *	@param[out] None 
+ *	@return	    ture/flase 
+ **/
+bool mime_entity::load(string &entity)
+{
+	/**============================= BASIC HANDLER ================================*/
+
+	/**----------------------------------------------------------------------------*/
+	/**< Clear mime entity */ 
+
+	this->clear();
+
+	/**----------------------------------------------------------------------------*/
+	/**< Implicitly typed plain US-ASCII text handler */
+
+	if (entity.find("\r\n", 0) == 0)  
+	{ 
+		this->sdbody.set(entity.substr(2, entity.size())); 
+		return true;
+	}	
+
+	/**----------------------------------------------------------------------------*/
+	/**< Get header string and body string */
+
+	class string_token stok_entity; stok_entity.cut(entity, "\r\n\r\n");
+
+	string header  = stok_entity.get_stok(0); /**< Get header		*/
+		   header += "\r\n"; /**< Add '\r\n' which has benn cut off */
+
+	string sdbody  = stok_entity.get_stok(1); /**< Get body			*/
+
+	/**============================= HEADER HANDLER ===============================*/
+
+	/**----------------------------------------------------------------------------*/
+	/**< Write header */
+	
+	header = field_body::unfold(header);
+
+	class string_token stok_header; stok_header.set(header, "\r\n");
+
+	string field_line;
+	string::size_type i = 0;
+
+	while ("" != (field_line = stok_header.get_stok(i)))
+	{
+		class string_token stok_line;
+						   stok_line.cut(field_line, ":");
+
+		class field_name  fname(stok_line.get_stok(0));
+		class string_body sbody(stok_line.get_stok(1));
+
+		class field _field(fname, &sbody);
+		this->header.set(_field);
+
+		i++;
+	}
+
+	/**============================= BODY HANDLER ==================================*/
+
+	string contenttype_body, boundary, _big_boundary, _end_boundary;
+	string::size_type				   _big_inx,      _end_inx	   ;
+	class  contenttype_body cb;
+
+	/**----------------------------------------------------------------------------*/
+	/**< Write body */
+
+	if (("" == sdbody) 
+			|| ("" == (contenttype_body = this->header.get_field(CONTENT_TYPE).get_body()))
+			|| (cb.set(contenttype_body), cb.get_major_type() != "multipart")
+			|| ("" == (boundary = cb.get_param_value("boundary"))) /**< Duo \" stripped  */
+			)
+	{
+		goto _ADD_NODE_BODY;
+	}
+
+	/**----------------------------------------------------------------------------*/
+	/**< Boundary handler */
+
+	_big_boundary = "--" + boundary;
+	_end_boundary = "--" + boundary + "--";
+
+	/**----------------------------------------------------------------------------*/
+	/**< Multi-part handler */
+
+	_big_inx = 0;
+	_end_inx = sdbody.find(_end_boundary, 0);
+
+	while (_end_inx != (_big_inx = sdbody.find(_big_boundary, _big_inx)))
+	{
+		_big_inx  = sdbody.find("\r\n", _big_inx); /**< Skip boundary and LWSP */
+
+		_big_inx += 2; /**< Skip '\r\n' */
+
+		string::size_type _ovr_inx = sdbody.find(_big_boundary, _big_inx);
+
+		string entity = sdbody.substr(_big_inx, _ovr_inx - _big_inx);
+
+		class mime_entity *pEntity = new class mime_entity;
+
+		this->sdbody.part_entity.push_back(pEntity);
+
+		pEntity->load(entity);
+
+		if (_ovr_inx == _end_inx)
+			break; /**< End of this entity */
+
+		_big_inx = _ovr_inx;
+	}
+
+	return true;
+
+_ADD_NODE_BODY:
+
+	/**----------------------------------------------------------------------------*/
+	/**< Delete '\r\n' after the body */ 
+
+	string::size_type _inx;
+
+	while (string::npos != (_inx = sdbody.find("\r\n", sdbody.size()-2)))
+	{
+		sdbody.erase(sdbody.size()-2, 2);
+	}
+
+	/**----------------------------------------------------------------------------*/
+	/**< Decode and set body */
+
+	string decode;
+	if ("" != (decode = this->header.get_field(CONTENT_TRANSFER_ENCODING).get_body()))
+	{
+		class codec _codec;
+		string::size_type _size;
+
+		_codec.decode(util::to_lower(decode), sdbody, *(this->sdbody.bodys), _size);
+	}
+
+	return true;
+}
+
+/**
+ *	@brief	    Clear mime entity 
+ *	@param[in]  None 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void mime_entity::clear(void)
+{
+	this->header.clear();
+	this->sdbody.clear();
 
 	list<class mime_entity*>::const_iterator _big_ = this->sdbody.part_entity.begin(),
 											 _end_ = this->sdbody.part_entity.  end();
@@ -182,27 +359,52 @@ _ADD_NODE_BODY:
 		delete *_big_; _big_++;
 	}
 
-	return _mime_entity; 
+	return;
 }
 
 /**
- *	@brief	    Load mime entity from some string buffer 
- *	@param[in]  _eneity - entity buffer 
- *	@param[in]  _size   - size of entity buffer
+ *	@brief	    Get mime entity header 
+ *	@param[in]  None 
  *	@param[out] None 
- *	@return	    ture/flase 
+ *	@return	    mime header 
  **/
-//bool load(const char *_eneity, string::size_type _size)
-bool load(string &_eneity)
+const class mime_header &mime_entity::get_header(void) const noexcept
 {
-#if 0
-	class string_token stok; stok.cut(_eneity, "\r\n\r\n");
+	return this->header;
+}
 
-	string header = stok.get_stok(0); /**< Get header */
-	string sdbody = stok.get_stok(1); /**< Get body   */
+/**
+ *	@brief	    Get mime entity body 
+ *	@param[in]  None 
+ *	@param[out] None 
+ *	@return	    mime entity body 
+ **/
+const class body_shadow &mime_entity::get_sdbody(void) const noexcept
+{
+	return this->sdbody;
+}
 
-#endif
+/**
+ *	@brief	    Get mime entity part 
+ *	@param[in]  _inx - part index 
+ *	@param[out] None 
+ *	@return	    mime entity part OR NULL 
+ *	@note		The function only get the brother part,
+ *				to use the return pointer, if deeper part should be get
+ **/
+const class mime_entity *mime_entity::get_part(string::size_type _inx) const noexcept
+{
+	list<class mime_entity*>::const_iterator _big_ = this->sdbody.part_entity.begin(),
+											 _end_ = this->sdbody.part_entity.  end();
 
-	return false;
+	string::size_type i = 0;
+	while ((_big_ != _end_) && (*_big_ != NULL))
+	{
+		if (i == _inx) { return *_big_; }	
+
+		i++; _big_++;
+	}
+
+	return NULL;
 }
 

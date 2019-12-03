@@ -35,7 +35,23 @@
  *------------------------------------------------------------------------------------------------------------------
 */
 
-enum codec{BASE64, QUOTED_PRINTABLE, _7BIT, _8BIT, BINARY};
+enum _codec{BASE64 = 0, QUOTED_PRINTABLE, _7BIT, _8BIT, BINARY};
+
+/**
+ *	@brief encode and decode mime message 
+ *	@note 
+ *		Inheritance graph : None 
+ **/
+class codec{
+	public:
+		codec(){}; /**< Empty structure */
+
+		void encode(enum _codec code, const string &src, string &des, string::size_type len   ); 
+		void encode(const string &code, const string &src, string &des, string::size_type len ); 
+		void decode(enum _codec code, const string &src, string &des, string::size_type &len  ); 
+		void decode(const string &code, const string &src, string &des, string::size_type &len); 
+
+};
 
 
 #endif /*__LIBMIME_CODEC_HPP__*/

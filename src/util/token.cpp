@@ -34,7 +34,7 @@ void string_token::set(const string &str, const string &delim)
 	{
 		this->stoks.push_back(str.substr(_inx_prev, _inx_next - _inx_prev));
 
-		_inx_prev = _inx_next + 1;
+		_inx_prev = _inx_next + delim.size();
 	}
 
 	if ((string::npos == _inx_next) && (0 == _inx_prev))
@@ -77,7 +77,7 @@ void string_token::cut(const string &str, const string &delim)
 	{
 		this->stoks.push_back(str.substr(_inx_prev, _inx_next - _inx_prev));
 
-		_inx_prev = _inx_next + 1;
+		_inx_prev = _inx_next + delim.size();
 	}
 
 	if ((string::npos == _inx_next) && (0 == _inx_prev))

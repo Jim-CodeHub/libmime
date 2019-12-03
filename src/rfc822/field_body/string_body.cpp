@@ -39,7 +39,13 @@ const string string_body::lable = "string";
  **/
 void string_body::set(const string &body)
 {
-	this->body = body;
+	string::size_type i = 0;
+
+	while ((i < body.length()) && ((' ' == body[i]) || ('\t' == body[i])))
+		i++; /**< Skip LWSP befor field body */
+
+	this->body.assign(body, i, body.length());
+
 	return;
 }
 
@@ -54,13 +60,15 @@ string_body::string_body(const string &body) { this->set(body); }
  **/
 void string_body::set(const char *body, string::size_type _size)
 {
-	this->body.clear();
-	this->body.assign(body, _size);
-
-	return;
+	string _body(body, _size);
+	
+	this->set(_body);  return;
 }
 
-string_body::string_body(const char *body, string::size_type _size) { this->set(body, _size); }
+string_body::string_body(const char *body, string::size_type _size)
+{
+	this->set(body, _size);
+}
 
 /**
  *	@brief	    Clone a heap instance for field_body

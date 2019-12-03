@@ -31,7 +31,7 @@ using namespace NS_LIBMIME;
 void mime_header::set(enum MIME_FNAME fname_t, const class field_body *pBody_t)
 {
 	string _FNAME[] = {"MIME-Version", "Content-Type", "Content-Id", "Content-Disposition", "Content-Description",
-		               "Content-TransferEncoding"}; 
+		               "Content-Transfer-Encoding"}; 
 
 	if ((pBody_t->get_lable() != string_body::lable) && (pBody_t->get_lable() != _FNAME[fname_t]))
 	{
@@ -83,7 +83,7 @@ void mime_header::set(const string &field_name, const class field_body *pBody_t)
 class field &mime_header::get_field(enum MIME_FNAME fname_t)
 {
 	string _FNAME[] = {"MIME-Version", "Content-Type", "Content-Id", "Content-Disposition", "Content-Description",
-		               "Content-TransferEncoding"}; 
+		               "Content-Transfer-Encoding"}; 
 
 	return header::get_field(_FNAME[fname_t]);
 }

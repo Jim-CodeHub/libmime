@@ -65,36 +65,33 @@ void base64_encode(const unsigned char *binIn, char *base64Out)
 /**
  *	@brief	    Encode '8-bit' binary bytes into base64 ASCII 
  *	@param[in]  binIn 
+ *	@param[in]  _size  -  size of _binIn 
  *	@param[out] _base64Out 
  *	@return		None
- *	@note		The function does no param checking for out
  *	@warning	Note the use of the escape character '\'
  **/
-void base64_encode(const unsigned char *binIn, string &_base64Out)
+void base64_encode(const string &_binIn, string::size_type _size, string &_base64Out)
 {
-	unsigned char bufCom[3], i = 0, j = 0;
+	unsigned char bufCom[3], i = 0;
 	char		  bufOut[4];
 
-	string::iterator base64Out = _base64Out.begin();
+	_base64Out.clear();
+	string::const_iterator binIn  = _binIn.begin();
 
-	while ('\0' != binIn[i])
+	while (i != _size)
 	{
-		for (unsigned char k = 0; k < 3; k++, i++) /**< Set buffer in for encode block */
+		for (unsigned char k = 0; ((k < 3) && (i != _size)); k++, i++) /**< Set buffer in for encode block */
 		{
 			bufCom[k] = binIn[i];
-
-			if ('\0' == binIn[i]) {break;}			
 		}
 
 		encode_block(bufCom, bufOut);
 
-		for (unsigned char k = 0; k < 4; k++, j++) /**< Set buffer out for base64 str */
+		for (unsigned char k = 0; k < 4; k++) /**< Set buffer out for base64 str */
 		{
-			base64Out[j] = bufOut[k];
+			_base64Out.push_back(bufOut[k]);
 		}
 	}
-
-	base64Out[j] = '\0';
 
 	return;
 }
@@ -137,15 +134,16 @@ void base64_decode(const char *base64In, unsigned char *binOut)
  *	@brief	    Decode base64 ASCII into '8-bit' binary bytes 
  *	@param[in]	base64In
  *	@param[out] _binOut
+ *	@param[out] _size	-	size of string that has been decoded 
  *	@return		None
  *	@note		The function does no param checking for out
  **/
-void base64_decode(const char *base64In, string &_binOut)
+void base64_decode(const string &base64In, string &_binOut, string::size_type &_size)
 {
-	unsigned char bufOut[3], i = 0, j = 0;
+	unsigned char bufOut[3], i = 0;
 	char		  bufCom[4];
 
-	string::iterator binOut = _binOut.begin();
+	_binOut.clear(); _size = 0;
 
 	while ('\0' != base64In[i])
 	{
@@ -158,13 +156,12 @@ void base64_decode(const char *base64In, string &_binOut)
 
 		decode_block(bufCom, bufOut);
 
-		for (unsigned char k = 0; k < 3; k++, j++) /**< Set buffer out for 8-bit bin */
+		for (unsigned char k = 0; k < 3; k++	) /**< Set buffer out for 8-bit bin */
 		{
-			binOut[j] = bufOut[k];
+			_binOut.push_back(bufOut[k]);
+			_size++; /**< Buffer character counter */
 		}
 	}
-
-	binOut[j] = '\0';
 
 	return;
 }

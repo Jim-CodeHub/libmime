@@ -36,7 +36,7 @@ void field_name::set(const string &name)
 		if ((*_index < FIELD_NAME_ASCII_SCOPE_MIN) || (*_index > FIELD_NAME_ASCII_SCOPE_MAX) 
 				|| (*_index == FIELD_NAME_ASCII_EXCLUDECH))
 		{
-			throw("Exception : rfc822 field name error - Character out of range!");
+			throw("Exception : 'field_name.cpp' - Character out of range!");
 		}
 
 		_index++;
@@ -70,7 +70,7 @@ void field_name::set(const char *name, size_t _size)
 		{
 			this->name.clear();
 
-			throw("Exception : rfc822 field name error!");
+			throw("Exception : 'field_name.cpp' - Character out of range!");
 		}
 
 		this->name.append(1, *_index);

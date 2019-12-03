@@ -5,18 +5,19 @@
 #-------------------------------------------------------------------------------------------------------
 
 
-PROJECT			=   libMIME
+PROJECT			   =    libMIME
 
-CXX				=	g++
+CXX				   =	g++
 
-CXXFLAGS		=	-Werror -std=c++11
-CXXFLAGS       += 	-Wall
-#CXXFLAGS		+=  -g
+CXXFLAGS		   =	-Werror -std=c++11
+CXXFLAGS       	  += 	-Wall
+#CXXFLAGS		  +=    -g
 
-SUBDIRS 		=   src
+SUBDIRS 		   =    src
 
-export CXX CXXFLAGS LD_FLAGS
+CPLUS_INCLUDE_PATH = $(shell dirname `pwd`)
 
+export CXX CXXFLAGS LD_FLAGS CPLUS_INCLUDE_PATH
 
 #-------------------------------------------------------------------------------------------------------
 #																									   #

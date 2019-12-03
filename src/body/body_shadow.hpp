@@ -59,9 +59,6 @@ class body_shadow : public body{
 		body_shadow(const string &sdbody):body(sdbody){}							  ;
 		body_shadow(const char *sdbody, string::size_type _size):body(sdbody, _size){};
 
-		void encode(enum codec code												     );
-		void decode(enum codec code												     );
-
 	protected:
 		list<class mime_entity*> part_entity;
 };

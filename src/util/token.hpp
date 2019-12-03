@@ -56,6 +56,8 @@ class string_token{
 		string_token(const string &str, const char *delim, string::size_type _dSize);
 		string_token(const string &str, const char *delim						   );
 
+		void set(const string &str, const string &delim							   );
+
 		void cut(const string &str, const char *delim, string::size_type _size	   );
 		void cut(const string &str, const char *delim							   );
 		void cut(const string &str, const string &delim							   );
@@ -63,7 +65,6 @@ class string_token{
 		const string get_stok(string::size_type pos = 0) const noexcept			    ;
 
 	private:
-		void set(const string &str, const string &delim							   );
 		vector<string> stoks;
 };
 

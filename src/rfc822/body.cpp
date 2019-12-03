@@ -28,7 +28,7 @@ using namespace NS_LIBMIME;
  **/
 void body::set(const string &body)
 { 
-	this->bodys->assign(body + "\r\n\r\n");
+	this->bodys->assign(body + "\r\n");
 	return;	
 }
 
