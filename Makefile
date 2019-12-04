@@ -6,6 +6,7 @@
 
 
 PROJECT			   =    libMIME
+TARGET			   =    $(PROJECT)
 
 CXX				   =	g++
 
@@ -35,16 +36,13 @@ all:$(SUBDIRS)
 $(SUBDIRS):
 	$(MAKE) -C $@	
 
-install:.ONSHELL
-.ONSHELL:
+install:
 	@make
-	@if [ ! -d libMIME ]; then mkdir libMIME; fi;
-	@cp -rf src ./libMIME
-	@rm -rf `find ./libMIME/src -name "*.o"`
-	@rm -rf `find ./libMIME/src -name "*.cpp"`
-	@rm -rf `find ./libMIME/src -name "Makefile"`
-	@mv ./libMIME.a libMIME
-	@mv ./libMIME.so libMIME 
+	$(shell if [ ! -d $(TARGET) ]; then `mkdir $(TARGET)`; fi;)
+	$(shell cp -rf src/* ./$(TARGET)/ )
+	@rm -rf `find ./$(TARGET) -name "*.o"`
+	@rm -rf `find ./$(TARGET) -name "*.cpp"`
+	@mv ./$(PROJECT).a ./$(PROJECT).so $(TARGET) 
 
 tst:
 	$(MAKE) -C tst
