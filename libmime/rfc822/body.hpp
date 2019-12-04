@@ -63,12 +63,13 @@ class body{
 		void set(const char *body, string::size_type _size );
 
 		const string &get(void) const noexcept			    ;
+		string::size_type size(void) const noexcept         ;
 
 		void clear(void									   );
 		
 	protected:
 		string *bodys = new string;
-		//string::size_type _size; /**< Size of bodys        */
+		string::size_type _size; /**< Size of bodys        */
 };
 
 
