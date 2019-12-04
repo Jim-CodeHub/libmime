@@ -88,3 +88,17 @@ class field &mime_header::get_field(enum MIME_FNAME fname_t)
 	return header::get_field(_FNAME[fname_t]);
 }
 
+/**
+ *	@brief	    Get mime header field with official field name
+ *	@param[in]  MIME_FNAME - official field name enumeration 
+ *	@param[out] None 
+ *	@return	    Reference class field 
+ **/
+const class field &mime_header::get_field(enum MIME_FNAME fname_t) const noexcept
+{
+	string _FNAME[] = {"MIME-Version", "Content-Type", "Content-Id", "Content-Disposition", "Content-Description",
+		               "Content-Transfer-Encoding"}; 
+
+	return header::get_field(_FNAME[fname_t]);
+}
+
