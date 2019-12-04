@@ -1,4 +1,4 @@
-#include <libMIME/src/mime.hpp>
+#include <libmime/mime.hpp>
 
 #include <iostream>
 

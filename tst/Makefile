@@ -15,7 +15,7 @@ SUBDIRS =
 all:
 	@for i in $(OBJS);													   				\
 	do															    	   				\
-		g++ -Werror -std=c++11 -Wall "$$i".cpp -L$(shell dirname `pwd`) -lMIME -Wl,-rpath=$(shell dirname `pwd`) -o "$$i".out;   \
+		g++ $(CXXFLAGS) "$$i".cpp -L$(shell dirname `pwd`) -lmime -Wl,-rpath=$(shell dirname `pwd`) -o "$$i".out;   \
 	done
 
 .PHONY:clean
