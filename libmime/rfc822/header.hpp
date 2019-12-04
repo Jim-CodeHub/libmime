@@ -55,27 +55,29 @@ class findIFname;
 class header{
 	public:
 		header(){}; /**< Empty structure */
-		header(const class field &field_line							  );		
-		header(const string &field_name, const class field_body *pBody_t  );
+		header(const class field &field_line								);		
+		header(const string &field_name, const class field_body *pBody_t  	);
 
-		void set(const class field &field_line							  );
-		void set(const string &field_name, const class field_body *pBody_t);
+		void set(const class field &field_line							  	);
+		void set(const string &field_name, const class field_body *pBody_t	);
 
-		const class header &operator=(const class header &_header		  );
+		const class header &operator=(const class header &_header		  	);
 
-		class field &get_field(const string &field_name					  );
-		class field &get_field(size_t pos								  );
+		class field &get_field(const string &field_name					  	);
+		class field &get_field(size_t pos								  	);
 
-		const string get(void) const noexcept							   ;
+		const class field &get_field(const string &field_name) const noexcept;
 
-		bool is_empty(void												  );
-		bool exist_field(const string &field_name				          );
+		const string get(void) const noexcept							     ;
 
-		void clear(void											          );
+		bool is_empty(void												    );
+		bool exist_field(const string &field_name				            );
+
+		void clear(void											            );
 
 		friend class findIFname;
 
-		void remove(const string &field_name					          );
+		void remove(const string &field_name					            );
 
 	protected:
 		deque<field> headers;
@@ -83,12 +85,12 @@ class header{
 
 class findIFname{
 	public:	
-		findIFname(const string &field_name								  );
-		findIFname(const char *field_name, string::size_type _size 		  );
-		findIFname(const class field_name &FName				   		  );
+		findIFname(const string &field_name								    );
+		findIFname(const char *field_name, string::size_type _size 		    );
+		findIFname(const class field_name &FName				   		    );
 
-		bool operator()(const string &field_name				   		  );
-		bool operator()(const class field &_field				   		  );	
+		bool operator()(const string &field_name				   		    );
+		bool operator()(const class field &_field				   		    );	
 
 	private:
 		string match_name;

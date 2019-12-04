@@ -155,6 +155,21 @@ class field &header::get_field(size_t pos)
 }
 
 /**
+ *	@brief	    Get field by field name from header container
+ *	@param[in]  field_name
+ *	@param[out] None
+ *	@return	    class field OR ""
+ **/
+const class field &header::get_field(const string &field_name) const noexcept
+{
+	deque<field>::const_iterator _inx;
+
+	_inx = find_if(headers.begin(), headers.end(), findIFname(field_name));
+
+	return (_inx != headers.end())?(*_inx):(field::null_field);
+}
+
+/**
  *	@brief	    Get header(s)
  *	@param[in]  None 
  *	@param[out] None
