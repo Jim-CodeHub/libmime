@@ -45,8 +45,8 @@ using namespace std ;
 /**
  *	@brief mime field nameenumeration list 
  **/
-enum MIME_FNAME{MIME_VERSION, CONTENT_TYPE, CONTENT_ID, CONTENT_DISPOSITION, CONTENT_DESCRIPTION, 
-			    CONTENT_TRANSFER_ENCODING}; 
+enum MIME_FNAME{MIME_Version, Content_Type, Content_ID, Content_Disposition, Content_Description, 
+			    Content_Transfer_Encoding}; 
 
 /**
  *	@brief mime_header class and function set

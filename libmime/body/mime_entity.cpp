@@ -61,12 +61,12 @@ void mime_entity::set_node(class mime_header &header, const class body_shadow &s
 
 	class codec _codec;
 
-	string encode = this->header.get_field(CONTENT_TRANSFER_ENCODING).get_body();
+	string encode = this->header.get_field(Content_Transfer_Encoding).get_body();
 
 	class string_body str_body("base64");
 
 	_codec.encode((encode == "")
-			?(this->header.set(CONTENT_TRANSFER_ENCODING, &str_body), "base64")
+			?(this->header.set(Content_Transfer_Encoding, &str_body), "base64")
 			:util::to_lower(encode) 
 			
 			, sdbody.get(), *(this->sdbody.bodys), sdbody.get().size());
@@ -113,7 +113,7 @@ class mime_entity *mime_entity::set_part(class mime_header &header)
 	/**----------------------------------------------------------------------------*/
 	/**< Multi-part check */
 
-	contenttype_body cb(this->header.get_field(CONTENT_TYPE).get_body());
+	contenttype_body cb(this->header.get_field(Content_Type).get_body());
 
 	if (cb.get_major_type() != "multipart")
 	{
@@ -156,14 +156,14 @@ const string mime_entity::make(void)
 	/**----------------------------------------------------------------------------*/
 	/**< Construct AND set boundary AND set header */
 
-	cb.set(this->header.get_field(CONTENT_TYPE).get_body());
+	cb.set(this->header.get_field(Content_Type).get_body());
 
 	if ("" == (boundary = cb.get_param_value("boundary")))
 	{
 		boundary = contenttype_body::construct_boundary();
 		cb.set_param("boundary", boundary);
 
-		this->header.get_field(CONTENT_TYPE).set_body(&cb);
+		this->header.get_field(Content_Type).set_body(&cb);
 	}
 
 	_mime_entity  = this->header.get();
@@ -271,7 +271,7 @@ bool mime_entity::load(string &entity)
 	/**< Write body */
 
 	if (("" == sdbody) 
-			|| ("" == (contenttype_body = this->header.get_field(CONTENT_TYPE).get_body()))
+			|| ("" == (contenttype_body = this->header.get_field(Content_Type).get_body()))
 			|| (cb.set(contenttype_body), cb.get_major_type() != "multipart")
 			|| ("" == (boundary = cb.get_param_value("boundary"))) /**< Duo \" stripped  */
 			)
@@ -331,7 +331,7 @@ _ADD_NODE_BODY:
 	/**< Decode and set body */
 
 	string decode;
-	if ("" != (decode = this->header.get_field(CONTENT_TRANSFER_ENCODING).get_body()))
+	if ("" != (decode = this->header.get_field(Content_Transfer_Encoding).get_body()))
 	{
 		class codec _codec;
 		string::size_type _size;
