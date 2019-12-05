@@ -352,7 +352,7 @@ bool mime_entity::load(const char *entity, string::size_type _size)
 {
 	string _entity(entity, _size);
 
-	return this->set(_entity    );
+	return this->load(_entity   );
 }
 
 /**
