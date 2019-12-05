@@ -204,7 +204,8 @@ _ADD_NODE_BODY:
  *	@param[in]  entity  - entity buffer 
  *	@param[in]  _size   - size of entity buffer
  *	@param[out] None 
- *	@return	    ture/flase 
+ *	@return     true/flase
+ *	@note		*** TO BE SURE param 'entity' has certain size info, If entity contain '\0' 
  **/
 bool mime_entity::load(string &entity)
 {
@@ -220,7 +221,7 @@ bool mime_entity::load(string &entity)
 
 	if (entity.find("\r\n", 0) == 0)  
 	{ 
-		this->sdbody.set(entity.substr(2, entity.size())); 
+		this->sdbody.set(entity.substr(2, entity.size()), entity.size()-2);
 		return true;
 	}	
 
@@ -339,6 +340,19 @@ _ADD_NODE_BODY:
 	}
 
 	return true;
+}
+
+/**
+ *	@brief	    Load mime entity from some string buffer 
+ *	@param[in]  entity  - entity buffer 
+ *	@param[in]  _size   - size of entity buffer
+ *	@param[out] None 
+ **/
+bool mime_entity::load(const char *entity, string::size_type _size)
+{
+	string _entity(entity, _size);
+
+	return this->set(_entity    );
 }
 
 /**

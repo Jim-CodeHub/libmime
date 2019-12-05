@@ -51,16 +51,17 @@ using namespace std ;
  **/
 class string_token{
 	public:
-		string_token(){}; /**< Empty constructure */
-		string_token(const string &str, const string &delim						   );
-		string_token(const string &str, const char *delim, string::size_type _dSize);
-		string_token(const string &str, const char *delim						   );
+		string_token(){ this->stoks.clear(); }; /**< Empty constructure */
+		string_token(const string &str, const string &delim												  );
+		string_token(const char *str, string::size_type _size, const string &delim						  );
+		string_token(const char *str, string::size_type _size, const char *delim, string::size_type _dsize);
 
-		void set(const string &str, const string &delim							   );
+		void set(const string &str, const string &delim													  );
+		void set(const char *str, string::size_type _size, const string &delim							  );
+		void set(const char *str, string::size_type _size, const char *delim, string::size_type _dsize	  );
 
-		void cut(const string &str, const char *delim, string::size_type _size	   );
-		void cut(const string &str, const char *delim							   );
-		void cut(const string &str, const string &delim							   );
+		void cut(const string &str, const string &delim													  );
+		void cut(const char *str, string::size_type _size, const string &delim							  );
 
 		const string get_stok(string::size_type pos = 0) const noexcept			    ;
 

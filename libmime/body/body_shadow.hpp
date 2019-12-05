@@ -55,9 +55,9 @@ class body_shadow : public body{
 	public: friend class mime_entity;
 	public:
 		body_shadow(){}; /**< Empty structure   */
-		body_shadow(const class body_shadow &sdbody){ *this = sdbody;}				  ;
-		body_shadow(const string &sdbody):body(sdbody){}							  ;
-		body_shadow(const char *sdbody, string::size_type _size):body(sdbody, _size){};
+		body_shadow(const class body_shadow &sdbody){ *this = sdbody;}				    ;
+		body_shadow(const string &sdbody, string::size_type _size):body(sdbody, _size){};
+		body_shadow(const char *sdbody, string::size_type _size):body(sdbody, _size){}  ;
 
 	protected:
 		list<class mime_entity*> part_entity;

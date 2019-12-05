@@ -22,20 +22,26 @@ using namespace NS_LIBMIME;
 
 /**
  *	@brief	    Set string body 
- *	@param[in]  body - string body 
+ *	@param[in]  body  - string body 
+ *	@param[in]  _size - size of body  
  *	@param[out] None
  *	@return		None
- *	@note		Dangerous interfase : body MAY having '\0' truncated in binary data
+ *	@note		param '_size' is to prevent the 'body' not ending in '\0' 
+ *				or 
+ *				having '\0' truncated in binary data
  **/
-void body::set(const string &body)
+void body::set(const string &body, string::size_type _size)
 { 
-	this->bodys->assign(body + "\r\n");
-	this->_size = body.size();
+	this->bodys->assign(body, 0, _size);
+	this->bodys->append("\r\n");
 
 	return;	
 }
 
-body::body(const string &body) { this->set(body); }
+body::body(const string &body, string::size_type _size)
+{ 
+	this->set(body, _size);
+}
 
 /**
  *	@brief	    Set string body 
@@ -51,8 +57,6 @@ void body::set(const char *body, string::size_type _size)
 {
 	this->bodys->assign(body, _size);
 	this->bodys->append("\r\n");
-
-	this->_size = _size;
 
 	return;
 }
@@ -78,7 +82,7 @@ void body::load(const char *file_path, string::size_type offset, long int _size)
 {
 	FILE *pFILE = fopen(file_path, "r");
 
-	this->bodys->clear(); this->_size = 0;
+	this->bodys->clear();
 
 	if (-1 == fseek(pFILE, offset, SEEK_SET)) {
 		goto _EXIT;
@@ -92,8 +96,6 @@ void body::load(const char *file_path, string::size_type offset, long int _size)
 	while ((EOF != (ch = fgetc(pFILE)) && (0 != _size)))
 	{
 		this->bodys->push_back(ch);
-		this->_size++;     
-
 		_size -= (-1 == _size)?0:1;
 	}
 
@@ -116,18 +118,20 @@ void body::fill(const char *file_path)
 		throw ("Exception : 'body.cpp' - file open error!" );
 	}
 
-	char *buff = new char[this->_size];
+	string::size_type body_size = this->bodys->size();
 
-	for (string::size_type i = 0; i < _size; i++)
+	char *buff = new char[body_size];
+
+	for (string::size_type i = 0; i < body_size; i++)
 	{
 		buff[i] = (*(this->bodys))[i];
 	}
 
-	if (1 != fwrite(buff, this->_size, 1, pFILE)) {
+	if (1 != fwrite(buff, body_size, 1, pFILE)) {
 		throw ("Exception : 'body.cpp' - file write error!");
 	}
 
-	delete buff;
+	delete [] buff;
 }
 
 /**
@@ -138,8 +142,7 @@ void body::fill(const char *file_path)
  **/
 const class body &body::operator=(const class body &_body)
 {
-	this->bodys->assign(*(_body.bodys), 0, _body.size());
-	this->_size = _body.size();
+	this->bodys->assign(*(_body).bodys);
 
 	return _body;
 }
@@ -153,17 +156,6 @@ const class body &body::operator=(const class body &_body)
 const string &body::get(void) const noexcept
 {
 	return *bodys;
-}
-
-/**
- *	@brief	    Get body size 
- *	@param[in]  None 
- *	@param[out] None
- *	@return		Size of the body	
- **/
-string::size_type body::size(void) const noexcept
-{
-	return this->_size;
 }
 
 /**

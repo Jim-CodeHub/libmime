@@ -1,5 +1,5 @@
 
-OBJS    = mime_entity mime_message body_fill body_load
+OBJS    = tst_token
 SUBDIRS = 
  
  

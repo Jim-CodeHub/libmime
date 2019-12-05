@@ -60,6 +60,7 @@ class mime_entity{
 		void set_node(class mime_header &header, const class body_shadow &sdbody );
 		class mime_entity *set_part(class mime_header &header					 );
 
+		//TBD load AND make function ADD size (of body)
 		bool load(string &_entity												 );
 		const string make(void													 );	
 
