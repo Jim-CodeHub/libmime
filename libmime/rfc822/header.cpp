@@ -116,6 +116,28 @@ header::header(const string &field_name, const class field_body *pBody_t)
 }
 
 /**
+ *	@brief	    Set header with string field_name and string instance body 
+ *	@param[in]  field_name
+ *	@param[in]  field_body - string instance 
+ *	@param[out] None
+ *	@return		None
+ **/
+void header::set(const string &field_name, const string &field_body)
+{
+	class field_name  _name(field_name);
+	class string_body sbody(field_body);
+
+	class field _field(_name, &sbody  );
+
+	this->set(_field);           return;
+}
+
+header::header(const string &field_name, const string &field_body)
+{
+	this->set(field_name, field_body);
+}
+
+/**
  *	@brief	    Operator '=' overloading 
  *	@param[in]  _header 
  *	@param[out] None 

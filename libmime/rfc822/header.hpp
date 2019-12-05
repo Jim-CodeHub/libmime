@@ -57,9 +57,11 @@ class header{
 		header(){}; /**< Empty structure */
 		header(const class field &field_line								);		
 		header(const string &field_name, const class field_body *pBody_t  	);
+		header(const string &field_name, const string &field_body			);
 
 		void set(const class field &field_line							  	);
 		void set(const string &field_name, const class field_body *pBody_t	);
+		void set(const string &field_name, const string &field_body			);
 
 		const class header &operator=(const class header &_header		  	);
 
