@@ -91,7 +91,7 @@ void mime_entity::set_node(class mime_header &header, const class body_shadow &s
  **/
 void mime_entity::set_node(class mime_header &header, const string &body, string::size_type _size)
 {
-	class body_shadow sdbody(body, _size );
+	class body_shadow sdbody(body, (0 == _size)?body.size():_size);
 
 	this->set_node(header, sdbody); return;
 }
