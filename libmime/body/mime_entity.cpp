@@ -75,6 +75,28 @@ void mime_entity::set_node(class mime_header &header, const class body_shadow &s
 }
 
 /**
+ *	@brief	    Set mime entity leaf node 
+ *	@param[in]  header - mime entity header 
+ *	@param[in]  body   - string body 
+ *	@param[in]  _size  - size of string body 
+ *	@param[out] None 
+ *	@return	    None 
+ *	@note		1. The function can be called repeatedly, but only to save the last settings 
+ *				2. The function SHOULD BE used as a leaf node setting 
+ *				3. The header will be filtered when set an non-mime-entity header
+ *			    4. Base64 encoding will be used as default
+ *
+ *			    5. NOTE THAT IF '\0' IS A VALID MESSAGE, TO USE THE EXACT _SIZE VALUE
+ *				   , OR Param '_size' default value is 0 AND 'body.size()' will be used. 
+ **/
+void mime_entity::set_node(class mime_header &header, const string &body, string::size_type _size)
+{
+	class body_shadow sdbody(body, _size );
+
+	this->set_node(header, sdbody); return;
+}
+
+/**
  *	@brief	    Set mime enity part which under the param 'header' 
  *	@param[in]  header - mime entity (part father's) header
  *	@param[out] None 
