@@ -84,13 +84,9 @@ void body::load(const char *file_path, string::size_type offset, long int _size)
 
 	this->bodys->clear();
 
-	if (-1 == fseek(pFILE, offset, SEEK_SET)) {
-		goto _EXIT;
-	}
+	if (NULL == pFILE) { perror("Exception : file open error"); exit(-1); }
 
-	if (NULL == pFILE) {
-		throw ("Exception : 'body.cpp' - file open error!");
-	}
+	if (-1 == fseek(pFILE, offset, SEEK_SET)){ goto _EXIT; }
 
 	int ch;
 	while ((EOF != (ch = fgetc(pFILE)) && (0 != _size)))
@@ -98,6 +94,8 @@ void body::load(const char *file_path, string::size_type offset, long int _size)
 		this->bodys->push_back(ch);
 		_size -= (-1 == _size)?0:1;
 	}
+
+	fclose(pFILE);
 
 _EXIT:
 	return;

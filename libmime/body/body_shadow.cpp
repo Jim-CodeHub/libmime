@@ -21,8 +21,15 @@ using namespace NS_LIBMIME;
 */
 
 /**
- *	@brief	    xxx 
- *	@param[in]  
- *	@param[out] 
- *	@return	    
+ *	@brief	    Operator '=' overloading 
+ *	@param[in]  _body
+ *	@param[out] None
+ *	@return	    _body
  **/
+const class body_shadow &body_shadow::operator=(const class body_shadow &_body)
+{
+	this->bodys->assign(*(_body).bodys);
+
+	return _body;
+}
+

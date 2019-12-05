@@ -7,11 +7,12 @@ using namespace NS_LIBMIME;
 
 int main(void)
 {
-	class body b;
+	class body_shadow b;
 
-	b.load("/home/jim/Project/bika.jpg", 0, -1);
+	b.load("xx", 0, -1);
 
-	b.fill("./a.jpg");
+	b.fill("xx");
+	
 
 	return 0;
 }

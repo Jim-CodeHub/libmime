@@ -54,10 +54,13 @@ class mime_entity; /**< Forward declaration */
 class body_shadow : public body{
 	public: friend class mime_entity;
 	public:
-		body_shadow(){}; /**< Empty structure   */
+		body_shadow() { this->clear(); }; /**< Empty structure   */
+		~body_shadow(){ delete bodys; bodys = NULL; }									;
 		body_shadow(const class body_shadow &sdbody){ *this = sdbody;}				    ;
 		body_shadow(const string &sdbody, string::size_type _size):body(sdbody, _size){};
 		body_shadow(const char *sdbody, string::size_type _size):body(sdbody, _size){}  ;
+
+		const class body_shadow &operator=(const class body_shadow &_body			   );
 
 	protected:
 		list<class mime_entity*> part_entity;
