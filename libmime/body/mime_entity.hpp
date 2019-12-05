@@ -55,25 +55,25 @@ using namespace std ;
 class mime_entity{
 	public: friend class body_shadow; 
 	public:
-		mime_entity(){ this->nest = true; } /**< Empty constructure */						 ;
+		mime_entity(){ this->nest = true; } /**< Empty constructure */							 ;
 
-		void set_node(class mime_header &header, const class body_shadow &sdbody			);
-		void set_node(class mime_header &header, const string &body, string::size_type _size);
-		class mime_entity *set_part(class mime_header &header								);
+		void set_node(class mime_header &header, const class body_shadow &sdbody				);
+		void set_node(class mime_header &header, const string &body, string::size_type _size = 0);
+		class mime_entity *set_part(class mime_header &header									);
 
-		bool load(string &_entity												 			);
-		bool load(const char *entity, string::size_type _size					 			);
-		const string make(void													 			);	
+		bool load(string &_entity												 				);
+		bool load(const char *entity, string::size_type _size					 				);
+		const string make(void													 				);	
 
-		static const class mime_header &check_header(class mime_header &_header	 			);
+		static const class mime_header &check_header(class mime_header &_header	 				);
 
-		const class mime_header &get_header(void) const noexcept                 			 ;
-		const class body_shadow &get_sdbody(void) const noexcept				 			 ;
+		const class mime_header &get_header(void) const noexcept                 				 ;
+		const class body_shadow &get_sdbody(void) const noexcept				 				 ;
 
-		const class mime_entity *get_part(string::size_type _inx) const noexcept 			 ;
+		const class mime_entity *get_part(string::size_type _inx) const noexcept 				 ;
 
 	protected:
-		void clear(void															 			);
+		void clear(void															 				);
 
 	protected:
 		bool nest; /**< Mark if the entity can be nested or not */ 
