@@ -50,6 +50,21 @@ mime_header::mime_header(enum MIME_FNAME fname_t, const class field_body *pBody_
 }
 
 /**
+ *	@brief	    Set mime header with official field name and string field body 
+ *	@param[in]  fname_t - official field name enumeration 
+ *	@param[in]  body    - string field body
+ *	@param[out] None 
+ *	@return	    None 
+ *	@exception  "Const char *", field body IS NOT MATCH the field name
+ **/
+void mime_header::set(enum MIME_FNAME fname_t, const string &body)
+{
+	class string_body str_body(body     );
+
+	this->set(fname_t, &str_body); return;
+}
+
+/**
  *	@brief	    Set mime header with class field 
  *	@param[in]  field_line 
  *	@param[out] None 

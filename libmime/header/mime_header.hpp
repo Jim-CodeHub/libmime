@@ -63,6 +63,7 @@ class mime_header : public header{
 		void set(const class field &field_line					   			 							   );
 		void set(const string &field_name, const class field_body *pBody_t	 							   );
 		void set(enum MIME_FNAME fname_t, const class field_body *pBody_t	 							   );
+		void set(enum MIME_FNAME fname_t, const string &body											   );
 
 		class field &get_field(enum MIME_FNAME fname_t						 							   );
 		const class field &get_field(enum MIME_FNAME fname_t) const noexcept								;
