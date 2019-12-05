@@ -1,5 +1,5 @@
 
-OBJS    = tst_token
+OBJS    = tst_token body_load
 SUBDIRS = 
  
  

@@ -120,18 +120,11 @@ void body::fill(const char *file_path)
 
 	string::size_type body_size = this->bodys->size();
 
-	char *buff = new char[body_size];
-
-	for (string::size_type i = 0; i < body_size; i++)
-	{
-		buff[i] = (*(this->bodys))[i];
-	}
-
-	if (1 != fwrite(buff, body_size, 1, pFILE)) {
+	if (1 != fwrite(this->bodys->data(), body_size, 1, pFILE)) {
 		throw ("Exception : 'body.cpp' - file write error!");
 	}
 
-	delete [] buff;
+	return;
 }
 
 /**
