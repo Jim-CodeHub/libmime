@@ -21,6 +21,18 @@ using namespace NS_LIBMIME;
 */
 
 /**
+ *	@brief	    Set a basic (ancestor) entity header 
+ *	@param[in]  header - class mime_header 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+mime_entity::mime_entity(class mime_header &header)
+{
+	this->nest   = true	 ;
+	this->header = header;
+}
+
+/**
  *	@brief	    Delete the header field, if it's not belong to the mime entity
  *	@param[in]  _header 
  *	@param[out] None 
@@ -69,7 +81,7 @@ void mime_entity::set_node(class mime_header &header, const class body_shadow &s
 			?(this->header.set(Content_Transfer_Encoding, &str_body), "base64")
 			:util::to_lower(encode) 
 			
-			, sdbody.get(), *(this->sdbody.bodys), sdbody.get().size());
+			, sdbody.get(), *(this->sdbody.bodys));
 
 	return;
 }
@@ -154,6 +166,29 @@ class mime_entity *mime_entity::set_part(class mime_header &header)
 	this->sdbody.part_entity.push_back(pEntity);
 	
 	return pEntity;
+}
+
+/**
+ *	@brief	    Set mime enity part which under FATHER header
+ *	@param[in]  None 
+ *	@param[out] None 
+ *	@return		mime entity part pointer OR NULL if subtype 'mixed' does not exsists
+ *
+ *	@note		Use this funtion when FATHER HEADER already has been setted
+ *
+ *	@note		*Multi part depth
+ *					1. The function can be called repeatedly, to set sub-part with return pointer OR
+ *					   to set brother-part under the same object 
+ *					2. Only 'Content-Type' with major-type 'multipart' and subtype 'mixed' can be nested deeply, 
+ *					   if not in this case, NULL will be returned
+ *
+ *	@exception  "Const char *" 'multipart' type does not exsits & 'mixed' subtyp lose
+ **/
+class mime_entity *mime_entity::set_part(void)
+{
+	class mime_header	  header ;
+
+	return this->set_part(header);
 }
 
 /**
@@ -356,9 +391,8 @@ _ADD_NODE_BODY:
 	if ("" != (decode = this->header.get_field(Content_Transfer_Encoding).get_body()))
 	{
 		class codec _codec;
-		string::size_type _size;
 
-		_codec.decode(util::to_lower(decode), sdbody, *(this->sdbody.bodys), _size);
+		_codec.decode(util::to_lower(decode), sdbody, *(this->sdbody.bodys));
 	}
 
 	return true;

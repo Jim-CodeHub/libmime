@@ -1,5 +1,5 @@
 
-OBJS    = version_body.o contenttype_body.o 
+OBJS    = version_body.o contenttype_body.o  contentid_body.o
 SUBDIRS =
  
  

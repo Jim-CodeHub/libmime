@@ -62,11 +62,10 @@ const char base64_decode_table[] = {
  *------------------------------------------------------------------------------------------------------------------
 */
 
-void base64_encode(const unsigned char *binIn, char *base64Out						);
-void base64_encode(const string &_binIn, string::size_type _size, string &_base64Out);
-
-void base64_decode(const char *base64In, unsigned char *binOut						);
-void base64_decode(const string &base64In, string &_binOut, string::size_type &_size);
+void base64_encode(const char *binIn, string::size_type _size, char *base64Out );
+void base64_encode(const string &_binIn, string &_base64Out					   );
+void base64_decode(const char *base64In, char *binOut, string::size_type &_size);
+void base64_decode(const string &base64In, string &_binOut					   );
 
 
 #endif /*__BASE64_HPP__*/

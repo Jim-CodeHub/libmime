@@ -16,8 +16,8 @@
  *
  *------------------------------------------------------------------------------------------------------------------
 */
-static void encode_block(const unsigned char *binIn, char *base64Out);
-static void decode_block(const char *base64In, unsigned char *binOut);
+static void encode_block(const unsigned char *binIn, uint8_t _size, char *base64Out);
+static void decode_block(const char *base64In, unsigned char *binOut			   );
 
 
 /*-----------------------------------------------------------------------------------------------------------------
@@ -31,27 +31,28 @@ static void decode_block(const char *base64In, unsigned char *binOut);
  *	@brief	    Encode '8-bit' binary bytes into base64 ASCII 
  *	@param[in]  binIn 
  *	@param[out] base64Out 
+ *	@param[in]  _size  -  size of _binIn 
  *	@return		None
  *	@note		The function does no param checking for out
  *	@warning	Note the use of the escape character '\'
  **/
-void base64_encode(const unsigned char *binIn, char *base64Out)
+void base64_encode(const char *binIn, string::size_type _size, char *base64Out)
 {
-	unsigned char bufCom[3], i = 0, j = 0;
+	unsigned char bufCom[3], i = 0, j = 0, k = 0;
 	char		  bufOut[4];
 
-	while ('\0' != binIn[i])
+	while (i != _size)
 	{
-		for (unsigned char k = 0; k < 3; k++, i++) /**< Set buffer in for encode block */
+		for (k = 0; k < 3; k++, i++) /**< Set buffer in for encode block */
 		{
-			bufCom[k] = binIn[i];
+			if (i == _size) {break;}
 
-			if ('\0' == binIn[i]) {break;}			
+			bufCom[k] = binIn[i]   ;
 		}
 
-		encode_block(bufCom, bufOut);
+		encode_block(bufCom, k, bufOut);
 
-		for (unsigned char k = 0; k < 4; k++, j++) /**< Set buffer out for base64 str */
+		for (k = 0; k < 4; k++, j++) /**< Set buffer out for base64 str */
 		{
 			base64Out[j] = bufOut[k];
 		}
@@ -68,26 +69,31 @@ void base64_encode(const unsigned char *binIn, char *base64Out)
  *	@param[in]  _size  -  size of _binIn 
  *	@param[out] _base64Out 
  *	@return		None
+ *	@note		To be sure that param '_binIn' has exact size info
  *	@warning	Note the use of the escape character '\'
  **/
-void base64_encode(const string &_binIn, string::size_type _size, string &_base64Out)
+void base64_encode(const string &_binIn, string &_base64Out)
 {
-	unsigned char bufCom[3], i = 0;
+	unsigned char bufCom[3], i = 0, k = 0;
 	char		  bufOut[4];
 
 	_base64Out.clear();
-	string::const_iterator binIn  = _binIn.begin();
+
+	string::const_iterator binIn = _binIn.begin();
+	string::size_type	   _size = _binIn.size( );
 
 	while (i != _size)
 	{
-		for (unsigned char k = 0; ((k < 3) && (i != _size)); k++, i++) /**< Set buffer in for encode block */
+		for (k = 0; k < 3; k++, i++) /**< Set buffer in for encode block */
 		{
-			bufCom[k] = binIn[i];
+			if (i == _size) {break;}			
+
+			bufCom[k] = binIn[i]   ;
 		}
 
-		encode_block(bufCom, bufOut);
+		encode_block(bufCom, k, bufOut);
 
-		for (unsigned char k = 0; k < 4; k++) /**< Set buffer out for base64 str */
+		for (k = 0; k < 4; k++	   ) /**< Set buffer out for base64 str */
 		{
 			_base64Out.push_back(bufOut[k]);
 		}
@@ -100,10 +106,11 @@ void base64_encode(const string &_binIn, string::size_type _size, string &_base6
  *	@brief	    Decode base64 ASCII into '8-bit' binary bytes 
  *	@param[in]	base64In
  *	@param[out] binOut
+ *	@param[out] _size   -  size of binOut
  *	@return		None
  *	@note		The function does no param checking for out
  **/
-void base64_decode(const char *base64In, unsigned char *binOut)
+void base64_decode(const char *base64In, char *binOut, string::size_type &_size)
 {
 	unsigned char bufOut[3], i = 0, j = 0;
 	char		  bufCom[4];
@@ -125,25 +132,22 @@ void base64_decode(const char *base64In, unsigned char *binOut)
 		}
 	}
 
-	binOut[j] = '\0';
-
-	return;
+	_size = j - 1;	return;
 }
 
 /**
  *	@brief	    Decode base64 ASCII into '8-bit' binary bytes 
  *	@param[in]	base64In
  *	@param[out] _binOut
- *	@param[out] _size	-	size of string that has been decoded 
  *	@return		None
  *	@note		The function does no param checking for out
  **/
-void base64_decode(const string &base64In, string &_binOut, string::size_type &_size)
+void base64_decode(const string &base64In, string &_binOut)
 {
 	unsigned char bufOut[3], i = 0;
 	char		  bufCom[4];
 
-	_binOut.clear(); _size = 0;
+	_binOut.clear();
 
 	while ('\0' != base64In[i])
 	{
@@ -159,7 +163,6 @@ void base64_decode(const string &base64In, string &_binOut, string::size_type &_
 		for (unsigned char k = 0; k < 3; k++	) /**< Set buffer out for 8-bit bin */
 		{
 			_binOut.push_back(bufOut[k]);
-			_size++; /**< Buffer character counter */
 		}
 	}
 
@@ -169,16 +172,15 @@ void base64_decode(const string &base64In, string &_binOut, string::size_type &_
 /**
  *	@brief	    Decode 3 '8-bit' binary bytes as 4 '6-bit' data
  *	@param[in]  binIn
+ *	@param[in]  _size 
  *	@param[out]	base64Out
  *	@return		None
  *	@note		The function does no param checking for out
  *	@warning	Note the use of the escape character '\'
  **/
-static void encode_block(const unsigned char *binIn, char *base64Out)
+static void encode_block(const unsigned char *binIn, uint8_t _size, char *base64Out)
 {
-	unsigned char i = 0; while ('\0' != binIn[i]) i++; /**< Calculate data size			*/
-
-	switch (i)
+	switch (_size)
 	{
 		case 0: break;
 		case 1:

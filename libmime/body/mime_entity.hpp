@@ -56,10 +56,12 @@ class mime_entity{
 	public: friend class body_shadow; 
 	public:
 		mime_entity(){ this->nest = true; } /**< Empty constructure */							 ;
+		mime_entity(class mime_header &header													);
 
 		void set_node(class mime_header &header, const class body_shadow &sdbody				);
 		void set_node(class mime_header &header, const string &body, string::size_type _size = 0);
 		class mime_entity *set_part(class mime_header &header									);
+		class mime_entity *set_part(void														);
 
 		bool load(string &_entity												 				);
 		bool load(const char *entity, string::size_type _size					 				);

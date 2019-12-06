@@ -36,6 +36,7 @@
 #include <libmime/header/mime_header.hpp>
 #include <libmime/header/field_body/version_body.hpp>
 #include <libmime/header/field_body/contenttype_body.hpp>
+#include <libmime/header/field_body/contentid_body.hpp>
 #include <libmime/mime_message.hpp>
 
 

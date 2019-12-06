@@ -1,5 +1,5 @@
 /**-----------------------------------------------------------------------------------------------------------------
- * @file	mime_message.hpp
+ * @file	contentid_body.hpp
  * @brief	Multi-purpose mail extensions	
  * @ref		IETF-rfc2045, rfc2046, rfc2047, rfc2048, rfc2049 
  *
@@ -8,18 +8,29 @@
 */
 
 
-#ifndef __LIBMIME_MIME_MESSAGE_HPP__
-#define __LIBMIME_MIME_MESSAGE_HPP__
+#ifndef __LIBMIME_CONTENTID_BODY_HPP__
+#define __LIBMIME_CONTENTID_BODY_HPP__
 
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_MESSAGE INCLUDES
+ *												CONTENTID_BODY INCLUDES
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
-#include <libmime/body/mime_entity.hpp>
+#include <list>
+#include <random>
+#include <chrono>
+#include <sstream>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <libmime/rfc822/field_body.hpp>
+#include <libmime/util/token.hpp>
+#include <libmime/header/param.hpp>
+
 
 namespace NS_LIBMIME{
 
@@ -28,7 +39,7 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_MESSAGE SHORT ALIAS 
+ *												CONTENTID_BODY SHORT ALIAS 
  *
  *------------------------------------------------------------------------------------------------------------------
 */
@@ -36,39 +47,43 @@ using namespace std ;
 
 /*------------------------------------------------------------------------------------------------------------------
  *
- *												MIME_MESSAGE DATA BLOCK
+ *												CONTENTID_BODY DATA BLOCK
  *
  *------------------------------------------------------------------------------------------------------------------
 */
 
 /**
- *	@brief mime_message class and function set
+ *	@brief string (structed) field body class and function set
  *	@note 
- *		Inheritance graph : None 
+ *		Inheritance graph : contentid_body->field_body (rfc822)
  **/
-class mime_message : public mime_entity{
+class contentid_body : public field_body{
 	public:
-		mime_message(){}; /**< Empty structure */
-		mime_message(class mime_header &header):mime_entity(header){}	  ;
+		static const string lable													  ;
 
-		void set_preamble(const string &_preamble						 );
-		void set_preamble(const char *_preamble, string::size_type _size );
+	public:
+		contentid_body(const string &host_name); /**< Contruct cid structure */
 
-		void set_epilogue(const string &_epilogue						 );
-		void set_epilogue(const char *_epilogue, string::size_type _size );
+		void set(const string &cid													 );
+		void set(const char *cid, string::size_type _size							 );
 
-		const string &get_preamble(void) const noexcept					  ;
-		const string &get_epilogue(void) const noexcept					  ;
+		const string &get_lable(void) const noexcept { return contentid_body::lable; };
 
-		const string make(void											 );
+		const string get(void) const noexcept										  ;
+
+	
+		static const string construct_id(const string &host_name					 );
 
 	protected:
-		string preamble;	 string epilogue;
+		class field_body *clone(void) const											  ;
+
+	private:
+		string cid_body; string host_name;
 };
 
 
 } /* namespace NS_LIBMIME */
 
 
-#endif /*__LIBMIME_MIME_MESSAGE_HPP__*/
+#endif /*__LIBMIME_CONTENTID_BODY_HPP__*/
 

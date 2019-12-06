@@ -57,7 +57,6 @@ class field{
 		field(){ pbody = NULL;}												     ;
 		~field(){ if (NULL != pbody) { delete pbody; pbody = NULL;}	}			 ;
 		field(const class field &_field) { *this = _field; }				     ;
-
 		field(const class field_name &name_t, const class field_body *pBody_t   );
 
 		void set(const class field_name &name_t, const class field_body *pBody_t);

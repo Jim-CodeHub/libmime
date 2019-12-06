@@ -1,5 +1,5 @@
 
-OBJS    = tst_token body_load
+OBJS    = tst_token body_load mime_message base64 cid
 SUBDIRS = 
  
  
