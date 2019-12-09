@@ -7,11 +7,11 @@ using namespace NS_LIBMIME;
 
 int main(void)
 {
-	class body_shadow b;
+	const class body_shadow b;
 
-	b.load("xx", 0, -1);
+	b.load("TharstenCaseStudy_ESP_FINAL.pdf", 0, -1);
 
-	b.fill("xx");
+	b.fill("./1.pdf");
 	
 
 	return 0;

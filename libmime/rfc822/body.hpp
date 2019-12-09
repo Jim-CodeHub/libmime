@@ -52,26 +52,27 @@ using namespace std ;
 class body{
 	public:
 		body() {this->clear();};	/**< Empty structure   */
-//		~body(){ delete bodys; bodys = NULL;}										 ;
-		body(const class body &_body){ *this = _body; }								 ;
+		body(const class body &_body){ *this = _body; }									 ;
 
-		body(const string &_body, string::size_type _size						   	);
-		body(const char *body, string::size_type _size	   							);
+		body(const string &_body, string::size_type _size						   		);
+		body(const char *body, string::size_type _size	   								);
 
-		const class body &operator=(const class body &_body							);
+		const class body &operator=(const class body &_body								);
 
-		void set(const string &body, string::size_type _size						);
-		void set(const char *body, string::size_type _size 							);
+		void set(const string &body, string::size_type _size							);
+		void set(const char *body, string::size_type _size 								);
 
-		const string &get(void) const noexcept			   							 ;
+		const string &get(void) const noexcept											 ;
 
-		void load(const char *file_path, string::size_type offset,  long int _size	);
-		void fill(const char *file_path												);
+		void load(const char *file_path, string::size_type offset,  long int _size		);
+		void load(const char *file_path, string::size_type offset,  long int _size) const;
+		void fill(const char *file_path													);
+		void fill(const char *file_path) const											 ;
 
-		void clear(void																);
+		void clear(void																	);
 		
 	protected:
-		string *bodys = new string; /**< String will hold it's size info            */
+		string *bodys = new string; /**< String will hold it's size info            	*/
 };
 
 

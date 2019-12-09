@@ -102,6 +102,41 @@ _EXIT:
 }
 
 /**
+ *	@brief	    Load file content to body 
+ *	@param[in]  file_path - file path with name 
+ *	@param[in]  offset	  - the postion to load from 
+ *	@param[in]  _size	  - the size to load 
+ *	@param[out] None
+ *	@return	    None 
+ *	@note		1. if offset already exceeds the file content length, the function will do nothing
+ *				2. if set param '_size' with -1, the function will load the entire file
+ *
+ *	@exception  "Const char *", file open error
+ **/
+void body::load(const char *file_path, string::size_type offset, long int _size) const
+{
+	FILE *pFILE = fopen(file_path, "r");
+
+	this->bodys->clear();
+
+	if (NULL == pFILE) { perror("Exception : file open error"); exit(-1); }
+
+	if (-1 == fseek(pFILE, offset, SEEK_SET)){ goto _EXIT; }
+
+	int ch;
+	while ((EOF != (ch = fgetc(pFILE)) && (0 != _size)))
+	{
+		this->bodys->push_back(ch);
+		_size -= (-1 == _size)?0:1;
+	}
+
+	fclose(pFILE);
+
+_EXIT:
+	return;
+}
+
+/**
  *	@brief	    Write body conent to file
  *	@param[in]  file_path - file path with name 
  *	@param[out] None
@@ -109,6 +144,30 @@ _EXIT:
  *	@exception  "Const char *", file open error, file write error
  **/
 void body::fill(const char *file_path)
+{
+	FILE *pFILE = fopen(file_path, "w");
+
+	if (NULL == pFILE) {
+		throw ("Exception : 'body.cpp' - file open error!" );
+	}
+
+	string::size_type body_size = this->bodys->size();
+
+	if (1 != fwrite(this->bodys->data(), body_size, 1, pFILE)) {
+		throw ("Exception : 'body.cpp' - file write error!");
+	}
+
+	return;
+}
+
+/**
+ *	@brief	    Write body conent to file
+ *	@param[in]  file_path - file path with name 
+ *	@param[out] None
+ *	@return	    None 
+ *	@exception  "Const char *", file open error, file write error
+ **/
+void body::fill(const char *file_path) const
 {
 	FILE *pFILE = fopen(file_path, "w");
 
