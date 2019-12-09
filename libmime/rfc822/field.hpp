@@ -68,6 +68,7 @@ class field{
 		const class field &operator=(const class field &_field					);
 
 		const string get(void) const noexcept									 ;
+		void clear(void															);
 
 		const string get_name(void) const noexcept								 ;
 		const string get_body(void) const noexcept								 ;

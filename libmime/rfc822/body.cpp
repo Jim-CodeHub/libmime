@@ -155,5 +155,11 @@ const string &body::get(void) const noexcept
  *	@param[out] None
  *	@return		None	
  **/
-void body::clear(void) { this->bodys->clear(); }
+void body::clear(void) 
+{ 
+	if (NULL != this->bodys)
+	{
+	}
+
+		this->bodys->clear(); }
 

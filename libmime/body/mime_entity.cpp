@@ -429,6 +429,8 @@ void mime_entity::clear(void)
 		delete *_big_; _big_++;
 	}
 
+	this->sdbody.part_entity.clear();
+
 	return;
 }
 

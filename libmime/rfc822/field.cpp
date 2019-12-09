@@ -144,6 +144,19 @@ const string field::get(void) const noexcept
 }
 
 /**
+ *	@brief	    Clear field
+ *	@param[in]  None 
+ *	@param[out] None 
+ *	@return	    None 
+ **/
+void field::clear(void)
+{
+	if (NULL != pbody) { delete pbody; pbody = NULL; }
+
+	return;
+}
+
+/**
  *	@brief	    Get field name from field
  *	@param[in]  None 
  *	@param[out] None 

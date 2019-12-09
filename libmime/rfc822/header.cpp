@@ -237,7 +237,16 @@ bool header::exist_field(const string &field_name)
  *	@param[out] None
  *	@return	    None 
  **/
-void header::clear(void) { headers.clear(); }
+void header::clear(void) 
+{ 
+	deque<field>::iterator _big = headers.begin(), _end = headers.end();
+
+	while (_big != _end){
+		_big->clear(); _big++; /**< Clear field_body */
+	}	
+
+	headers.clear();  return;
+}
 
 /**
  *	@brief	    Delete a field of headers
