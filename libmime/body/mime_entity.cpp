@@ -387,14 +387,16 @@ _ADD_NODE_BODY:
 	/**----------------------------------------------------------------------------*/
 	/**< Decode and set body */
 
-	string decode;
-	if ("" != (decode = this->header.get_field(Content_Transfer_Encoding).get_body()))
-	{
-		class codec _codec;
+	string decode; class codec _codec;
 
-		_codec.decode(util::to_lower(decode), sdbody, *(this->sdbody.bodys));
+	if ("" == (decode = this->header.get_field(Content_Transfer_Encoding).get_body()))
+	{
+		this->sdbody.bodys->assign(sdbody); goto _EXIT;
 	}
 
+	_codec.decode(util::to_lower(decode), sdbody, *(this->sdbody.bodys));
+
+_EXIT:
 	return true;
 }
 
