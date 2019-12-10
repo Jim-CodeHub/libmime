@@ -408,9 +408,11 @@ _EXIT:
  **/
 bool mime_entity::load(const char *entity, string::size_type _size)
 {
-	string _entity(entity, _size);
+	string *_entity = new string; _entity->assign(entity, _size);
 
-	return this->load(_entity   );
+	bool ret = this->load(*_entity);
+
+	delete _entity;	     return ret;
 }
 
 /**

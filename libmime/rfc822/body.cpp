@@ -157,7 +157,8 @@ void body::fill(const char *file_path)
 		throw ("Exception : 'body.cpp' - file write error!");
 	}
 
-	return;
+	fflush(pFILE);
+	fclose(pFILE); return;
 }
 
 /**
@@ -181,7 +182,8 @@ void body::fill(const char *file_path) const
 		throw ("Exception : 'body.cpp' - file write error!");
 	}
 
-	return;
+	fflush(pFILE);
+	fclose(pFILE); return;
 }
 
 /**
