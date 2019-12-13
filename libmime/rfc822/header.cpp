@@ -63,7 +63,7 @@ findIFname::findIFname(const class field_name &FName)
  **/
 bool findIFname::operator()(const string &field_name)
 {
-	return (field_name == match_name)?true:false;
+	return util::string_cmp_ci(field_name, match_name);
 }
 
 /**

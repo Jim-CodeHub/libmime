@@ -55,6 +55,8 @@ class util{
 		static const string to_lower(const string &str, string::size_type _size );
 		static const string to_upper(const string &str							);
 		static const string to_upper(const string &str, string::size_type _size );
+		
+		static bool string_cmp_ci(const string &s1, const string &s2			);
 };
 
 

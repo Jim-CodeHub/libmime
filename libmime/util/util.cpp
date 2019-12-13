@@ -121,3 +121,14 @@ const string util::to_upper(const string &str)
 	return util::to_upper(str, str.size());
 }
 
+/**
+ *	@brief	    Compare string with case-insensitivity mode 
+ *	@param[in]  s1, s2 
+ *	@param[out] None
+ *	@return	    true/false 
+ **/
+bool util::string_cmp_ci(const string &s1, const string &s2)
+{
+	return (util::to_upper(s1) == util::to_upper(s2));
+}
+

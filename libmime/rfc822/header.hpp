@@ -23,6 +23,7 @@
 #include <deque>
 #include <algorithm>
 #include <libmime/rfc822/field.hpp>
+#include <libmime/util/util.hpp>
 
 
 namespace NS_LIBMIME{
