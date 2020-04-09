@@ -32,7 +32,7 @@ export CXX CXXFLAGS
 
 all:$(SUBDIRS)
 	ar -rcs $(PROJECT).a $(shell find ./$(TARGET) -name "*.o")
-	$(CXX) -fPIC -shared $(shell find ./$(TARGET) -name "*.cpp") -I$(CURDIR) -o $(PROJECT).so
+	$(CXX) -fPIC -shared $(CXXFLAGS) $(shell find ./$(TARGET) -name "*.cpp") -o $(PROJECT).so
 
 $(SUBDIRS):
 	$(MAKE) -C $@	
