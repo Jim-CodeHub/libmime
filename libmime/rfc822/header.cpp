@@ -256,7 +256,7 @@ void header::clear(void)
  **/
 void header::remove(const string &field_name)
 {
-	deque<field>::const_iterator _inx;
+	deque<field>::iterator _inx;
 
 	_inx = find_if(headers.begin(), headers.end(), findIFname(field_name));
 
