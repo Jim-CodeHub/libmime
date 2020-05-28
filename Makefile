@@ -10,7 +10,7 @@ TARGET			   =    $(PROJECT)
 
 --PREFIX		   =    ./install
 
-CXX				   =	g++
+CXX				   =	arm-cortex_a9-linux-gnueabi-g++
 
 CXXFLAGS		   =	-Werror -std=c++11
 CXXFLAGS       	  += 	-Wall
