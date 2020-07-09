@@ -299,7 +299,7 @@ const string contenttype_body::construct_boundary(void)
 
 	for (int i = 0 ; i < CONTENTTYPE_BODY_BOUNDARY_MAX; i++)
 	{
-		ss << asciibet[e() % sizeof(asciibet)]; 
+		ss << asciibet[e() % (sizeof(asciibet) - 1)]; 
 	}
 
 	ss >> boundary;

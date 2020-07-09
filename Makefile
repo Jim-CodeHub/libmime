@@ -10,7 +10,7 @@ TARGET			   =    $(PROJECT)
 
 --PREFIX		   =    ./install
 
-CXX				   =	arm-cortex_a9-linux-gnueabi-g++
+CXX				   = 	g++	
 
 CXXFLAGS		   =	-Werror -std=c++11
 CXXFLAGS       	  += 	-Wall
@@ -28,7 +28,7 @@ export CXX CXXFLAGS
 #-------------------------------------------------------------------------------------------------------
 
 
-.PHONY: all clean install tst $(SUBDIRS)
+.PHONY: all clean install demo $(SUBDIRS)
 
 all:$(SUBDIRS)
 	ar -rcs $(PROJECT).a $(shell find ./$(TARGET) -name "*.o")
@@ -47,8 +47,8 @@ install:
 	rm -rf `find ./$(--PREFIX)/include -name "*.cpp"`
 	rm -rf `find ./$(--PREFIX)/include -name "Makefile"`
 
-tst:
-	$(MAKE) -C tst
+demo:
+	$(MAKE) -C demo 
  
 tags:
 	@rm -rf ./tags
