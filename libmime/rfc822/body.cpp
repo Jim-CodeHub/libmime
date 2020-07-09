@@ -211,6 +211,17 @@ const string &body::get(void) const noexcept
 }
 
 /**
+ *	@brief	    Get string body size
+ *	@param[in]  None 
+ *	@param[out] None
+ *	@return		body size
+ **/
+ssize_t  body::get_size(void) const noexcept
+{
+	return this->bodys->size();
+}
+
+/**
  *	@brief	    Clear body 
  *	@param[in]  None 
  *	@param[out] None
@@ -220,7 +231,7 @@ void body::clear(void)
 { 
 	if (NULL != this->bodys)
 	{
+		this->bodys->clear();
 	}
-
-		this->bodys->clear(); }
+}
 
