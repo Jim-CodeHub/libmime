@@ -4,10 +4,10 @@ MIME C++ library that reference RFC822, RFC2045, RFC2046, RFC2047, RFC2048 and R
 ### Now VS Future
 Currently only the parts that might be relevant to HTTP are implemented and int the future implement mail parts, such as 'Message', 'Data and time', 'Address' etc.
 
-###Known-Bug
+### Known-Bug
 funciton "class field &operator=(const class &field);" will cause little heep leak, but almost negligible
 
-###Usage
+### Usage
 	//Preamble : HEAD and BODY set by class mime_header and class body_shadow etc.
 
 1. 
