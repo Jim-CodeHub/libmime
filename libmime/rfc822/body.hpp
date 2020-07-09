@@ -63,7 +63,7 @@ class body{
 		void set(const char *body, string::size_type _size 								);
 
 		const string &get(void) const noexcept											 ;
-		ssize_t  get_size(void) const noexcept											 ;
+		ssize_t		 size(void) const noexcept											 ;
 
 		void load(const char *file_path, string::size_type offset,  long int _size		);
 		void load(const char *file_path, string::size_type offset,  long int _size) const;

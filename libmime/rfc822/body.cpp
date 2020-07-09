@@ -216,7 +216,7 @@ const string &body::get(void) const noexcept
  *	@param[out] None
  *	@return		body size
  **/
-ssize_t  body::get_size(void) const noexcept
+ssize_t  body::size(void) const noexcept
 {
 	return this->bodys->size();
 }
